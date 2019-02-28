@@ -1,0 +1,7 @@
+/quizorus/target/
+
+### IntelliJ IDEA ###
+/quizorus/.idea
+/quizorus/*.iws
+/quizorus/*.iml
+/quizorus/*.ipr
