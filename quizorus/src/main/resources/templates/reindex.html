@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.com">
+<head>
+    <meta charset="UTF-8">
+    <title>Home Page | Quziorus</title>
+    <link rel="stylesheet" href="../static/assets/vendor/font-awesome/css/fontawesome-all.min.css">
+    <link rel="stylesheet" href="../static/assets/vendor/animate.css/animate.min.css">
+    <link rel="stylesheet" href="../static/assets/vendor/hs-megamenu/src/hs.megamenu.css">
+    <!-- CSS Implementing Plugins -->
+    <link rel="stylesheet" href="../static/assets/vendor/font-awesome/css/fontawesome-all.min.css">
+
+    <!-- CSS Front Template -->
+    <link rel="stylesheet" href="../static/assets/css/theme.css">
+</head>
+<body>
+<!-- ========== HEADER ========== -->
+<header id="header" class="u-header u-header--sticky-top-md">
+    <div class="u-header__section">
+        <div id="logoAndNav" class="container">
+            <!-- Nav -->
+            <nav class="js-mega-menu navbar navbar-expand-md u-header__navbar u-header__navbar--no-space">
+                <!-- Logo -->
+                <a class="navbar-brand u-header__navbar-brand" href="index.html" aria-label="Front">
+                    <img class="u-header__navbar-brand-default" src="../static/assets/svg/logos/logo.svg" alt="Logo">
+                </a>
+                <!-- End Logo -->
+
+                <!-- Responsive Toggle Button -->
+                <button type="button" class="navbar-toggler btn u-hamburger"
+                        aria-label="Toggle navigation"
+                        aria-expanded="false"
+                        aria-controls="navBar"
+                        data-toggle="collapse"
+                        data-target="#navBar">
+          <span id="hamburgerTrigger" class="u-hamburger__box">
+            <span class="u-hamburger__inner"></span>
+          </span>
+                </button>
+                <!-- End Responsive Toggle Button -->
+
+                <!-- Navigation -->
+                <div id="navBar" class="collapse navbar-collapse u-header__navbar-collapse">
+                    <ul class="navbar-nav u-header__navbar-nav">
+                        <!-- Glossary -->
+                        <li class="nav-item u-header__nav-item" data-event="hover">
+                            <a href="" class="nav-link u-header__nav-link" href="#">Glossary</a>
+                        </li>
+                        <!-- End Glossary -->
+
+                        <!-- Create a Topic -->
+                        <li class="nav-item u-header__nav-item" data-event="hover">
+                            <a href="" class="nav-link u-header__nav-link" href="#">Create a Topic</a>
+                        </li>
+                        <!-- End Create a Topic -->
+
+                        <!-- Enroll a Topic -->
+                        <li class="nav-item u-header__nav-item" data-event="hover">
+                            <a href="" class="nav-link u-header__nav-link" href="#">Enroll a Topic</a>
+                        </li>
+                        <!-- End Enroll a Topic -->
+
+
+
+
+
+                        <!-- Button -->
+                        <li class="nav-item u-header__nav-last-item">
+                            <a class="btn btn-sm btn-primary transition-3d-hover" href="https://themes.getbootstrap.com/product/front-multipurpose-responsive-template/" target="_blank">
+                                Buy Now
+                            </a>
+                        </li>
+                        <!-- End Button -->
+                    </ul>
+                </div>
+                <!-- End Navigation -->
+            </nav>
+            <!-- End Nav -->
+        </div>
+    </div>
+</header>
+<!-- ========== END HEADER ========== -->
+
+<!-- Hero Section -->
+<div class="bg-img-hero" style="background-image: url(../static/assets/img/1920x800/img14.jpg);">
+    <div class="gradient-overlay-half-primary-v1">
+        <div class="container space-2 space-md-3">
+            <div class="w-md-80 w-lg-60 text-center mx-auto">
+                <!-- Title -->
+                <div class="mb-5">
+                    <h1 class="display-4 font-size-md-down-5 text-white mb-0">What to <span class="font-weight-semi-bold">learn?</span></h1>
+                </div>
+                <!-- End Title -->
+
+                <!-- Input -->
+                <form class="input-group input-group-lg input-group-borderless mb-5">
+                    <div class="input-group-prepend">
+                    <span class="input-group-text" id="askQuestions">
+                      <span class="fas fa-search"></span>
+                    </span>
+                    </div>
+                    <input type="search" class="form-control" placeholder="Search a topic" aria-label="Ask a question" aria-describedby="askQuestions">
+                </form>
+                <!-- End Input -->
+
+                <!-- Text/Links -->
+                <p class="text-white-70">
+                    Popular topics:
+                    <a class="link-light" href="#">science,</a>
+                    <a class="link-light ml-1" href="#">art,</a>
+                    <a class="link-light ml-1" href="#">music,</a>
+                    <a class="link-light ml-1" href="#">movie</a>
+                </p>
+                <!-- End Text/Links -->
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Hero Section -->
+
+<!-- Shop Items Section -->
+<div class="container mt-5">
+    <div class="text-center mb-7">
+        <span class="u-label u-label--sm u-label--primary mb-2">Enroll a Topic</span>
+        <h2 class="h3 text-primary font-weight-normal">Hot Topics!</h2>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-6 col-lg-4 mb-5">
+            <!-- Shop Item -->
+            <a class="d-block card card-text-dark border-0 text-center transition-3d-hover" href="#">
+                <img class="img-fluid rounded" src="../static/assets/img/500x550/img1.jpg" alt="Image Description">
+                <div class="card-body pt-4 px-4">
+                    <h2 class="h5 mb-1">Safe travel</h2>
+                    <span class="d-block">Guidelines for safe travelling</span>
+                </div>
+            </a>
+            <!-- End Shop Item -->
+        </div>
+
+        <div class="col-sm-6 col-lg-4 mb-5">
+            <!-- Shop Item -->
+            <a class="d-block card card-text-dark border-0 text-center transition-3d-hover" href="#">
+                <img class="img-fluid rounded" src="../static/assets/img/500x550/img2.jpg" alt="Image Description">
+                <div class="card-body pt-4 px-4">
+                    <h3 class="h5 mb-1">How a watch works</h3>
+                    <span class="d-block">This is precise mechanics</span>
+                </div>
+            </a>
+            <!-- End Shop Item -->
+        </div>
+
+        <div class="col-sm-6 col-lg-4 mb-5">
+            <!-- Shop Item -->
+            <a class="d-block card card-text-dark border-0 text-center transition-3d-hover" href="#">
+                <img class="img-fluid rounded" src="../static/assets/img/500x550/img3.jpg" alt="Image Description">
+                <div class="card-body pt-4 px-4">
+                    <h3 class="h5 mb-1">Wilderness</h3>
+                    <span class="d-block">Wanna be free</span>
+                </div>
+            </a>
+            <!-- End Shop Item -->
+        </div>
+
+        <div class="col-sm-6 col-lg-4 mb-5">
+            <!-- Shop Item -->
+            <a class="d-block card card-text-dark border-0 text-center transition-3d-hover" href="#">
+                <img class="img-fluid rounded" src="../static/assets/img/500x550/img7.jpg" alt="Image Description">
+                <div class="card-body pt-4 px-4">
+                    <h3 class="h5 mb-1">ABC of Finance</h3>
+                    <span class="d-block">Baby steps for more money</span>
+                </div>
+            </a>
+            <!-- End Shop Item -->
+        </div>
+
+        <div class="col-sm-6 col-lg-4 mb-5">
+            <!-- Shop Item -->
+            <a class="d-block card card-text-dark border-0 text-center transition-3d-hover" href="#">
+                <img class="img-fluid rounded" src="../static/assets/img/500x550/img5.jpg" alt="Image Description">
+                <div class="card-body pt-4 px-4">
+                    <h3 class="h5 mb-1">Bitcoin Facts</h3>
+                    <span class="d-block">Good or bad</span>
+                </div>
+            </a>
+            <!-- End Shop Item -->
+        </div>
+
+        <div class="col-sm-6 col-lg-4 mb-5">
+            <!-- Shop Item -->
+            <a class="d-block card card-text-dark border-0 text-center transition-3d-hover" href="#">
+                <img class="img-fluid rounded" src="../static/assets/img/500x550/img6.jpg" alt="Image Description">
+                <div class="card-body pt-4 px-4">
+                    <h3 class="h5 mb-1">Communicate Better</h3>
+                    <span class="d-block">Close your phones</span>
+                </div>
+            </a>
+            <!-- End Shop Item -->
+        </div>
+
+    </div>
+</div>
+<!-- End Shop Items Section -->
+<hr>
+<!-- ========== FOOTER ========== -->
+<footer class="container text-center space-2">
+    <!-- Logo -->
+    <a class="d-inline-flex align-items-center mb-3" href="index.html" aria-label="Front">
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="36px" height="36px" viewBox="0 0 46 46" xml:space="preserve" style="margin-bottom: 0;">
+      <path fill="#3F7DE0" opacity=".65" d="M23,41L23,41c-9.9,0-18-8-18-18v0c0-9.9,8-18,18-18h11.3C38,5,41,8,41,11.7V23C41,32.9,32.9,41,23,41z"/>
+            <path class="fill-info" opacity=".5" d="M28,35.9L28,35.9c-9.9,0-18-8-18-18v0c0-9.9,8-18,18-18l11.3,0C43,0,46,3,46,6.6V18C46,27.9,38,35.9,28,35.9z"/>
+            <path class="fill-primary" opacity=".7" d="M18,46L18,46C8,46,0,38,0,28v0c0-9.9,8-18,18-18h11.3c3.7,0,6.6,3,6.6,6.6V28C35.9,38,27.9,46,18,46z"/>
+            <path class="fill-white" d="M17.4,34V18.3h10.2v2.9h-6.4v3.4h4.8v2.9h-4.8V34H17.4z"/>
+    </svg>
+        <span class="brand brand-primary">Front</span>
+    </a>
+    <!-- End Logo -->
+
+    <!-- List -->
+    <ul class="list-inline list-group-flush list-group-borderless">
+        <li class="list-inline-item px-2">
+            <a class="list-group-item-action" href="#">Glossary</a>
+        </li>
+        <li class="list-inline-item px-2">
+            <a class="list-group-item-action" href="#">Create a Topic</a>
+        </li>
+        <li class="list-inline-item px-2">
+            <a class="list-group-item-action" href="#">Enroll a Topic</a>
+        </li>
+    </ul>
+    <!-- End List -->
+
+    <!-- Copyright -->
+    <p class="small text-muted mb-0">© Quizorus. 2019 All Rights Reserved.</p>
+    <!-- End Copyright -->
+</footer>
+<!-- ========== END FOOTER ========== -->
+
+<!-- JS Global Compulsory -->
+<script src="../static/assets/vendor/jquery/dist/jquery.min.js"></script>
+<script src="../static/assets/vendor/jquery-migrate/dist/jquery-migrate.min.js"></script>
+<script src="../static/assets/vendor/popper.js/dist/umd/popper.min.js"></script>
+<script src="../static/assets/vendor/bootstrap/bootstrap.min.js"></script>
+
+<!-- JS Front -->
+<script src="../static/assets/js/hs.core.js"></script>
+
+<!-- JS Implementing Plugins -->
+<script src="../static/assets/vendor/hs-megamenu/src/hs.megamenu.js"></script>
+<script src="../static/assets/vendor/svg-injector/dist/svg-injector.min.js"></script>
+
+<!-- JS Front -->
+<script src="../static/assets/js/components/hs.header.js"></script>
+<script src="../static/assets/js/components/hs.svg-injector.js"></script>
+
+<!-- JS Plugins Init. -->
+<script>
+    $(window).on('load', function () {
+        // initialization of HSMegaMenu component
+        $('.js-mega-menu').HSMegaMenu({
+            event: 'hover',
+            pageContainer: $('.container'),
+            breakpoint: 767.98,
+            hideTimeOut: 0
+        });
+
+        // initialization of svg injector module
+        $.HSCore.components.HSSVGIngector.init('.js-svg-injector');
+    });
+
+    $(document).on('ready', function () {
+        // initialization of header
+        $.HSCore.components.HSHeader.init($('#header'));
+    });
+</script>
+</body>
+</html>
