@@ -5,3 +5,5 @@
 /quizorus/*.iws
 /quizorus/*.iml
 /quizorus/*.ipr
+
+.DS_Store
