@@ -78,126 +78,64 @@
 </header>
 <!-- ========== END HEADER ========== -->
 
-<!-- Hero Section -->
-<div class="bg-img-hero" style="background-image: url(../static/assets/img/1920x800/img14.jpg);" th:style="'background-image:url('+@{assets/img/1920x800/img14.jpg}+')'">
-    <div class="gradient-overlay-half-primary-v1">
-        <div class="container space-2 space-md-3">
-            <div class="w-md-80 w-lg-60 text-center mx-auto">
-                <!-- Title -->
-                <div class="mb-5">
-                    <h1 class="display-4 font-size-md-down-5 text-white mb-0">What to <span class="font-weight-semi-bold">learn?</span></h1>
-                </div>
-                <!-- End Title -->
+<!-- ========== SIGNUP ========== -->
+<div class="container space-2 space-md-3">
+<!-- Form -->
+<form class="js-validate w-md-50 mx-md-auto">
+    <!-- Title -->
+    <div class="mb-7">
+        <h1 class="h3 text-primary font-weight-normal mb-0">Welcome to <span class="font-weight-semi-bold">Quizorus</span></h1>
+        <p>Fill out the form to get started.</p>
+    </div>
+    <!-- End Title -->
 
-                <!-- Input -->
-                <form class="input-group input-group-lg input-group-borderless mb-5">
-                    <div class="input-group-prepend">
-                    <span class="input-group-text" id="askQuestions">
-                      <span class="fas fa-search"></span>
-                    </span>
-                    </div>
-                    <input type="search" class="form-control" placeholder="Search a topic" aria-label="Ask a question" aria-describedby="askQuestions">
-                </form>
-                <!-- End Input -->
+    <!-- Form Group -->
+    <div class="js-form-message form-group">
+        <label class="form-label" for="signinSrEmailExample3">Email address</label>
+        <input type="email" class="form-control" name="email" id="signinSrEmailExample3" placeholder="Email address" aria-label="Email address" required
+               data-msg="Please enter a valid email address."
+               data-error-class="u-has-error"
+               data-success-class="u-has-success">
+    </div>
+    <!-- End Form Group -->
 
-                <!-- Text/Links -->
-                <p class="text-white-70">
-                    Popular topics:
-                    <a class="link-light" href="#">science,</a>
-                    <a class="link-light ml-1" href="#">art,</a>
-                    <a class="link-light ml-1" href="#">music,</a>
-                    <a class="link-light ml-1" href="#">movie</a>
-                </p>
-                <!-- End Text/Links -->
-            </div>
+    <!-- Form Group -->
+    <div class="js-form-message form-group">
+        <label class="form-label" for="signinSrPasswordExample2">Password</label>
+        <input type="password" class="form-control" name="password" id="signinSrPasswordExample2" placeholder="********" aria-label="********" required
+               data-msg="Your password is invalid. Please try again."
+               data-error-class="u-has-error"
+               data-success-class="u-has-success">
+    </div>
+    <!-- End Form Group -->
+
+    <!-- Form Group -->
+    <div class="js-form-message form-group">
+        <label class="form-label" for="signinSrConfirmPassword">Confirm password</label>
+        <input type="password" class="form-control" name="confirmPassword" id="signinSrConfirmPassword" placeholder="********" aria-label="********" required
+               data-msg="Password does not match the confirm password."
+               data-error-class="u-has-error"
+               data-success-class="u-has-success">
+    </div>
+    <!-- End Form Group -->
+
+    <!-- Button -->
+    <div class="row align-items-center mb-5">
+        <div class="col-5 col-sm-6">
+            <span class="small text-muted">Already have an account?</span>
+            <a class="small" href="login.html">Login</a>
+        </div>
+
+        <div class="col-7 col-sm-6 text-right">
+            <button type="submit" class="btn btn-primary transition-3d-hover">Get Started</button>
         </div>
     </div>
+    <!-- End Button -->
+</form>
+<!-- End Form -->
 </div>
-<!-- End Hero Section -->
+<!-- ========== END SIGNUP ========== -->
 
-<!-- Shop Items Section -->
-<div class="container mt-5">
-    <div class="text-center mb-7">
-        <span class="u-label u-label--sm u-label--primary mb-2">Enroll a Topic to Start</span>
-        <h2 class="h3 text-primary font-weight-normal">Hot Topics!</h2>
-    </div>
-
-    <div class="row">
-        <div class="col-sm-6 col-lg-4 mb-5">
-            <!-- Shop Item -->
-            <a class="d-block card card-text-dark border-0 text-center transition-3d-hover" href="#">
-                <img class="img-fluid rounded" src="../static/assets/img/500x550/img1.jpg" th:src="@{assets/img/500x550/img1.jpg}" alt="Image Description">
-                <div class="card-body pt-4 px-4">
-                    <h2 class="h5 mb-1">Safe travel</h2>
-                    <span class="d-block">Guidelines for safe travelling</span>
-                </div>
-            </a>
-            <!-- End Shop Item -->
-        </div>
-
-        <div class="col-sm-6 col-lg-4 mb-5">
-            <!-- Shop Item -->
-            <a class="d-block card card-text-dark border-0 text-center transition-3d-hover" href="#">
-                <img class="img-fluid rounded" src="../static/assets/img/500x550/img2.jpg" th:src="@{assets/img/500x550/img2.jpg}" alt="Image Description">
-                <div class="card-body pt-4 px-4">
-                    <h3 class="h5 mb-1">How a watch works</h3>
-                    <span class="d-block">This is precise mechanics</span>
-                </div>
-            </a>
-            <!-- End Shop Item -->
-        </div>
-
-        <div class="col-sm-6 col-lg-4 mb-5">
-            <!-- Shop Item -->
-            <a class="d-block card card-text-dark border-0 text-center transition-3d-hover" href="#">
-                <img class="img-fluid rounded" src="../static/assets/img/500x550/img3.jpg" th:src="@{assets/img/500x550/img3.jpg}" alt="Image Description">
-                <div class="card-body pt-4 px-4">
-                    <h3 class="h5 mb-1">Wilderness</h3>
-                    <span class="d-block">Wanna be free</span>
-                </div>
-            </a>
-            <!-- End Shop Item -->
-        </div>
-
-        <div class="col-sm-6 col-lg-4 mb-5">
-            <!-- Shop Item -->
-            <a class="d-block card card-text-dark border-0 text-center transition-3d-hover" href="#">
-                <img class="img-fluid rounded" src="../static/assets/img/500x550/img7.jpg" th:src="@{assets/img/500x550/img7.jpg}" alt="Image Description">
-                <div class="card-body pt-4 px-4">
-                    <h3 class="h5 mb-1">ABC of Finance</h3>
-                    <span class="d-block">Baby steps for more money</span>
-                </div>
-            </a>
-            <!-- End Shop Item -->
-        </div>
-
-        <div class="col-sm-6 col-lg-4 mb-5">
-            <!-- Shop Item -->
-            <a class="d-block card card-text-dark border-0 text-center transition-3d-hover" href="#">
-                <img class="img-fluid rounded" src="../static/assets/img/500x550/img5.jpg" th:src="@{assets/img/500x550/img5.jpg}" alt="Image Description">
-                <div class="card-body pt-4 px-4">
-                    <h3 class="h5 mb-1">Bitcoin Facts</h3>
-                    <span class="d-block">Good or bad</span>
-                </div>
-            </a>
-            <!-- End Shop Item -->
-        </div>
-
-        <div class="col-sm-6 col-lg-4 mb-5">
-            <!-- Shop Item -->
-            <a class="d-block card card-text-dark border-0 text-center transition-3d-hover" href="#">
-                <img class="img-fluid rounded" src="../static/assets/img/500x550/img6.jpg" th:src="@{assets/img/500x550/img6.jpg}" alt="Image Description">
-                <div class="card-body pt-4 px-4">
-                    <h3 class="h5 mb-1">Communicate Better</h3>
-                    <span class="d-block">Close your phones</span>
-                </div>
-            </a>
-            <!-- End Shop Item -->
-        </div>
-
-    </div>
-</div>
-<!-- End Shop Items Section -->
 <hr>
 <!-- ========== FOOTER ========== -->
 <footer class="container text-center space-2">
@@ -240,10 +178,13 @@
 <!-- JS Implementing Plugins -->
 <script src="../static/assets/vendor/hs-megamenu/src/hs.megamenu.js" th:src="@{assets/vendor/hs-megamenu/src/hs.megamenu.js}"></script>
 <script src="../static/assets/vendor/svg-injector/dist/svg-injector.min.js" th:src="@{assets/vendor/svg-injector/dist/svg-injector.min.js}"></script>
+<script src="../static/assets/vendor/jquery-validation/dist/jquery.validate.min.js" th:src="@{assets/vendor/jquery-validation/dist/jquery.validate.min.js}"></script>
 
 <!-- JS Front -->
 <script src="../static/assets/js/components/hs.header.js" th:src="@{assets/js/components/hs.header.js}"></script>
 <script src="../static/assets/js/components/hs.svg-injector.js" th:src="@{assets/js/components/hs.svg-injector.js}"></script>
+<script src="../static/assets/js/components/hs.validation.js" th:src="@{assets/js/components/hs.validation.js}"></script>
+
 
 <!-- JS Plugins Init. -->
 <script>
@@ -263,6 +204,14 @@
     $(document).on('ready', function () {
         // initialization of header
         $.HSCore.components.HSHeader.init($('#header'));
+        // initialization of form validation
+        $.HSCore.components.HSValidation.init('.js-validate', {
+            rules: {
+                confirmPassword: {
+                    equalTo: '#signinSrPasswordExample2'
+                }
+            }
+        });
     });
 </script>
 </body>
