@@ -57,7 +57,7 @@ module.exports = function( grunt ) {
 					linesThresholdPct: 85
 				}
 			},
-			files: [ "test/**/index.html" ]
+			files: [ "test/**/arc_index.html" ]
 		},
 		coveralls: {
 			src: "coverage/lcov/lcov.info",
