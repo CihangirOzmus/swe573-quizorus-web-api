@@ -1,6 +1,6 @@
 import React from 'react';
 import logo from '../img/logo.png';
-import {Button, Form, FormControl, Nav, Navbar, NavDropdown} from "react-bootstrap";
+import {Nav, Navbar} from "react-bootstrap";
 
 export default class AppNavBar extends React.Component {
     constructor(props) {
