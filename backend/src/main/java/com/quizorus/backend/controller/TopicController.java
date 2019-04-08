@@ -49,7 +49,7 @@ public class TopicController {
     @PostMapping
     @PreAuthorize("hasRole('USER')")
     public ResponseEntity<?> createTopic(@Valid @RequestBody TopicRequest topicRequest){
-        Topic topic = new topicService.createTopic(topicRequest);
+        Topic topic = topicService.createTopic(topicRequest);
 
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest().path("/{topicId}")
