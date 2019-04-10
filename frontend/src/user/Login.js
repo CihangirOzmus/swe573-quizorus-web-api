@@ -1,13 +1,7 @@
 import React, { Component } from 'react';
-import { login } from '../util/APIUtils';
-import { Link } from 'react-router-dom';
-import { ACCESS_TOKEN } from '../constants';
-
-import { notification } from 'antd';
 import Form from "react-bootstrap/Form";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
-
 
 class Login extends Component {
     render() {
@@ -33,7 +27,7 @@ class Login extends Component {
                         </Col>
                     </Form.Group>
 
-                    <Button className="mt-4" variant="primary" type="submit" block>
+                    <Button className="mt-4" variant="info" type="submit" block>
                         Login
                     </Button>
                 </Form>

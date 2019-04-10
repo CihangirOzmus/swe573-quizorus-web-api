@@ -4,13 +4,14 @@ import {Route, withRouter, Switch} from 'react-router-dom';
 import {getCurrentUser} from '../util/APIUtils';
 import {ACCESS_TOKEN} from '../constants';
 
-import AppHeader from "../common/AppHeader";
+import AppHeader from '../common/AppHeader';
 import {notification} from 'antd';
-import Login from "../user/Login";
-import Signup from "../user/Signup";
+import Home from '../common/Home';
+import Login from '../user/Login';
+import Signup from '../user/Signup';
+import Glossary from '../glossary/Glossary';
 
 class App extends Component {
-
     constructor(props) {
         super(props);
         this.state = {
@@ -96,9 +97,11 @@ class App extends Component {
                     <Switch>
                         <Route path="/login" render={(props) => <Login onLogin={this.handleLogin} {...props} />}></Route>
                         <Route path="/signup" component={Signup}></Route>
+                        <Route path="/glossary" component={Glossary}></Route>
+                        <Route path="/" component={Home}></Route>
                     </Switch>
                 </div>
-
+                
             </div>
         );
     }

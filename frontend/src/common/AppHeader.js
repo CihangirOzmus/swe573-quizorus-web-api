@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {Link, withRouter} from 'react-router-dom';
-import './AppHeader.css';
 import logo from '../img/logo.png';
 import {Nav, Navbar} from "react-bootstrap";
 
@@ -33,14 +32,14 @@ class AppHeader extends Component {
         if (!this.props.currentUser) {
             menuItems =
                 <Nav className="ml-auto">
-                    <Nav.Link as={Link} className="mr-5" to="/topics">Glossary</Nav.Link>
+                    <Nav.Link as={Link} className="mr-5" to="/glossary">Glossary</Nav.Link>
                     {!this.props.currentUser && <Nav.Link as={Link} className="mr-2" to="/login">Login</Nav.Link>}
                     {!this.props.currentUser && <Nav.Link as={Link} className="mr-2" to="/signup">SignUp</Nav.Link>}
                 </Nav>
         } else {
             menuItems =
                 <Nav className="ml-auto">
-                    <Nav.Link className="mr-5" href="#">Glossary</Nav.Link>
+                    <Nav.Link className="mr-5" href="/glossary">Glossary</Nav.Link>
                     {this.props.currentUser && <Nav.Link as={Link} className="mr-2" href="#CT">Create Topic</Nav.Link>}
                     {this.props.currentUser && <Nav.Link as={Link} className="mr-2" href="#P">Profile</Nav.Link>}
                     {this.props.currentUser && <Nav.Link as={Link} className="mr-2" href="#L">Logout</Nav.Link>}
@@ -48,9 +47,9 @@ class AppHeader extends Component {
         }
 
         return (
-            <Navbar bg="light" expand="lg">
+            <Navbar bg="info" variant="dark" expand="lg">
                 <Navbar.Brand>
-                    <Link style={{ textDecoration: 'none', color: 'black'}} to="/" >
+                    <Link style={{ textDecoration: 'none', color: 'white'}} to="/" >
                         <img
                             src={logo}
                             width="30"

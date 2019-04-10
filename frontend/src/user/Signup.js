@@ -1,12 +1,4 @@
 import React, { Component } from 'react';
-import { signup, checkUsernameAvailability, checkEmailAvailability } from '../util/APIUtils';
-import { Link } from 'react-router-dom';
-import {
-    NAME_MIN_LENGTH, NAME_MAX_LENGTH,
-    USERNAME_MIN_LENGTH, USERNAME_MAX_LENGTH,
-    EMAIL_MAX_LENGTH,
-    PASSWORD_MIN_LENGTH, PASSWORD_MAX_LENGTH
-} from '../constants';
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
@@ -53,7 +45,7 @@ class Signup extends Component {
                         </Col>
                     </Form.Group>
 
-                    <Button className="mt-4" variant="primary" type="submit" block>
+                    <Button className="mt-4" variant="info" type="submit" block>
                         Submit
                     </Button>
                 </Form>
