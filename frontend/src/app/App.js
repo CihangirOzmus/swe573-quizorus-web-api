@@ -5,11 +5,13 @@ import {getCurrentUser} from '../util/APIUtils';
 import {ACCESS_TOKEN} from '../constants';
 
 import AppHeader from '../common/AppHeader';
-import {notification} from 'antd';
 import Home from '../common/Home';
 import Login from '../user/Login';
 import Signup from '../user/Signup';
 import Glossary from '../glossary/Glossary';
+
+import toast from 'toasted-notes'
+import 'toasted-notes/src/styles.css';
 
 class App extends Component {
     constructor(props) {
@@ -22,12 +24,6 @@ class App extends Component {
         this.handleLogout = this.handleLogout.bind(this);
         this.loadCurrentUser = this.loadCurrentUser.bind(this);
         this.handleLogin = this.handleLogin.bind(this);
-
-        notification.config({
-            placement: 'topRight',
-            top: 70,
-            duration: 3,
-        });
     }
 
     loadCurrentUser() {
@@ -53,7 +49,7 @@ class App extends Component {
     }
 
     // Handle Logout, Set currentUser and isAuthenticated state which will be passed to other components
-    handleLogout(redirectTo = "/", notificationType = "success", description = "You're successfully logged out.") {
+    handleLogout(redirectTo = "/") {
         localStorage.removeItem(ACCESS_TOKEN);
 
         this.setState({
@@ -63,22 +59,11 @@ class App extends Component {
 
         this.props.history.push(redirectTo);
 
-        notification[notificationType]({
-            message: 'Polling App',
-            description: description,
-        });
+        toast.notify("You're successfully logged out.", { position : "top-right"});
     }
 
-    /*
-   This method is called by the Login component after successful login
-   so that we can load the logged-in user details and set the currentUser &
-   isAuthenticated state, which other components will use to render their JSX
-  */
     handleLogin() {
-        notification.success({
-            message: 'Polling App',
-            description: "You're successfully logged in.",
-        });
+        toast.notify("You're successfully logged in.", { position : "top-right"});
         this.loadCurrentUser();
         this.props.history.push("/");
     }
@@ -101,7 +86,6 @@ class App extends Component {
                         <Route path="/" component={Home}></Route>
                     </Switch>
                 </div>
-                
             </div>
         );
     }

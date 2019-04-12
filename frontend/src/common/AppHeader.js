@@ -7,7 +7,6 @@ class AppHeader extends Component {
 
     constructor(props) {
         super(props);
-        this.handleMenuClick = this.handleMenuClick.bind(this);
 
         this.toggle = this.toggle.bind(this);
         this.state = {
@@ -15,11 +14,7 @@ class AppHeader extends Component {
         };
     }
 
-    handleMenuClick({key}) {
-        if (key === "logout") {
-            this.props.onLogout();
-        }
-    }
+
 
     toggle() {
         this.setState({
@@ -39,17 +34,17 @@ class AppHeader extends Component {
         } else {
             menuItems =
                 <Nav className="ml-auto">
-                    <Nav.Link className="mr-5" href="/glossary">Glossary</Nav.Link>
-                    {this.props.currentUser && <Nav.Link as={Link} className="mr-2" href="#CT">Create Topic</Nav.Link>}
-                    {this.props.currentUser && <Nav.Link as={Link} className="mr-2" href="#P">Profile</Nav.Link>}
-                    {this.props.currentUser && <Nav.Link as={Link} className="mr-2" href="#L">Logout</Nav.Link>}
+                    <Nav.Link className="mr-5" as={Link} to="/glossary">Glossary</Nav.Link>
+                    {this.props.currentUser && <Nav.Link as={Link} className="mr-2" to="#">Create Topic</Nav.Link>}
+                    {this.props.currentUser && <Nav.Link as={Link} className="mr-2" to="#">Profile</Nav.Link>}
+                    {this.props.currentUser && <Nav.Link as={Link} className="mr-2" onClick={this.props.onLogout} to="/">Logout</Nav.Link>}
                 </Nav>
         }
 
         return (
             <Navbar bg="info" variant="dark" expand="lg">
                 <Navbar.Brand>
-                    <Link style={{ textDecoration: 'none', color: 'white'}} to="/" >
+                    <Link to="/" style={{ textDecoration: 'none', color: 'white'}} >
                         <img
                             src={logo}
                             width="30"

@@ -55,7 +55,7 @@ public class UserController {
         return userProfile;
     }
 
-    @GetMapping("/users/{username}/polls")
+    @GetMapping("/users/{username}/topics")
     public PagedResponse<TopicResponse> getTopicsCreatedBy(@PathVariable(value = "username") String username,
                                                            @CurrentUser UserPrincipal currentUser,
                                                            @RequestParam(value = "page", defaultValue = AppConstants.DEFAULT_PAGE_NUMBER) int page,
