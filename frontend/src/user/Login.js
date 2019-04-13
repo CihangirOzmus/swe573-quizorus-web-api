@@ -62,19 +62,19 @@ class Login extends Component {
                 <h2 className="m-5">Login</h2>
                 <Form ref={this.form} onSubmit={this.handleSubmit}>
                     <Form.Group className="row" controlId="formPlaintextUsernameOrEmail">
-                        <Form.Label column sm="3">
+                        <Form.Label column sm="4">
                             Username/Email
                         </Form.Label>
-                        <Col sm="9">
+                        <Col sm="8">
                             <Form.Control type="text" placeholder="username/email" required onChange={this.handleUsernameOrEmailChange}/>
                         </Col>
                     </Form.Group>
 
                     <Form.Group className="row" controlId="formPlaintextPassword" >
-                        <Form.Label column sm="3">
+                        <Form.Label column sm="4">
                             Password
                         </Form.Label>
-                        <Col sm="9">
+                        <Col sm="8">
                             <Form.Control type="password" placeholder="Password" required onChange={this.handlePasswordChange}/>
                         </Col>
                     </Form.Group>

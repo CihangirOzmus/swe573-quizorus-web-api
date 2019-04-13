@@ -27,14 +27,14 @@ class AppHeader extends Component {
         if (!this.props.currentUser) {
             menuItems =
                 <Nav className="ml-auto">
-                    <Nav.Link as={Link} className="mr-5" to="/glossary">Glossary</Nav.Link>
+                    <Nav.Link as={Link} className="mr-2" to="/glossary">Glossary</Nav.Link>
                     {!this.props.currentUser && <Nav.Link as={Link} className="mr-2" to="/login">Login</Nav.Link>}
                     {!this.props.currentUser && <Nav.Link as={Link} className="mr-2" to="/signup">SignUp</Nav.Link>}
                 </Nav>
         } else {
             menuItems =
                 <Nav className="ml-auto">
-                    <Nav.Link className="mr-5" as={Link} to="/glossary">Glossary</Nav.Link>
+                    <Nav.Link className="mr-2" as={Link} to="/glossary">Glossary</Nav.Link>
                     {this.props.currentUser && <Nav.Link as={Link} className="mr-2" to="#">Create Topic</Nav.Link>}
                     {this.props.currentUser && <Nav.Link as={Link} className="mr-2" to="#">Profile</Nav.Link>}
                     {this.props.currentUser && <Nav.Link as={Link} className="mr-2" onClick={this.props.onLogout} to="/">Logout</Nav.Link>}
@@ -44,7 +44,7 @@ class AppHeader extends Component {
         return (
             <Navbar bg="info" variant="dark" expand="lg">
                 <Navbar.Brand>
-                    <Link to="/" style={{ textDecoration: 'none', color: 'white'}} >
+                    <Link to="/" style={{ textDecoration: 'none', color: 'white'}}>
                         <img
                             src={logo}
                             width="30"
@@ -52,7 +52,7 @@ class AppHeader extends Component {
                             className="d-inline-block align-top"
                             alt="quizorus logo"
                         />
-                        Quizorus
+                        <span className="ml-2 font-weight-bold" >Quizorus</span>
                     </Link>
                 </Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav"/>
