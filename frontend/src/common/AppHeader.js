@@ -1,20 +1,18 @@
 import React, {Component} from 'react';
 import {Link, withRouter} from 'react-router-dom';
+import './AppHeader.css';
 import logo from '../img/logo.png';
-import {Nav, Navbar} from "react-bootstrap";
+import {Nav, Navbar, NavDropdown} from "react-bootstrap";
 
 class AppHeader extends Component {
 
     constructor(props) {
         super(props);
-
         this.toggle = this.toggle.bind(this);
         this.state = {
             isOpen: false
         };
     }
-
-
 
     toggle() {
         this.setState({
@@ -28,16 +26,19 @@ class AppHeader extends Component {
             menuItems =
                 <Nav className="ml-auto">
                     <Nav.Link as={Link} className="mr-2" to="/glossary">Glossary</Nav.Link>
-                    {!this.props.currentUser && <Nav.Link as={Link} className="mr-2" to="/login">Login</Nav.Link>}
-                    {!this.props.currentUser && <Nav.Link as={Link} className="mr-2" to="/signup">SignUp</Nav.Link>}
+                    <Nav.Link as={Link} className="mr-2" to="/login">Login</Nav.Link>
+                    <Nav.Link as={Link} className="mr-5" to="/signup">SignUp</Nav.Link>
                 </Nav>
         } else {
             menuItems =
                 <Nav className="ml-auto">
                     <Nav.Link className="mr-2" as={Link} to="/glossary">Glossary</Nav.Link>
-                    {this.props.currentUser && <Nav.Link as={Link} className="mr-2" to="#">Create Topic</Nav.Link>}
-                    {this.props.currentUser && <Nav.Link as={Link} className="mr-2" to="#">Profile</Nav.Link>}
-                    {this.props.currentUser && <Nav.Link as={Link} className="mr-2" onClick={this.props.onLogout} to="/">Logout</Nav.Link>}
+                    <Nav.Link as={Link} className="mr-2" to="/glossary">Enroll Topic</Nav.Link>
+                    <Nav.Link as={Link} className="mr-2" to="#">Create Topic</Nav.Link>
+                    <NavDropdown title={this.props.currentUser.username} id="basic-nav-dropdown" className="mr-5">
+                        <NavDropdown.Item as={Link} to="/">Profile</NavDropdown.Item>
+                        <NavDropdown.Item as={Link} onClick={this.props.onLogout} to="/" >Logout</NavDropdown.Item>
+                    </NavDropdown>
                 </Nav>
         }
 

@@ -3,7 +3,6 @@ import './App.css';
 import {Route, withRouter, Switch} from 'react-router-dom';
 import {getCurrentUser} from '../util/APIUtils';
 import {ACCESS_TOKEN} from '../constants';
-
 import AppHeader from '../common/AppHeader';
 import Home from '../common/Home';
 import Login from '../user/Login';
@@ -20,7 +19,7 @@ class App extends Component {
             currentUser: null,
             isAuthenticated: false,
             isLoading: false
-        }
+        };
         this.handleLogout = this.handleLogout.bind(this);
         this.loadCurrentUser = this.loadCurrentUser.bind(this);
         this.handleLogin = this.handleLogin.bind(this);
