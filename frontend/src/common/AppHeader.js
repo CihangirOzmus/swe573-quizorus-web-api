@@ -27,7 +27,7 @@ class AppHeader extends Component {
                 <Nav className="ml-auto">
                     <Nav.Link as={Link} className="mr-2" to="/glossary">Glossary</Nav.Link>
                     <Nav.Link as={Link} className="mr-2" to="/login">Login</Nav.Link>
-                    <Nav.Link as={Link} className="mr-5" to="/signup">SignUp</Nav.Link>
+                    <Nav.Link as={Link} className="mr-2" to="/signup">SignUp</Nav.Link>
                 </Nav>
         } else {
             menuItems =
@@ -35,7 +35,7 @@ class AppHeader extends Component {
                     <Nav.Link className="mr-2" as={Link} to="/glossary">Glossary</Nav.Link>
                     <Nav.Link as={Link} className="mr-2" to="/glossary">Enroll Topic</Nav.Link>
                     <Nav.Link as={Link} className="mr-2" to="#">Create Topic</Nav.Link>
-                    <NavDropdown title={this.props.currentUser.username} id="basic-nav-dropdown" className="mr-5">
+                    <NavDropdown title={this.props.currentUser.username} id="basic-nav-dropdown" className="mr-2">
                         <NavDropdown.Item as={Link} to="/">Profile</NavDropdown.Item>
                         <NavDropdown.Item as={Link} onClick={this.props.onLogout} to="/" >Logout</NavDropdown.Item>
                     </NavDropdown>
