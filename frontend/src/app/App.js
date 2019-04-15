@@ -3,15 +3,17 @@ import './App.css';
 import {Route, withRouter, Switch} from 'react-router-dom';
 import {getCurrentUser} from '../util/APIUtils';
 import {ACCESS_TOKEN} from '../constants';
-import AppHeader from '../common/AppHeader';
-import Home from '../common/Home';
+
+import Glossary from '../glossary/Glossary';
+import CreateTopic from '../topic/CreateTopic';
 import Login from '../user/Login';
 import Signup from '../user/Signup';
-import Glossary from '../glossary/Glossary';
 
+import AppHeader from '../common/AppHeader';
+
+import PrivateRoute from '../common/PrivateRoute';
 import toast from 'toasted-notes'
 import 'toasted-notes/src/styles.css';
-import CreateTopic from '../topic/CreateTopic';
 
 class App extends Component {
     constructor(props) {
@@ -30,6 +32,7 @@ class App extends Component {
         this.setState({
             isLoading: true
         });
+
         getCurrentUser()
             .then(response => {
                 this.setState({
@@ -48,7 +51,6 @@ class App extends Component {
         this.loadCurrentUser();
     }
 
-    // Handle Logout, Set currentUser and isAuthenticated state which will be passed to other components
     handleLogout(redirectTo = "/") {
         localStorage.removeItem(ACCESS_TOKEN);
 
@@ -78,13 +80,35 @@ class App extends Component {
                 <AppHeader isAuthenticated={this.state.isAuthenticated}
                            currentUser={this.state.currentUser}
                            onLogout={this.handleLogout}/>
+
                 <div className="container">
                     <Switch>
-                        <Route path="/login" render={(props) => <Login onLogin={this.handleLogin} {...props} />}></Route>
+                        <Route exact path="/"
+                            render={(props) => <Glossary 
+                                isAuthenticated={this.state.isAuthenticated} 
+                                currentUser={this.state.currentUser} 
+                                handleLogout={this.handleLogout} 
+                                {...props} />}>
+                        </Route>
+
+                        <Route path="/login" 
+                            render={(props) => <Login 
+                                onLogin={this.handleLogin} 
+                                {...props} />}>
+                        </Route>
+
                         <Route path="/signup" component={Signup}></Route>
-                        <Route path="/glossary" component={Glossary}></Route>
-                        <Route path="/createtopic" component={CreateTopic}></Route>
-                        <Route path="/" component={Home}></Route>
+
+                        <PrivateRoute 
+                            authenticated={this.state.isAuthenticated} 
+                            path="/createtopic" 
+                            component={CreateTopic} 
+                            handleLogout={this.handleLogout}
+                        ></PrivateRoute>
+
+
+
+                        
                     </Switch>
                 </div>
             </div>

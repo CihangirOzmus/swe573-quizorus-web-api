@@ -1,5 +1,6 @@
 .dropdown-menu {
     min-width: 6rem;
+    left: -40px;
 }
 
 .dropdown-item {

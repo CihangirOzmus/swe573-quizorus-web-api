@@ -1,4 +1,4 @@
-import {API_BASE_URL, POLL_LIST_SIZE, ACCESS_TOKEN} from '../constants';
+import {API_BASE_URL, TOPIC_LIST_SIZE, ACCESS_TOKEN} from '../constants';
 
 const request = (options) => {
     const headers = new Headers({
@@ -23,12 +23,12 @@ const request = (options) => {
         );
 };
 
-export function getAllPolls(page, size) {
+export function getAllTopics(page, size) {
     page = page || 0;
-    size = size || POLL_LIST_SIZE;
+    size = size || TOPIC_LIST_SIZE;
 
     return request({
-        url: API_BASE_URL + "/polls?page=" + page + "&size=" + size,
+        url: API_BASE_URL + "/topics?page=" + page + "&size=" + size,
         method: 'GET'
     });
 }
@@ -98,19 +98,19 @@ export function getUserProfile(username) {
     });
 }
 
-export function getUserCreatedPolls(username, page, size) {
+export function getUserCreatedTopics(username, page, size) {
     page = page || 0;
-    size = size || POLL_LIST_SIZE;
+    size = size || TOPIC_LIST_SIZE;
 
     return request({
-        url: API_BASE_URL + "/users/" + username + "/polls?page=" + page + "&size=" + size,
+        url: API_BASE_URL + "/users/" + username + "/topics?page=" + page + "&size=" + size,
         method: 'GET'
     });
 }
 
 export function getUserVotedPolls(username, page, size) {
     page = page || 0;
-    size = size || POLL_LIST_SIZE;
+    size = size || TOPIC_LIST_SIZE;
 
     return request({
         url: API_BASE_URL + "/users/" + username + "/votes?page=" + page + "&size=" + size,

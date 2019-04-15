@@ -3,8 +3,6 @@ import Form from "react-bootstrap/Form";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 import { createTopic } from '../util/APIUtils';
-import { Link } from 'react-router-dom';
-import { ACCESS_TOKEN } from '../constants';
 import toast from "toasted-notes";
 
 class CreateTopic extends Component {
@@ -27,12 +25,10 @@ class CreateTopic extends Component {
             description: this.state.description
         }
 
-        console.log(newTopic)
-        
         createTopic(newTopic)
         .then(response => {
             toast.notify("Topic created successfully.", { position : "top-right"});
-            this.props.history.push("/glossary");
+            this.props.history.push("/");
         }).catch(error => {
             if(error.status === 401) {
                 this.props.handleLogout('/login', 'error', 'You have been logged out. Please login create poll.');    
