@@ -12,7 +12,7 @@ import java.util.Optional;
 
 @Repository
 public interface TopicRepository extends JpaRepository<Topic, Long> {
-    Optional<Topic> findById(Long pollId);
+    Optional<Topic> findById(Long topicId);
 
     Page<Topic> findByCreatedBy(Long userId, Pageable pageable);
 

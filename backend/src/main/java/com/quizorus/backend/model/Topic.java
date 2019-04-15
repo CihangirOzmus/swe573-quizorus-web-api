@@ -18,6 +18,10 @@ public class Topic extends UserDateAudit {
     @Size(max = 150)
     private String title;
 
+    @NotBlank
+    @Size(max = 255)
+    private String description;
+
     public Long getId() {
         return id;
     }
@@ -32,5 +36,13 @@ public class Topic extends UserDateAudit {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }
