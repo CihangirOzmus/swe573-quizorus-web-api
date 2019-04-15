@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
-import {CardDeck, Card, Form, FormControl, Button} from 'react-bootstrap';
-import 'holderjs';
+import { CardDeck, Card, Form, FormControl, Button } from 'react-bootstrap';
 
 class Glossary extends Component {
     render(){

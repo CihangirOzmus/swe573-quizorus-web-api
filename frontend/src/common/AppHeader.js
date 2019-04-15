@@ -31,12 +31,13 @@ class AppHeader extends Component {
                 </Nav>
         } else {
             menuItems =
-                <Nav className="ml-auto">
+                <Nav className="ml-auto mr-5">
                     <Nav.Link className="mr-2" as={Link} to="/glossary">Glossary</Nav.Link>
-                    <Nav.Link as={Link} className="mr-2" to="/glossary">Enroll Topic</Nav.Link>
-                    <Nav.Link as={Link} className="mr-2" to="#">Create Topic</Nav.Link>
-                    <NavDropdown title={this.props.currentUser.username} id="basic-nav-dropdown" className="mr-2">
+                    <Nav.Link as={Link} className="mr-2" to="/createtopic">Create Topic</Nav.Link>
+                    <NavDropdown title={this.props.currentUser.username} id="basic-nav-dropdown">
                         <NavDropdown.Item as={Link} to="/">Profile</NavDropdown.Item>
+                        <NavDropdown.Item as={Link} to="/">Enrolled Topics</NavDropdown.Item>
+                        <NavDropdown.Item as={Link} to="/">Created Topics</NavDropdown.Item>
                         <NavDropdown.Item as={Link} onClick={this.props.onLogout} to="/" >Logout</NavDropdown.Item>
                     </NavDropdown>
                 </Nav>
@@ -44,7 +45,7 @@ class AppHeader extends Component {
 
         return (
             <Navbar bg="info" variant="dark" expand="lg">
-                <Navbar.Brand>
+                <Navbar.Brand className="ml-5">
                     <Link to="/" style={{ textDecoration: 'none', color: 'white'}}>
                         <img
                             src={logo}

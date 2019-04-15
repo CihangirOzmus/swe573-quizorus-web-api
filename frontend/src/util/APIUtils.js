@@ -33,11 +33,11 @@ export function getAllPolls(page, size) {
     });
 }
 
-export function createPoll(pollData) {
+export function createTopic(topicData) {
     return request({
-        url: API_BASE_URL + "/polls",
+        url: API_BASE_URL + "/topics",
         method: 'POST',
-        body: JSON.stringify(pollData)
+        body: JSON.stringify(topicData)
     });
 }
 

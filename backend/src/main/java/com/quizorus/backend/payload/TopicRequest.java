@@ -9,11 +9,23 @@ public class TopicRequest {
     @Size(max = 150)
     private String title;
 
+    @NotBlank
+    @Size(max = 255)
+    private String description;
+
     public String getTitle() {
         return title;
     }
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

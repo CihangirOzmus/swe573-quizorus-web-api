@@ -38,22 +38,20 @@ class Login extends Component {
         event.preventDefault();
         const err = !this.validate();
 
-
-            if (!err) {
-                const loginRequest = this.state;
-                login(loginRequest)
-                    .then(response => {
-                        localStorage.setItem(ACCESS_TOKEN, response.accessToken);
-                        this.props.onLogin();
-                    }).catch(error => {
-                    if(error.status === 401) {
-                        toast.notify('Your Username or Password is incorrect. Please try again!', { position : "top-right"});
-                    } else {
-                        toast.notify('Sorry! Something went wrong. Please try again!', { position : "top-right"});
-                    }
-                });
-            }
-
+        if (!err) {
+            const loginRequest = this.state;
+            login(loginRequest)
+                .then(response => {
+                    localStorage.setItem(ACCESS_TOKEN, response.accessToken);
+                    this.props.onLogin();
+                }).catch(error => {
+                if(error.status === 401) {
+                    toast.notify('Your Username or Password is incorrect. Please try again!', { position : "top-right"});
+                } else {
+                    toast.notify('Sorry! Something went wrong. Please try again!', { position : "top-right"});
+                }
+            });
+        }
     }
 
     render() {

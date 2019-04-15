@@ -94,7 +94,7 @@ public class TopicService {
     public Topic createTopic(TopicRequest topicRequest) {
         Topic topic = new Topic();
         topic.setTitle(topicRequest.getTitle());
-        topic.setDescription(topicRequest.getTitle());
+        topic.setDescription(topicRequest.getDescription());
 
         return topicRepository.save(topic);
     }

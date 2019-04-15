@@ -11,6 +11,7 @@ import Glossary from '../glossary/Glossary';
 
 import toast from 'toasted-notes'
 import 'toasted-notes/src/styles.css';
+import CreateTopic from '../topic/CreateTopic';
 
 class App extends Component {
     constructor(props) {
@@ -82,6 +83,7 @@ class App extends Component {
                         <Route path="/login" render={(props) => <Login onLogin={this.handleLogin} {...props} />}></Route>
                         <Route path="/signup" component={Signup}></Route>
                         <Route path="/glossary" component={Glossary}></Route>
+                        <Route path="/createtopic" component={CreateTopic}></Route>
                         <Route path="/" component={Home}></Route>
                     </Switch>
                 </div>
