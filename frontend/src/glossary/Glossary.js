@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import { CardDeck, Card, Form, FormControl, Button } from 'react-bootstrap';
 import { withRouter } from 'react-router-dom';
+import { API_BASE_URL } from '../constants';
+import axios from 'axios';
 
 class Glossary extends Component {
     constructor(props){
@@ -18,8 +20,13 @@ class Glossary extends Component {
         this.handleLoadMore = this.handleLoadMore.bind(this);
     }
 
-    loadTopicList(){
+    loadTopicList(page, size){
         console.log("topics loaded!..")
+        let url = API_BASE_URL + "/topics?page=" + page + "&size=" + size;
+        // axios.get(url).then(res => {
+        //     console.log(res.data)
+        //     this.setState({topics: [...this.state.topics, res.data.content]})
+        // })
     }
 
     handleLoadMore(){
@@ -27,7 +34,7 @@ class Glossary extends Component {
     }
 
     componentDidMount() {
-        this.loadTopicList();
+        this.loadTopicList(this.state.page, this.state.size);
     }
 
     render(){
@@ -41,6 +48,7 @@ class Glossary extends Component {
                     <FormControl type="text" placeholder="Search" className="mr-sm-2" />
                     <Button variant="outline-info">Search</Button>
                 </Form>
+                {this.state.topics.content}
                 <CardDeck>
                     <Card>
                         <Card.Img variant="top" src="holder.js/100px160" />
