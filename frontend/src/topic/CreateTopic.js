@@ -31,7 +31,7 @@ class CreateTopic extends Component {
             this.props.history.push("/");
         }).catch(error => {
             if(error.status === 401) {
-                this.props.handleLogout('/login', 'error', 'You have been logged out. Please login create poll.');    
+                this.props.handleLogout();    
             } else {
                 toast.notify('Sorry! Something went wrong. Please try again!', { position : "top-right"});  
             }

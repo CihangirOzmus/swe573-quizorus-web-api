@@ -25,14 +25,14 @@ class AppHeader extends Component {
         if (!this.props.currentUser) {
             menuItems =
                 <Nav className="ml-auto">
-                    <Nav.Link as={Link} className="mr-2" to="/">Glossary</Nav.Link>
+                    <Nav.Link as={Link} className="mr-2" to="/glossary">Glossary</Nav.Link>
                     <Nav.Link as={Link} className="mr-2" to="/login">Login</Nav.Link>
                     <Nav.Link as={Link} className="mr-2" to="/signup">SignUp</Nav.Link>
                 </Nav>
         } else {
             menuItems =
                 <Nav className="ml-auto mr-5">
-                    <Nav.Link className="mr-2" as={Link} to="/">Glossary</Nav.Link>
+                    <Nav.Link className="mr-2" as={Link} to="/glossary">Glossary</Nav.Link>
                     <Nav.Link as={Link} className="mr-2" to="/createtopic">Create Topic</Nav.Link>
                     <NavDropdown title={this.props.currentUser.username} id="basic-nav-dropdown">
                         <NavDropdown.Item as={Link} to="/">Profile</NavDropdown.Item>

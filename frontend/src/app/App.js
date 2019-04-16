@@ -8,9 +8,9 @@ import Glossary from '../glossary/Glossary';
 import CreateTopic from '../topic/CreateTopic';
 import Login from '../user/Login';
 import Signup from '../user/Signup';
-
+import Home from '../common/Home';
 import AppHeader from '../common/AppHeader';
-
+import NotFound from '../common/NotFound';
 import PrivateRoute from '../common/PrivateRoute';
 import toast from 'toasted-notes'
 import 'toasted-notes/src/styles.css';
@@ -51,7 +51,7 @@ class App extends Component {
         this.loadCurrentUser();
     }
 
-    handleLogout(redirectTo = "/") {
+    handleLogout() {
         localStorage.removeItem(ACCESS_TOKEN);
 
         this.setState({
@@ -59,7 +59,7 @@ class App extends Component {
             isAuthenticated: false
         });
 
-        this.props.history.push(redirectTo);
+        this.props.history.push("/");
 
         toast.notify("You're successfully logged out.", { position : "top-right"});
     }
@@ -83,13 +83,11 @@ class App extends Component {
 
                 <div className="container">
                     <Switch>
-                        <Route exact path="/"
-                            render={(props) => <Glossary 
-                                isAuthenticated={this.state.isAuthenticated} 
-                                currentUser={this.state.currentUser} 
-                                handleLogout={this.handleLogout} 
-                                {...props} />}>
-                        </Route>
+                        
+                        
+                        <Route exact path="/" component={Home}></Route>
+
+                        <Route exact path="/glossary" component={Glossary}></Route>
 
                         <Route path="/login" 
                             render={(props) => <Login 
@@ -102,13 +100,12 @@ class App extends Component {
                         <PrivateRoute 
                             authenticated={this.state.isAuthenticated} 
                             path="/createtopic" 
-                            component={CreateTopic} 
-                            handleLogout={this.handleLogout}
+                            component={CreateTopic}
+                            handleLogout={this.handleLogout} 
                         ></PrivateRoute>
 
+                        <Route component={NotFound}></Route>
 
-
-                        
                     </Switch>
                 </div>
             </div>

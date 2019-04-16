@@ -11,6 +11,7 @@ public class ModelMapper {
         TopicResponse topicResponse = new TopicResponse();
         topicResponse.setId(topic.getId());
         topicResponse.setTitle(topic.getTitle());
+        topicResponse.setDescription(topic.getDescription());
         topicResponse.setCreationDateTime(topic.getCreatedAt());
 
         UserSummary creatorSummary = new UserSummary(creator.getId(), creator.getUsername(), creator.getName());

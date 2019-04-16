@@ -1,8 +1,6 @@
 import React, {Component} from 'react';
-import { TOPIC_LIST_SIZE } from '../constants';
-import { getAllTopics, getUserCreatedTopics, getUserVotedPolls } from '../util/APIUtils';
 import { CardDeck, Card, Form, FormControl, Button } from 'react-bootstrap';
-import Home from '../common/Home';
+import { withRouter } from 'react-router-dom';
 
 class Glossary extends Component {
     constructor(props){
@@ -20,84 +18,30 @@ class Glossary extends Component {
         this.handleLoadMore = this.handleLoadMore.bind(this);
     }
 
-    loadTopicList(page = 0, size = TOPIC_LIST_SIZE) {
-        let promise;
-        if(this.props.username) {
-            if(this.props.type === 'USER_CREATED_POLLS') {
-                promise = getUserCreatedTopics(this.props.username, page, size);
-            } else if (this.props.type === 'USER_VOTED_POLLS') {
-                promise = getUserVotedPolls(this.props.username, page, size);                               
-            }
-        } else {
-            promise = getAllTopics(page, size);
-        }
+    loadTopicList(){
+        console.log("topics loaded!..")
+    }
 
-        if(!promise) {
-            return;
-        }
-
-        this.setState({
-            isLoading: true
-        });
-
-        promise            
-        .then(response => {
-            const polls = this.state.polls.slice();
-            const currentVotes = this.state.currentVotes.slice();
-
-            this.setState({
-                polls: polls.concat(response.content),
-                page: response.page,
-                size: response.size,
-                totalElements: response.totalElements,
-                totalPages: response.totalPages,
-                last: response.last,
-                currentVotes: currentVotes.concat(Array(response.content.length).fill(null)),
-                isLoading: false
-            })
-        }).catch(error => {
-            this.setState({
-                isLoading: false
-            })
-        });  
-        
+    handleLoadMore(){
+        console.log("more topics loaded!..")
     }
 
     componentDidMount() {
         this.loadTopicList();
     }
 
-    componentDidUpdate(nextProps) {
-        if(this.props.isAuthenticated !== nextProps.isAuthenticated) {
-            // Reset State
-            this.setState({
-                polls: [],
-                page: 0,
-                size: 10,
-                totalElements: 0,
-                totalPages: 0,
-                last: true,
-                currentVotes: [],
-                isLoading: false
-            });    
-            this.loadTopicList();
-        }
-    }
-
-    handleLoadMore() {
-        this.loadTopicList(this.state.page + 1);
-    }
-
     render(){
+        if (this.state.isLoading) {
+            return <h1>isLoading!...</h1>
+        }
+
         return (
             <div>
-                <Home />
                 <Form inline className="row justify-content-center m-5">
                     <FormControl type="text" placeholder="Search" className="mr-sm-2" />
                     <Button variant="outline-info">Search</Button>
                 </Form>
-
-                <CardDeck className="m-2">
+                <CardDeck>
                     <Card>
                         <Card.Img variant="top" src="holder.js/100px160" />
                         <Card.Body>
@@ -147,4 +91,4 @@ class Glossary extends Component {
     }
 }
 
-export default Glossary;
+export default withRouter(Glossary);
