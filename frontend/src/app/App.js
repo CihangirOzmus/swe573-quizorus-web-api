@@ -67,7 +67,7 @@ class App extends Component {
     handleLogin() {
         toast.notify("You're successfully logged in.", { position : "top-right"});
         this.loadCurrentUser();
-        this.props.history.push("/");
+        this.props.history.push("/glossary");
     }
 
     render() {
@@ -83,8 +83,7 @@ class App extends Component {
 
                 <div className="container">
                     <Switch>
-                        
-                        
+
                         <Route exact path="/" component={Home}></Route>
 
                         <Route exact path="/glossary" component={Glossary}></Route>

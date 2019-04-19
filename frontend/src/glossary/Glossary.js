@@ -1,7 +1,9 @@
 import React, {Component} from 'react';
-import { CardDeck, Card, Form, FormControl, Button } from 'react-bootstrap';
+import {Card, Form, FormControl, Button, Row, Col} from 'react-bootstrap';
 import { withRouter } from 'react-router-dom';
-import { API_BASE_URL } from '../constants';
+import {API_BASE_URL, TOPIC_LIST_SIZE} from '../constants';
+import './Glossary.css';
+
 import axios from 'axios';
 
 class Glossary extends Component {
@@ -15,26 +17,39 @@ class Glossary extends Component {
             totalPages: 0,
             last: true,
             isLoading: false
-        }
+        };
         this.loadTopicList = this.loadTopicList.bind(this);
         this.handleLoadMore = this.handleLoadMore.bind(this);
     }
 
-    loadTopicList(page, size){
+    loadTopicList(page, size=TOPIC_LIST_SIZE){
         console.log("topics loaded!..")
+        const topics = this.state.topics.slice();
         let url = API_BASE_URL + "/topics?page=" + page + "&size=" + size;
-        // axios.get(url).then(res => {
-        //     console.log(res.data)
-        //     this.setState({topics: [...this.state.topics, res.data.content]})
-        // })
-    }
-
-    handleLoadMore(){
-        console.log("more topics loaded!..")
+        axios.get(url).then(res => {
+            console.log(res.data)
+            this.setState({
+                topics: topics.concat(res.data.content),
+                page: res.data.page,
+                size: res.data.size,
+                totalElements: res.data.totalElements,
+                totalPages: res.data.totalPages,
+                last: res.data.last,
+                isLoading: false
+            })
+        }).catch(err => {
+            this.setState({isLoading: false})
+        });
     }
 
     componentDidMount() {
         this.loadTopicList(this.state.page, this.state.size);
+    }
+
+
+    handleLoadMore(){
+        console.log("more topics loaded!..");
+        this.loadTopicList(this.state.page + 1);
     }
 
     render(){
@@ -42,58 +57,44 @@ class Glossary extends Component {
             return <h1>isLoading!...</h1>
         }
 
+        const topics = this.state.topics;
+        const topicsView = topics.map((topic, topicIndex) => {
+            return (
+                <Row className="justify-content-center mb-1" key={topicIndex}>
+                    <div className="card mb-3" style={{minWidth: "100%"}}>
+                        <div className="row no-gutters align-items-center">
+                            <div className="col-md-4">
+                                <img src="https://via.placeholder.com/200x200" className="rounded"></img>
+                            </div>
+                            <div className="col-md-8">
+                                <div className="card-body">
+                                    <h5 className="card-title text-info text-justify">{topic.title}</h5>
+                                    <p className="card-text text-justify">{topic.description}</p>
+                                    <div className="card-footer text-muted border">
+                                        <p>
+                                            <span className="badge badge-success">3x</span> Learning Path {' '}
+                                            <span className="badge badge-warning">12x</span> Questions {' '}
+                                            <span className="badge badge-light">Created by</span> @{topic.createdBy.username} {' '}
+                                        </p>
+                                        <Button variant="info" block>Enroll</Button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </Row>
+
+            )
+        });
+
         return (
             <div>
                 <Form inline className="row justify-content-center m-5">
                     <FormControl type="text" placeholder="Search" className="mr-sm-2" />
                     <Button variant="outline-info">Search</Button>
                 </Form>
-                {this.state.topics.content}
-                <CardDeck>
-                    <Card>
-                        <Card.Img variant="top" src="holder.js/100px160" />
-                        <Card.Body>
-                        <Card.Title>Topic title</Card.Title>
-                        <Card.Text>
-                            This is a wider card with supporting text below as a natural lead-in to
-                            additional content. This content is a little bit longer.
-                        </Card.Text>
-                        </Card.Body>
-                        <Card.Footer>
-                        <small className="text-muted">Created by @Username</small>
-                        </Card.Footer>
-                        <Button variant="info" size="sm" block className="mb-2">Enroll</Button>
-                    </Card>
-                    <Card>
-                        <Card.Img variant="top" src="holder.js/100px160" />
-                        <Card.Body>
-                        <Card.Title>Topic title</Card.Title>
-                        <Card.Text>
-                            This card has supporting text below as a natural lead-in to additional
-                            content.
-                        </Card.Text>
-                        </Card.Body>
-                        <Card.Footer>
-                        <small className="text-muted">Created by @Username</small>
-                        </Card.Footer>
-                        <Button variant="info" size="sm" block className="mb-2">Enroll</Button>
-                    </Card>
-                    <Card>
-                        <Card.Img variant="top" src="holder.js/100px160" />
-                        <Card.Body>
-                        <Card.Title>Topic title</Card.Title>
-                        <Card.Text>
-                            This is a wider card with supporting text below as a natural lead-in to
-                            additional content. This card has even longer content than the first to
-                            show that equal height action.
-                        </Card.Text>
-                        </Card.Body>
-                        <Card.Footer>
-                        <small className="text-muted">Created by @Username</small>
-                        </Card.Footer>
-                        <Button variant="info" size="sm" block className="mb-2">Enroll</Button>
-                    </Card>
-                </CardDeck> 
+
+                {topicsView}
             </div>
         )
     }

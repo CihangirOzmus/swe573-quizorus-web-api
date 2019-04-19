@@ -23,12 +23,12 @@ class CreateTopic extends Component {
         const newTopic = {
             title: this.state.title,
             description: this.state.description
-        }
+        };
 
         createTopic(newTopic)
         .then(response => {
             toast.notify("Topic created successfully.", { position : "top-right"});
-            this.props.history.push("/");
+            this.props.history.push("/glossary");
         }).catch(error => {
             if(error.status === 401) {
                 this.props.handleLogout();    

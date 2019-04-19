@@ -30,7 +30,6 @@ class Login extends Component {
     }
 
     validate() {
-
         return this.form.current.reportValidity();
     }
 
