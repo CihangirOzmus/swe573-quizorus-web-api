@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Card, Form, FormControl, Button, Row, Col} from 'react-bootstrap';
+import { FormControl, Button, Row, InputGroup } from 'react-bootstrap';
 import { withRouter } from 'react-router-dom';
 import {API_BASE_URL, TOPIC_LIST_SIZE} from '../constants';
 import './Glossary.css';
@@ -16,10 +16,12 @@ class Glossary extends Component {
             totalElements: 0,
             totalPages: 0,
             last: true,
-            isLoading: false
+            isLoading: false,
+            filter: ''
         };
         this.loadTopicList = this.loadTopicList.bind(this);
         this.handleLoadMore = this.handleLoadMore.bind(this);
+        this.handleFilter = this.handleFilter.bind(this);
     }
 
     loadTopicList(page, size=TOPIC_LIST_SIZE){
@@ -27,7 +29,10 @@ class Glossary extends Component {
         const topics = this.state.topics.slice();
         let url = API_BASE_URL + "/topics?page=" + page + "&size=" + size;
         axios.get(url).then(res => {
-            console.log(res.data)
+            console.log("===>>>");
+            console.log(res.data);
+            console.log("===>>>");
+
             this.setState({
                 topics: topics.concat(res.data.content),
                 page: res.data.page,
@@ -52,11 +57,18 @@ class Glossary extends Component {
         this.loadTopicList(this.state.page + 1);
     }
 
+    handleFilter(event){
+        let filterText = event.target.value.toLowerCase().trim();
+        if (filterText){
+            this.setState({filterText});
+        }
+    }
+
     render(){
         if (this.state.isLoading) {
             return <h1>isLoading!...</h1>
         }
-
+        console.log(this.state.filterText);
         const topics = this.state.topics;
         const topicsView = topics.map((topic, topicIndex) => {
             return (
@@ -64,7 +76,7 @@ class Glossary extends Component {
                     <div className="card mb-3" style={{minWidth: "100%"}}>
                         <div className="row no-gutters align-items-center">
                             <div className="col-md-4">
-                                <img src="https://via.placeholder.com/200x200" className="rounded"></img>
+                                <img src={"https://via.placeholder.com/200x200"} className="rounded" alt={topic.title}/>
                             </div>
                             <div className="col-md-8">
                                 <div className="card-body">
@@ -89,11 +101,13 @@ class Glossary extends Component {
 
         return (
             <div>
-                <Form inline className="row justify-content-center m-5">
-                    <FormControl type="text" placeholder="Search" className="mr-sm-2" />
-                    <Button variant="outline-info">Search</Button>
-                </Form>
-
+                <div className="row justify-content-center m-5">
+                <InputGroup className="m-5 w-50">
+                    <FormControl onChange={this.handleFilter}
+                        placeholder="Search"
+                    />
+                </InputGroup>
+                </div>
                 {topicsView}
             </div>
         )
