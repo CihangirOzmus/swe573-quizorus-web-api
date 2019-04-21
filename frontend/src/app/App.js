@@ -86,7 +86,7 @@ class App extends Component {
 
                         <Route exact path="/" component={Home}></Route>
 
-                        <Route exact path="/glossary" component={Glossary}></Route>
+                        <Route path="/glossary" component={Glossary}></Route>
 
                         <Route path="/login" 
                             render={(props) => <Login 
