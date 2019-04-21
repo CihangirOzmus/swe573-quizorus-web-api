@@ -45,9 +45,9 @@ class Login extends Component {
                     this.props.onLogin();
                 }).catch(error => {
                 if(error.status === 401) {
-                    toast.notify('Your Username or Password is incorrect. Please try again!', { position : "top-right"});
+                    toast.notify('Your Username or Password is incorrect. Please try again!', { position : "bottom-right"});
                 } else {
-                    toast.notify('Sorry! Something went wrong. Please try again!', { position : "top-right"});
+                    toast.notify('Sorry! Something went wrong. Please try again!', { position : "bottom-right"});
                 }
             });
         }

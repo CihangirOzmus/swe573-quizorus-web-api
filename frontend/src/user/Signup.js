@@ -61,10 +61,10 @@ class Signup extends Component {
 
         signup(signupRequest)
             .then(response => {
-                toast.notify("Thank you! You're successfully registered. Please Login to continue!", { position : "top-right"});
+                toast.notify("Thank you! You're successfully registered. Please Login to continue!", { position : "bottom-right"});
                 this.props.history.push("/login");
             }).catch(error => {
-            toast.notify('Sorry! Something went wrong. Please try again!', { position : "top-right"});
+            toast.notify('Sorry! Something went wrong. Please try again!', { position : "bottom-right"});
         });
     }
 
