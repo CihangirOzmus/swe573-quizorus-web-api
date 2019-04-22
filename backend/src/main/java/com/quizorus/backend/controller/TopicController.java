@@ -65,4 +65,12 @@ public class TopicController {
         return topicService.getTopicById(topicId, currentUser);
     }
 
+    @GetMapping("/{username}")
+    public PagedResponse<TopicResponse> getTopicsByUsername(@PathVariable String username,
+                                                  @CurrentUser UserPrincipal currentUser,
+                                                  @RequestParam(value = "page", defaultValue = AppConstants.DEFAULT_PAGE_NUMBER) int page,
+                                                  @RequestParam(value = "size", defaultValue = AppConstants.DEFAULT_PAGE_SIZE) int size){
+        return topicService.getTopicsCreatedBy(username, currentUser, page, size);
+    }
+
 }

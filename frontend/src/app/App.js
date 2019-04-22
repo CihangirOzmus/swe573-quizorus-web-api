@@ -80,9 +80,10 @@ class App extends Component {
 
         return (
             <div className="App">
-                <AppHeader isAuthenticated={this.state.isAuthenticated}
-                           currentUser={this.state.currentUser}
-                           onLogout={this.handleLogout}/>
+                <AppHeader
+                   isAuthenticated={this.state.isAuthenticated}
+                   currentUser={this.state.currentUser}
+                   onLogout={this.handleLogout}/>
 
                 <div className="container">
                     <Switch>
@@ -109,6 +110,7 @@ class App extends Component {
                         <PrivateRoute
                             path="/:username/topics/created"
                             authenticated={this.state.isAuthenticated}
+                            currentUser={this.state.currentUser}
                             component={UserCreatedTopicList}
                         >
                         </PrivateRoute>
