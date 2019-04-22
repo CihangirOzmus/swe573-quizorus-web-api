@@ -69,7 +69,6 @@ class CreateTopic extends Component {
                 axios.get(url)
                     .then(response => {
                         if (response.data.search.length > 0){
-                            console.log(response.data.search);
                             this.setState({wikiDataSearch : response.data.search})
                             toast.notify("Found in WikiData!", { position : "bottom-right"})
                         } else {

@@ -25,14 +25,9 @@ class Glossary extends Component {
     }
 
     loadTopicList(page, size=TOPIC_LIST_SIZE){
-        console.log("topics loaded!..")
         const topics = this.state.topics.slice();
         let url = API_BASE_URL + "/topics?page=" + page + "&size=" + size;
         axios.get(url).then(res => {
-            console.log("===>>>");
-            console.log(res.data);
-            console.log("===>>>");
-
             this.setState({
                 topics: topics.concat(res.data.content),
                 page: res.data.page,
@@ -68,7 +63,6 @@ class Glossary extends Component {
         if (this.state.isLoading) {
             return <h1>isLoading!...</h1>
         }
-        console.log(this.state.filterText);
         const topics = this.state.topics;
 
         const topicsView = topics.map((topic, topicIndex) => {
