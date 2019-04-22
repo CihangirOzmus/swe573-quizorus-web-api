@@ -1,6 +1,7 @@
 package com.quizorus.backend.payload;
 
 import java.time.Instant;
+import java.util.ArrayList;
 
 public class TopicResponse {
 
@@ -9,6 +10,15 @@ public class TopicResponse {
     private String description;
     private UserSummary createdBy;
     private Instant creationDateTime;
+    private ArrayList<String> wikiData;
+
+    public ArrayList<String> getWikiData() {
+        return wikiData;
+    }
+
+    public void setWikiData(ArrayList<String> wikiData) {
+        this.wikiData = wikiData;
+    }
 
     public Long getId() {
         return id;

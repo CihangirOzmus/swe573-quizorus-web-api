@@ -70,6 +70,7 @@ class Glossary extends Component {
         }
         console.log(this.state.filterText);
         const topics = this.state.topics;
+
         const topicsView = topics.map((topic, topicIndex) => {
             return (
                 <Row className="justify-content-center mb-1" key={topicIndex}>
@@ -82,6 +83,7 @@ class Glossary extends Component {
                                 <div className="card-body">
                                     <h5 className="card-title text-info text-justify">{topic.title}</h5>
                                     <p className="card-text text-justify">{topic.description}</p>
+                                    <p className="card-text text-justify text-danger">{topic.wikiData}</p>
                                     <div className="card-footer text-muted border">
                                         <p>
                                             <span className="badge badge-success">3x</span> Learning Path {' '}
@@ -95,9 +97,10 @@ class Glossary extends Component {
                         </div>
                     </div>
                 </Row>
-
             )
         });
+
+
 
         return (
             <div>

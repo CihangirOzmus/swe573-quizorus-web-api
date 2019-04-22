@@ -27,18 +27,12 @@ class CreateTopic extends Component {
 
     handleSubmit(event) {
         event.preventDefault();
-        const newTopic = {
-            title: this.state.title,
-            description: this.state.description
-        };
 
-        // will used for wikili topic
-        const newTopic1 = {
+        const newTopic = {
             title: this.state.title,
             description: this.state.description,
             wikiData: this.state.wikiData
         };
-        console.log(newTopic1);
 
         createTopic(newTopic)
         .then(response => {
