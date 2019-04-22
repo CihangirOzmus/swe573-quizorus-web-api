@@ -14,6 +14,9 @@ import NotFound from '../common/NotFound';
 import PrivateRoute from '../common/PrivateRoute';
 import toast from 'toasted-notes'
 import 'toasted-notes/src/styles.css';
+import UserCreatedTopicList from "../topic/UserCreatedTopicList";
+import UserEnrolledTopicList from "../topic/UserEnrolledTopicList";
+import UserProfile from "../user/UserProfile";
 
 class App extends Component {
     constructor(props) {
@@ -96,11 +99,31 @@ class App extends Component {
 
                         <Route path="/signup" component={Signup}></Route>
 
+                        <PrivateRoute
+                            exact path="/:username"
+                            authenticated={this.state.isAuthenticated}
+                            component={UserProfile}
+                        >
+                        </PrivateRoute>
+
+                        <PrivateRoute
+                            path="/:username/topics/created"
+                            authenticated={this.state.isAuthenticated}
+                            component={UserCreatedTopicList}
+                        >
+                        </PrivateRoute>
+
+                        <PrivateRoute
+                            path="/:username/topics/enrolled"
+                            authenticated={this.state.isAuthenticated}
+                            component={UserEnrolledTopicList}
+                        >
+                        </PrivateRoute>
+
                         <PrivateRoute 
                             authenticated={this.state.isAuthenticated} 
                             path="/topic/new"
                             component={CreateTopic}
-                            handleLogout={this.handleLogout} 
                         ></PrivateRoute>
 
                         <Route component={NotFound}></Route>

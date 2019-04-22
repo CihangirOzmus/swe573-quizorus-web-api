@@ -80,8 +80,8 @@ class Glossary extends Component {
                                     <p className="card-text text-justify text-danger">{topic.wikiData}</p>
                                     <div className="card-footer text-muted border">
                                         <p>
-                                            <span className="badge badge-success">3x</span> Learning Path {' '}
-                                            <span className="badge badge-warning">12x</span> Questions {' '}
+                                            <span className="badge badge-success">??</span> Learning Path {' '}
+                                            <span className="badge badge-warning">??</span> Questions {' '}
                                             <span className="badge badge-light">Created by</span> @{topic.createdBy.username} {' '}
                                         </p>
                                         <Button variant="info" block>Enroll</Button>
