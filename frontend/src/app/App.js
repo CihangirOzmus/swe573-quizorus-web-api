@@ -98,7 +98,7 @@ class App extends Component {
 
                         <PrivateRoute 
                             authenticated={this.state.isAuthenticated} 
-                            path="/createtopic" 
+                            path="/topic/new"
                             component={CreateTopic}
                             handleLogout={this.handleLogout} 
                         ></PrivateRoute>

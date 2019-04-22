@@ -33,7 +33,7 @@ class AppHeader extends Component {
             menuItems =
                 <Nav className="ml-auto mr-5">
                     <Nav.Link className="mr-2" as={Link} to="/glossary">Glossary</Nav.Link>
-                    <Nav.Link as={Link} className="mr-2" to="/createtopic">Create Topic</Nav.Link>
+                    <Nav.Link as={Link} className="mr-2" to="/topic/new">Create Topic</Nav.Link>
                     <NavDropdown title={this.props.currentUser.username} id="basic-nav-dropdown">
                         <NavDropdown.Item as={Link} to="/">Profile</NavDropdown.Item>
                         <NavDropdown.Item as={Link} to="/">Enrolled Topics</NavDropdown.Item>
