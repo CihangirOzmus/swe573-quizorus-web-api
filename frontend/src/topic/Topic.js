@@ -36,7 +36,6 @@ class Topic extends Component{
                         <h1>{this.state.topic.title}</h1>
                         <h3>{this.state.topic.description}</h3>
                         <Button variant="outline-info">Add Learning Path</Button>
-                        <Button variant="outline-info">Delete Topic</Button>
                     </Container>
                 </Jumbotron>
             </React.Fragment>
