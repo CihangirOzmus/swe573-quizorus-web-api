@@ -103,6 +103,7 @@ class App extends Component {
                         <PrivateRoute
                             exact path="/:username"
                             authenticated={this.state.isAuthenticated}
+                            currentUser={this.state.currentUser}
                             component={UserProfile}
                         >
                         </PrivateRoute>
@@ -118,6 +119,7 @@ class App extends Component {
                         <PrivateRoute
                             path="/:username/topics/enrolled"
                             authenticated={this.state.isAuthenticated}
+                            currentUser={this.state.currentUser}
                             component={UserEnrolledTopicList}
                         >
                         </PrivateRoute>

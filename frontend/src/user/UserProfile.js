@@ -3,7 +3,7 @@ import React, {Component} from 'react';
 class UserProfile extends Component{
     render() {
         return(
-            <h1 className="text-danger">User Profile</h1>
+            <h1 className="text-danger">@{this.props.currentUser.username} Profile</h1>
         )
     }
 }
