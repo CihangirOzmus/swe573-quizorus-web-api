@@ -100,13 +100,11 @@ public class TopicService {
 
     public TopicResponse getTopicById(Long topicId, UserPrincipal currentUser) {
         Topic topic = topicRepository.findById(topicId).orElseThrow(
-                () -> new ResourceNotFoundException("Poll", "id", topicId));
-
+                () -> new ResourceNotFoundException("Topic", "id", topicId));
 
         // Retrieve topic creator details
         User creator = userRepository.findById(topic.getCreatedBy())
                 .orElseThrow(() -> new ResourceNotFoundException("User", "id", topic.getCreatedBy()));
-
 
         return ModelMapper.mapTopicToTopicResponse(topic, creator);
     }

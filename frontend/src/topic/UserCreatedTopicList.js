@@ -24,6 +24,7 @@ class UserCreatedTopicList extends Component{
         const username = this.props.currentUser.username;
         const topics = this.state.topics.slice();
         let url = API_BASE_URL + `/users/${username}/topics/?page=${page}&size=${size}`;
+        console.log(url);
 
         axios.get(url).then(res => {
             this.setState({

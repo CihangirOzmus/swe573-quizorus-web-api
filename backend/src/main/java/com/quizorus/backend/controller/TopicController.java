@@ -60,7 +60,7 @@ public class TopicController {
 
     }
 
-    @GetMapping("/{topicId}")
+    @GetMapping("/topic/{topicId}")
     public TopicResponse getTopicById(@CurrentUser UserPrincipal currentUser, @PathVariable Long topicId){
         return topicService.getTopicById(topicId, currentUser);
     }
