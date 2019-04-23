@@ -17,6 +17,7 @@ import 'toasted-notes/src/styles.css';
 import UserCreatedTopicList from "../topic/UserCreatedTopicList";
 import UserEnrolledTopicList from "../topic/UserEnrolledTopicList";
 import UserProfile from "../user/UserProfile";
+import Topic from "../topic/Topic";
 
 class App extends Component {
     constructor(props) {
@@ -127,7 +128,14 @@ class App extends Component {
                         <PrivateRoute 
                             authenticated={this.state.isAuthenticated} 
                             path="/topic/new"
+                            currentUser={this.state.currentUser}
                             component={CreateTopic}
+                        ></PrivateRoute>
+
+                        <PrivateRoute
+                            authenticated={this.state.isAuthenticated}
+                            path="/topic/:topicId"
+                            component={Topic}
                         ></PrivateRoute>
 
                         <Route component={NotFound}></Route>

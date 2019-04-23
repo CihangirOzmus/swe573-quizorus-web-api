@@ -37,7 +37,7 @@ class CreateTopic extends Component {
         createTopic(newTopic)
         .then(response => {
             toast.notify("Topic created successfully.", { position : "bottom-right"});
-            this.props.history.push("/glossary");
+            this.props.history.push(`/${this.props.currentUser.username}/topics/created`);
         }).catch(error => {
             if(error.status === 401) {
                 this.props.handleLogout();    
