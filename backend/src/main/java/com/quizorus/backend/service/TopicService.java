@@ -109,8 +109,13 @@ public class TopicService {
         return ModelMapper.mapTopicToTopicResponse(topic, creator);
     }
 
-    public void deleteTopicById(Long topicId, UserPrincipal currentUser){
-        topicRepository.deleteById(topicId);
+    public boolean deleteTopicById(Long topicId, UserPrincipal currentUser){
+        Topic topic = topicRepository.findById(topicId).orElse(null);
+        if (topic != null && currentUser.getId().equals(topic.getCreatedBy())){
+            topicRepository.deleteById(topicId);
+            return true;
+        }
+        return false;
     }
 
     private void validatePageNumberAndSize(int page, int size) {

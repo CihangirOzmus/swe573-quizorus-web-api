@@ -67,8 +67,11 @@ public class TopicController {
 
     @DeleteMapping("/topic/{topicId}")
     public ResponseEntity<ApiResponse> deleteTopicById(@CurrentUser UserPrincipal currentUser, @PathVariable Long topicId){
-        topicService.deleteTopicById(topicId, currentUser);
-        return ResponseEntity.ok().body(new ApiResponse(true, "Topic deleted successfully"));
+        boolean result = topicService.deleteTopicById(topicId, currentUser);
+        if (result){
+            return ResponseEntity.ok().body(new ApiResponse(true, "Topic deleted successfully"));
+        }
+        return ResponseEntity.badRequest().body(new ApiResponse(false, "Topic can be deleted by its owner"));
     }
 
     @GetMapping("/{username}")
