@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {API_BASE_URL} from "../constants";
+import {ACCESS_TOKEN, API_BASE_URL} from "../constants";
 import axios from "axios";
 import {Button, Container, Jumbotron} from "react-bootstrap";
 
@@ -14,13 +14,19 @@ class Topic extends Component{
 
     loadTopicById(){
         let url = API_BASE_URL + `/topics/topic/${this.props.match.params.topicId}`;
-        axios.get(url).then(res => {
-            console.log(res.data);
-            this.setState({topic : res.data})
 
-        }).catch(err => {
-            this.setState({isLoading: false})
-        });
+        const options = {
+            method: 'GET',
+            headers: { 'content-type': 'application/json', 'Authorization' : 'Bearer ' + localStorage.getItem(ACCESS_TOKEN)},
+            url
+        };
+
+        axios(options)
+            .then(res => {
+                this.setState({topic : res.data})
+            }).catch(err => {
+                this.setState({isLoading: false})
+            });
     }
 
     componentDidMount() {

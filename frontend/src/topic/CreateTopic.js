@@ -75,7 +75,7 @@ class CreateTopic extends Component {
                             toast.notify("Keyword can not found!", { position : "bottom-right"});
                         }
                     })
-            }, 2000)
+            }, 1000)
         } else {
             this.setState({wikiDataSearch : []})
         }

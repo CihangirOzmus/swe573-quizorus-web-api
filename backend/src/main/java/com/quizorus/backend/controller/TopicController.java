@@ -65,6 +65,12 @@ public class TopicController {
         return topicService.getTopicById(topicId, currentUser);
     }
 
+    @DeleteMapping("/topic/{topicId}")
+    public ResponseEntity<ApiResponse> deleteTopicById(@CurrentUser UserPrincipal currentUser, @PathVariable Long topicId){
+        topicService.deleteTopicById(topicId, currentUser);
+        return ResponseEntity.ok().body(new ApiResponse(true, "Topic deleted successfully"));
+    }
+
     @GetMapping("/{username}")
     public PagedResponse<TopicResponse> getTopicsByUsername(@PathVariable String username,
                                                   @CurrentUser UserPrincipal currentUser,

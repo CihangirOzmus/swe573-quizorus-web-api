@@ -109,6 +109,10 @@ public class TopicService {
         return ModelMapper.mapTopicToTopicResponse(topic, creator);
     }
 
+    public void deleteTopicById(Long topicId, UserPrincipal currentUser){
+        topicRepository.deleteById(topicId);
+    }
+
     private void validatePageNumberAndSize(int page, int size) {
         if(page < 0) {
             throw new BadRequestException("Page number cannot be less than zero.");
@@ -132,5 +136,7 @@ public class TopicService {
 
         return creatorMap;
     }
+
+
 
 }

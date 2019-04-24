@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
-import {API_BASE_URL, TOPIC_LIST_SIZE} from "../constants";
+import {ACCESS_TOKEN, API_BASE_URL, TOPIC_LIST_SIZE} from "../constants";
 import axios from "axios";
-import {Badge, Table} from "react-bootstrap";
+import {Badge, Button, Table} from "react-bootstrap";
 import {Link} from "react-router-dom";
 
 class UserCreatedTopicList extends Component{
@@ -18,6 +18,7 @@ class UserCreatedTopicList extends Component{
         };
         this.loadUserCreatedTopics = this.loadUserCreatedTopics.bind(this);
         this.handleLoadMore = this.handleLoadMore.bind(this);
+        this.handleDeleteTopicById = this.handleDeleteTopicById.bind(this);
     }
 
     loadUserCreatedTopics(page, size=TOPIC_LIST_SIZE){
@@ -46,6 +47,19 @@ class UserCreatedTopicList extends Component{
         this.loadTopicList(this.state.page + 1);
     }
 
+    handleDeleteTopicById(topicIdToDelete){
+        console.log("topic deleted");
+        let url = API_BASE_URL + `/topics/topic/${topicIdToDelete}`;
+
+        const options = {
+            method: 'DELETE',
+            headers: { 'content-type': 'application/json', 'Authorization' : 'Bearer ' + localStorage.getItem(ACCESS_TOKEN)},
+            url
+        };
+
+        axios(options);
+    }
+
     componentDidMount() {
         this.loadUserCreatedTopics(this.state.page, this.state.size)
     }
@@ -63,7 +77,10 @@ class UserCreatedTopicList extends Component{
                     <td>{topic.description}</td>
                     <td>???</td>
                     <td>???</td>
-                    <td><Link to={`/topic/${topic.id}`}>Details</Link></td>
+                    <td>
+                        <Link className="btn btn-outline-info" to={`/topic/${topic.id}`}>Details</Link>
+                        <Button className="ml-2" variant="outline-danger" onClick={() => this.handleDeleteTopicById(topic.id)}>Delete</Button>
+                    </td>
                 </tr>
             )
         });
