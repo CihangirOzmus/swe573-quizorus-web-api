@@ -78,9 +78,11 @@ class UserCreatedTopicList extends Component{
                     <td>{topicIndex+1 === 1 ? <Badge variant="success">New</Badge> : topicIndex + 1}</td>
                     <td>{topic.title}</td>
                     <td>{topic.description}</td>
-                    <td>{topic.wikiData.map((wiki) => {
-                        return <a href={wiki} target="_blank" rel="noopener noreferrer" className="badge badge-pill badge-info">{wiki.substring(wiki.indexOf("Q"), wiki.length)}</a>
-                    })}</td>
+                    <td>
+                        {topic.wikiData.map((wiki, wikiIndex) => {
+                            return <a key={wikiIndex} href={wiki} target="_blank" rel="noopener noreferrer" className="badge badge-pill badge-info">{wiki.substring(wiki.indexOf("Q"), wiki.length)}</a>
+                        })}
+                    </td>
                     <td>???</td>
                     <td>???</td>
                     <td>

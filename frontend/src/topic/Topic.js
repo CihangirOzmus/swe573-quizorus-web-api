@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {ACCESS_TOKEN, API_BASE_URL} from "../constants";
 import axios from "axios";
-import {Button, Container, Jumbotron} from "react-bootstrap";
+import {Button, Jumbotron} from "react-bootstrap";
 
 class Topic extends Component{
     constructor(props){
@@ -35,14 +35,17 @@ class Topic extends Component{
 
 
     render() {
+        const topic = this.state.topic;
         return(
             <React.Fragment>
-                <Jumbotron fluid>
-                    <Container>
-                        <h1>{this.state.topic.title}</h1>
-                        <h3>{this.state.topic.description}</h3>
-                        <Button variant="outline-info">Add Learning Path</Button>
-                    </Container>
+                <Jumbotron>
+                    <h1 className="font-weight-light">{topic.title}</h1>
+                    <p className="font-italic">
+                        {topic.description}
+                    </p>
+                    <p>
+                        <Button variant="info">Add Learning Path</Button>
+                    </p>
                 </Jumbotron>
             </React.Fragment>
         )

@@ -76,8 +76,8 @@ class Glossary extends Component {
                                     <h5 className="card-title text-info text-justify">{topic.title}</h5>
                                     <p className="card-text text-justify">{topic.description}</p>
                                     <p className="card-text text-justify">Tags:
-                                        {topic.wikiData.map((wiki) => {
-                                            return <a href={wiki} target="_blank" rel="noopener noreferrer" className="badge badge-pill badge-info">{wiki.substring(wiki.indexOf("Q"), wiki.length)}</a>
+                                        {topic.wikiData.map((wiki, wikiIndex) => {
+                                            return <a key={wikiIndex} href={wiki} target="_blank" rel="noopener noreferrer" className="badge badge-pill badge-info">{wiki.substring(wiki.indexOf("Q"), wiki.length)}</a>
                                         })}
                                     </p>
                                     <div className="card-footer text-muted border">
