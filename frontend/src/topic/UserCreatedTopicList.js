@@ -23,13 +23,12 @@ class UserCreatedTopicList extends Component{
 
     loadUserCreatedTopics(page, size=TOPIC_LIST_SIZE){
         const username = this.props.currentUser.username;
-        const topics = this.state.topics.slice();
         let url = API_BASE_URL + `/users/${username}/topics/?page=${page}&size=${size}`;
         console.log(url);
 
         axios.get(url).then(res => {
             this.setState({
-                topics: topics.concat(res.data.content),
+                topics: res.data.content,
                 page: res.data.page,
                 size: res.data.size,
                 totalElements: res.data.totalElements,
@@ -57,7 +56,14 @@ class UserCreatedTopicList extends Component{
             url
         };
 
-        axios(options);
+        axios(options)
+            .then(res => {
+                console.log(res)
+                this.loadUserCreatedTopics(this.state.page, this.state.size)
+            }).catch(err => {
+                console.log(err)
+        });
+
     }
 
     componentDidMount() {

@@ -3,7 +3,6 @@ import { FormControl, Button, Row, InputGroup } from 'react-bootstrap';
 import { withRouter } from 'react-router-dom';
 import {API_BASE_URL, TOPIC_LIST_SIZE} from '../constants';
 import './Glossary.css';
-
 import axios from 'axios';
 
 class Glossary extends Component {
@@ -17,7 +16,7 @@ class Glossary extends Component {
             totalPages: 0,
             last: true,
             isLoading: false,
-            filter: ''
+            filterText: ''
         };
         this.loadTopicList = this.loadTopicList.bind(this);
         this.handleLoadMore = this.handleLoadMore.bind(this);
@@ -25,11 +24,10 @@ class Glossary extends Component {
     }
 
     loadTopicList(page, size=TOPIC_LIST_SIZE){
-        const topics = this.state.topics.slice();
         let url = API_BASE_URL + "/topics?page=" + page + "&size=" + size;
         axios.get(url).then(res => {
             this.setState({
-                topics: topics.concat(res.data.content),
+                topics: res.data.content,
                 page: res.data.page,
                 size: res.data.size,
                 totalElements: res.data.totalElements,
@@ -54,9 +52,12 @@ class Glossary extends Component {
 
     handleFilter(event){
         let filterText = event.target.value.toLowerCase().trim();
-        if (filterText){
-            this.setState({filterText});
-        }
+
+        this.setState((prevState) => {
+           return {
+               topics : prevState.topics.filter(topic => topic.title.toLowerCase().indexOf(filterText) > -1)
+           }
+        });
     }
 
     render(){
@@ -103,6 +104,9 @@ class Glossary extends Component {
                     <FormControl onChange={this.handleFilter}
                         placeholder="Search"
                     />
+                    <InputGroup.Append>
+                        <Button onClick={() => {this.loadTopicList(this.state.page, this.state.size)}} variant="outline-info">Reset</Button>
+                    </InputGroup.Append>
                 </InputGroup>
                 </div>
                 {topicsView}
