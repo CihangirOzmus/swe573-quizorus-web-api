@@ -62,7 +62,6 @@ class CreateTopic extends Component {
         clearTimeout(this.timer);
 
         const value = event.target.value;
-
         if ( value !== ''){
             this.timer = setTimeout(() => {
                 const url = wdk.searchEntities(value, 'en', 5, 'json');
@@ -92,13 +91,14 @@ class CreateTopic extends Component {
         const wikidatas = this.state.wikiDataSearch;
         const wikidataResultList = wikidatas.map((wiki, wikiIndex) => {
             return (
+                // if the description is empty, empty row seen, try domates
                 <Row key={wikiIndex} className="border border-info p-1 m-1 text-left">
                     {wiki.description && (
                         <React.Fragment>
                             <Col md="1"><Form.Check onChange={this.handleSelect}
                                 type="checkbox"
                                 id="default-checkbox"
-                                value={wiki.id}
+                                value={wiki.concepturi}
                             /></Col>
                             <Col md="9"><Badge variant="secondary">Description: </Badge> {wiki.description}</Col>
                             <Col md="2"><Badge variant="secondary">Url: </Badge> <a href={wiki.concepturi} target="_blank" rel="noopener noreferrer">WikiData Page</a></Col>

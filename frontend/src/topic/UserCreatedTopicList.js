@@ -24,7 +24,6 @@ class UserCreatedTopicList extends Component{
     loadUserCreatedTopics(page, size=TOPIC_LIST_SIZE){
         const username = this.props.currentUser.username;
         let url = API_BASE_URL + `/users/${username}/topics/?page=${page}&size=${size}`;
-        console.log(url);
 
         axios.get(url).then(res => {
             this.setState({
@@ -47,7 +46,6 @@ class UserCreatedTopicList extends Component{
     }
 
     handleDeleteTopicById(topicIdToDelete){
-        console.log("topic deleted");
         let url = API_BASE_URL + `/topics/topic/${topicIdToDelete}`;
 
         const options = {
@@ -58,7 +56,6 @@ class UserCreatedTopicList extends Component{
 
         axios(options)
             .then(res => {
-                console.log(res)
                 this.loadUserCreatedTopics(this.state.page, this.state.size)
             }).catch(err => {
                 console.log(err)
@@ -81,6 +78,9 @@ class UserCreatedTopicList extends Component{
                     <td>{topicIndex+1 === 1 ? <Badge variant="success">New</Badge> : topicIndex + 1}</td>
                     <td>{topic.title}</td>
                     <td>{topic.description}</td>
+                    <td>{topic.wikiData.map((wiki) => {
+                        return <a href={wiki} target="_blank" rel="noopener noreferrer" className="badge badge-pill badge-info">{wiki.substring(wiki.indexOf("Q"), wiki.length)}</a>
+                    })}</td>
                     <td>???</td>
                     <td>???</td>
                     <td>
@@ -100,6 +100,7 @@ class UserCreatedTopicList extends Component{
                         <th>#</th>
                         <th>Title</th>
                         <th>Short Description</th>
+                        <th>Wikidata</th>
                         <th>#Learning Path</th>
                         <th>#Quiz</th>
                         <th>Action</th>

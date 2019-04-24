@@ -15,8 +15,7 @@ class Glossary extends Component {
             totalElements: 0,
             totalPages: 0,
             last: true,
-            isLoading: false,
-            filterText: ''
+            isLoading: false
         };
         this.loadTopicList = this.loadTopicList.bind(this);
         this.handleLoadMore = this.handleLoadMore.bind(this);
@@ -52,7 +51,6 @@ class Glossary extends Component {
 
     handleFilter(event){
         let filterText = event.target.value.toLowerCase().trim();
-
         this.setState((prevState) => {
            return {
                topics : prevState.topics.filter(topic => topic.title.toLowerCase().indexOf(filterText) > -1)
@@ -65,7 +63,6 @@ class Glossary extends Component {
             return <h1>isLoading!...</h1>
         }
         const topics = this.state.topics;
-
         const topicsView = topics.map((topic, topicIndex) => {
             return (
                 <Row className="justify-content-center mb-1" key={topicIndex}>
@@ -78,7 +75,11 @@ class Glossary extends Component {
                                 <div className="card-body">
                                     <h5 className="card-title text-info text-justify">{topic.title}</h5>
                                     <p className="card-text text-justify">{topic.description}</p>
-                                    <p className="card-text text-justify text-danger">{topic.wikiData}</p>
+                                    <p className="card-text text-justify">Tags:
+                                        {topic.wikiData.map((wiki) => {
+                                            return <a href={wiki} target="_blank" rel="noopener noreferrer" className="badge badge-pill badge-info">{wiki.substring(wiki.indexOf("Q"), wiki.length)}</a>
+                                        })}
+                                    </p>
                                     <div className="card-footer text-muted border">
                                         <p>
                                             <span className="badge badge-success">??</span> Learning Path {' '}
@@ -94,8 +95,6 @@ class Glossary extends Component {
                 </Row>
             )
         });
-
-
 
         return (
             <div>
