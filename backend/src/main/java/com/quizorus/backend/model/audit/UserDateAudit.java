@@ -19,9 +19,6 @@ public abstract class UserDateAudit extends DateAudit {
     @Column(updatable = false)
     private Long createdBy;
 
-    @LastModifiedBy
-    private Long updatedBy;
-
     public Long getCreatedBy() {
         return createdBy;
     }
@@ -30,11 +27,4 @@ public abstract class UserDateAudit extends DateAudit {
         this.createdBy = createdBy;
     }
 
-    public Long getUpdatedBy() {
-        return updatedBy;
-    }
-
-    public void setUpdatedBy(Long updatedBy) {
-        this.updatedBy = updatedBy;
-    }
 }
