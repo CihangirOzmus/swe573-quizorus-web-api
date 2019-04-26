@@ -29,6 +29,20 @@ public class Topic extends UserDateAudit {
     private ArrayList<String> wikiData;
 
     @Nullable
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "topic")
+    private List<Content> contentList = new ArrayList<>();
+
+    @Nullable
+    public List<Content> getContentList() {
+        return contentList;
+    }
+
+    public void setContentList(@Nullable List<Content> contentList) {
+        this.contentList = contentList;
+    }
+
+    @Nullable
+    @Lob
     public ArrayList<String> getWikiData() {
         return wikiData;
     }

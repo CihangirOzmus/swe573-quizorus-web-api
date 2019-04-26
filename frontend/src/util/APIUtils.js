@@ -3,7 +3,7 @@ import {API_BASE_URL, TOPIC_LIST_SIZE, ACCESS_TOKEN} from '../constants';
 const request = (options) => {
     const headers = new Headers({
         'Content-Type': 'application/json',
-    })
+    });
 
     if (localStorage.getItem(ACCESS_TOKEN)) {
         headers.append('Authorization', 'Bearer ' + localStorage.getItem(ACCESS_TOKEN))
@@ -38,6 +38,14 @@ export function createTopic(topicData) {
         url: API_BASE_URL + "/topics",
         method: 'POST',
         body: JSON.stringify(topicData)
+    });
+}
+
+export function createContent(contentData) {
+    return request({
+        url: API_BASE_URL + `/contents/`,
+        method: 'POST',
+        body: JSON.stringify(contentData)
     });
 }
 
