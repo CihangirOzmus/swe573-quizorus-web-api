@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import {ACCESS_TOKEN, API_BASE_URL} from "../constants";
 import axios from "axios";
-import {Button, Jumbotron} from "react-bootstrap";
+import {Jumbotron} from "react-bootstrap";
+import {Link} from "react-router-dom";
 
 class Topic extends Component{
     constructor(props){
@@ -44,7 +45,7 @@ class Topic extends Component{
                         {topic.description}
                     </p>
                     <p>
-                        <Button variant="info">Add Learning Path</Button>
+                        <Link className="btn btn-outline-info" to={`/topic/${topic.id}/content`}>Add Learning Path</Link>
                     </p>
                 </Jumbotron>
             </React.Fragment>
