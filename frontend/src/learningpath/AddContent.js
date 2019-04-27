@@ -1,9 +1,8 @@
 import React from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import {Button} from "react-bootstrap";
-import {ACCESS_TOKEN, API_BASE_URL} from "../constants";
-import axios from "axios";
 import {createContent} from "../util/APIUtils";
+import toast from "toasted-notes";
 
 const AddContent = (props) => (
     <div>
@@ -27,16 +26,18 @@ const AddContent = (props) => (
             onSubmit={(values, { setSubmitting }) => {
                 setTimeout(() => {
 
+                    let topicId = props.match.params.topicId;
                     const newContent = {
                         title: values.title,
                         text: values.text
                     };
 
-                    createContent(newContent)
+                    createContent(newContent, topicId)
                         .then(res => {
-                            console.log(res);
+                            toast.notify("Content created successfully.", { position : "bottom-right"});
+                            props.history.push(`/topic/${topicId}`);
                         }).catch(err => {
-                            console.log(err);
+                            toast.notify("Topic does not exist!", { position : "bottom-right"});
                     });
 
                     setSubmitting(false);

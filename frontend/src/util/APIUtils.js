@@ -41,9 +41,9 @@ export function createTopic(topicData) {
     });
 }
 
-export function createContent(contentData) {
+export function createContent(contentData, topicId) {
     return request({
-        url: API_BASE_URL + `/contents/`,
+        url: API_BASE_URL + `/contents/${topicId}`,
         method: 'POST',
         body: JSON.stringify(contentData)
     });

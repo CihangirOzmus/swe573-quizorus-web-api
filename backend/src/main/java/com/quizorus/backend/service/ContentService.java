@@ -1,21 +1,14 @@
 package com.quizorus.backend.service;
 
-import com.quizorus.backend.exception.ResourceNotFoundException;
 import com.quizorus.backend.model.Content;
-import com.quizorus.backend.model.Topic;
-import com.quizorus.backend.model.User;
-import com.quizorus.backend.payload.ApiResponse;
 import com.quizorus.backend.repository.ContentRepository;
 import com.quizorus.backend.repository.TopicRepository;
 import com.quizorus.backend.repository.UserRepository;
 import com.quizorus.backend.security.UserPrincipal;
-import jdk.nashorn.internal.ir.IfNode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Service
 public class ContentService {

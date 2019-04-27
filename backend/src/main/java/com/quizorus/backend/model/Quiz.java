@@ -11,6 +11,6 @@ public class Quiz {
 
     //private Question question;
 
-    @OneToOne
-    private Content content;
+//    @OneToOne
+//    private Content content;
 }

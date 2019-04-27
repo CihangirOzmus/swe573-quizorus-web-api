@@ -1,7 +1,6 @@
 package com.quizorus.backend.model;
 
 import com.quizorus.backend.model.audit.UserDateAudit;
-import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -23,9 +22,9 @@ public class Content extends UserDateAudit {
     @Size(max = 1000)
     private String text;
 
-    @Nullable
-    @OneToOne(cascade = CascadeType.ALL)
-    private Quiz quiz;
+//    @Nullable
+//    @OneToOne(cascade = CascadeType.ALL)
+//    private Quiz quiz;
 
     @ManyToOne
     private Topic topic;
@@ -62,12 +61,12 @@ public class Content extends UserDateAudit {
         this.text = text;
     }
 
-    @Nullable
-    public Quiz getQuiz() {
-        return quiz;
-    }
-
-    public void setQuiz(@Nullable Quiz quiz) {
-        this.quiz = quiz;
-    }
+//    @Nullable
+//    public Quiz getQuiz() {
+//        return quiz;
+//    }
+//
+//    public void setQuiz(@Nullable Quiz quiz) {
+//        this.quiz = quiz;
+//    }
 }
