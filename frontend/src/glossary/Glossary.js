@@ -25,7 +25,6 @@ class Glossary extends Component {
     loadTopicList(page, size=TOPIC_LIST_SIZE){
         let url = API_BASE_URL + "/topics?page=" + page + "&size=" + size;
         axios.get(url).then(res => {
-            console.log(res.data.content);
             this.setState({
                 topics: res.data.content,
                 page: res.data.page,
