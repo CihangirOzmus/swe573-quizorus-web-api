@@ -30,7 +30,7 @@ public class Topic extends UserDateAudit {
 
     @Nullable
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "topic")
-    private List<Content> contentList = new ArrayList<>();
+    private List<Content> contentList;
 
     @Nullable
     public List<Content> getContentList() {

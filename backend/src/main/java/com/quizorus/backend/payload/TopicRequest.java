@@ -1,10 +1,12 @@
 package com.quizorus.backend.payload;
 
+import com.quizorus.backend.model.Content;
 import org.springframework.lang.Nullable;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.util.ArrayList;
+import java.util.List;
 
 public class TopicRequest {
 
@@ -18,6 +20,18 @@ public class TopicRequest {
 
     @Nullable
     private ArrayList<String> wikiData;
+
+    @Nullable
+    private List<Content> contentList;
+
+    @Nullable
+    public List<Content> getContentList() {
+        return contentList;
+    }
+
+    public void setContentList(@Nullable List<Content> contentList) {
+        this.contentList = contentList;
+    }
 
     @Nullable
     public ArrayList<String> getWikiData() {
