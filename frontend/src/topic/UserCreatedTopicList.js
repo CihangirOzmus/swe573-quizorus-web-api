@@ -83,7 +83,7 @@ class UserCreatedTopicList extends Component{
                             return <a key={wikiIndex} href={wiki} target="_blank" rel="noopener noreferrer" className="badge badge-pill badge-info">{wiki.substring(wiki.indexOf("Q"), wiki.length)}</a>
                         })}
                     </td>
-                    <td>???</td>
+                    <td>{topic.contentList.length}</td>
                     <td>???</td>
                     <td>
                         <Link className="btn btn-outline-info" to={`/topic/${topic.id}`}>Details</Link>
@@ -104,7 +104,7 @@ class UserCreatedTopicList extends Component{
                         <th>Short Description</th>
                         <th>Wikidata</th>
                         <th>#Learning Path</th>
-                        <th>#Quiz</th>
+                        <th>#Question</th>
                         <th>Action</th>
                     </tr>
                     </thead>

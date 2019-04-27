@@ -1,5 +1,6 @@
 package com.quizorus.backend.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.quizorus.backend.model.audit.UserDateAudit;
 
 import javax.persistence.*;
@@ -26,6 +27,7 @@ public class Content extends UserDateAudit {
 //    @OneToOne(cascade = CascadeType.ALL)
 //    private Quiz quiz;
 
+    @JsonIgnore
     @ManyToOne
     private Topic topic;
 

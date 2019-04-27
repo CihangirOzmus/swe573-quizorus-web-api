@@ -58,7 +58,6 @@ public class TopicService {
             return ModelMapper.mapTopicToTopicResponse(topic, creatorMap.get(topic.getCreatedBy()));
         }).getContent();
 
-
         return new PagedResponse<>(topicResponses, topics.getNumber(),
                 topics.getSize(), topics.getTotalElements(), topics.getTotalPages(), topics.isLast());
     }

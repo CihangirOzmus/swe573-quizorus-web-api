@@ -14,6 +14,8 @@ public class ModelMapper {
         topicResponse.setDescription(topic.getDescription());
         topicResponse.setCreationDateTime(topic.getCreatedAt());
         topicResponse.setWikiData(topic.getWikiData());
+        System.out.println(topic.getContentList());
+        topicResponse.setContentList(topic.getContentList());
 
         UserSummary creatorSummary = new UserSummary(creator.getId(), creator.getUsername(), creator.getName());
         topicResponse.setCreatedBy(creatorSummary);
