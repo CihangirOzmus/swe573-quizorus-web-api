@@ -3,6 +3,7 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import {Button} from "react-bootstrap";
 import {createContent} from "../util/APIUtils";
 import toast from "toasted-notes";
+import EditorField from '../texteditor/EditorField'
 
 const AddContent = (props) => (
     <div>
@@ -57,7 +58,7 @@ const AddContent = (props) => (
                     <div className="form-group row">
                         <label htmlFor="contentText" className="col-sm-2 col-form-label">Content Text: </label>
                         <div className="col-sm-10">
-                            <Field name="text" component="textarea" rows="20" className="form-control" placeholder="content text"/>
+                            <Field name="text" component={EditorField} placeholder="Enter Content" row="20"/>
                             <ErrorMessage name="contentText" component="div" />
                         </div>
                     </div>

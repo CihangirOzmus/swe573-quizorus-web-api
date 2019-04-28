@@ -1,9 +1,11 @@
 import React, {Component} from 'react';
-import { FormControl, Button, Row, InputGroup } from 'react-bootstrap';
+import { Button, Row, InputGroup } from 'react-bootstrap';
 import { withRouter } from 'react-router-dom';
 import {API_BASE_URL, TOPIC_LIST_SIZE} from '../constants';
 import './Glossary.css';
 import axios from 'axios';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faHashtag } from '@fortawesome/free-solid-svg-icons'
 
 class Glossary extends Component {
     constructor(props){
@@ -15,11 +17,11 @@ class Glossary extends Component {
             totalElements: 0,
             totalPages: 0,
             last: true,
-            isLoading: false
+            isLoading: false,
+            input:''
         };
         this.loadTopicList = this.loadTopicList.bind(this);
         this.handleLoadMore = this.handleLoadMore.bind(this);
-        this.handleFilter = this.handleFilter.bind(this);
     }
 
     loadTopicList(page, size=TOPIC_LIST_SIZE){
@@ -50,13 +52,11 @@ class Glossary extends Component {
         this.loadTopicList(this.state.page + 1);
     }
 
-    handleFilter(event){
-        let filterText = event.target.value.toLowerCase().trim();
-        this.setState((prevState) => {
-           return {
-               topics : prevState.topics.filter(topic => topic.title.toLowerCase().indexOf(filterText) > -1)
-           }
-        });
+
+    onChangeHandler(e) {
+        this.setState({
+            input: e.target.value,
+        })
     }
 
     render(){
@@ -64,7 +64,7 @@ class Glossary extends Component {
             return <h1>isLoading!...</h1>
         }
         const topics = this.state.topics;
-        const topicsView = topics.map((topic, topicIndex) => {
+        const topicsView = topics.filter(topic => this.state.input === '' || topic.title.toLowerCase().indexOf(this.state.input) > -1).map((topic, topicIndex) => {
             return (
                 <Row className="justify-content-center mb-1" key={topicIndex}>
                     <div className="card mb-3" style={{minWidth: "100%"}}>
@@ -76,7 +76,7 @@ class Glossary extends Component {
                                 <div className="card-body">
                                     <h5 className="card-title text-info text-justify">{topic.title}</h5>
                                     <p className="card-text text-justify">{topic.description}</p>
-                                    <p className="card-text text-justify">Tags:
+                                    <p className="card-text text-justify">Tags<FontAwesomeIcon icon={faHashtag} />
                                         {topic.wikiData.map((wiki, wikiIndex) => {
                                             return <a key={wikiIndex} href={wiki} target="_blank" rel="noopener noreferrer" className="badge badge-pill badge-info">{wiki.substring(wiki.indexOf("Q"), wiki.length)}</a>
                                         })}
@@ -99,15 +99,13 @@ class Glossary extends Component {
 
         return (
             <div>
-                <div className="row justify-content-center m-5">
-                <InputGroup className="m-5 w-50">
-                    <FormControl onChange={this.handleFilter}
-                        placeholder="Search"
-                    />
-                    <InputGroup.Append>
-                        <Button onClick={() => {this.loadTopicList(this.state.page, this.state.size)}} variant="outline-info">Reset</Button>
-                    </InputGroup.Append>
-                </InputGroup>
+                <div className="row justify-content-center mt-5 mb-5">
+                    <InputGroup>
+                        <input
+                            value={this.state.input}
+                            placeholder="Search topics"
+                            className="form-control searchInput" type="text" onChange={this.onChangeHandler.bind(this)} />
+                    </InputGroup>
                 </div>
                 {topicsView}
             </div>

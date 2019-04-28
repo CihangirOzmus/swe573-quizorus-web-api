@@ -26,7 +26,7 @@ class App extends Component {
         this.state = {
             currentUser: null,
             isAuthenticated: false,
-            isLoading: false
+            isLoading: true
         };
         this.handleLogout = this.handleLogout.bind(this);
         this.loadCurrentUser = this.loadCurrentUser.bind(this);
@@ -78,79 +78,81 @@ class App extends Component {
     render() {
         if (this.state.isLoading) {
             return <h1>isLoading!...</h1>
+        }else{
+            return (
+                <div className="App">
+                    <AppHeader
+                        isAuthenticated={this.state.isAuthenticated}
+                        currentUser={this.state.currentUser}
+                        onLogout={this.handleLogout}/>
+
+                    <div className="container">
+                        <Switch>
+
+                            <Route exact path="/" component={Home}></Route>
+
+                            <Route path="/glossary" component={Glossary}></Route>
+
+                            <Route path="/login"
+                                   render={(props) => <Login
+                                       onLogin={this.handleLogin}
+                                       {...props} />}>
+                            </Route>
+
+                            <Route path="/signup" component={Signup}></Route>
+
+                            <PrivateRoute
+                                exact path="/:username"
+                                authenticated={this.state.isAuthenticated}
+                                currentUser={this.state.currentUser}
+                                component={UserProfile}
+                            >
+                            </PrivateRoute>
+
+                            <PrivateRoute
+                                path="/:username/topics/created"
+                                authenticated={this.state.isAuthenticated}
+                                currentUser={this.state.currentUser}
+                                component={UserCreatedTopicList}
+                            >
+                            </PrivateRoute>
+
+                            <PrivateRoute
+                                path="/:username/topics/enrolled"
+                                authenticated={this.state.isAuthenticated}
+                                currentUser={this.state.currentUser}
+                                component={UserEnrolledTopicList}
+                            >
+                            </PrivateRoute>
+
+                            <PrivateRoute
+                                authenticated={this.state.isAuthenticated}
+                                path="/topic/new"
+                                currentUser={this.state.currentUser}
+                                component={CreateTopic}
+                            ></PrivateRoute>
+
+                            <PrivateRoute
+                                authenticated={this.state.isAuthenticated}
+                                path="/topic/:topicId/content"
+                                component={AddContent}
+                            ></PrivateRoute>
+
+                            <PrivateRoute
+                                authenticated={this.state.isAuthenticated}
+                                path="/topic/:topicId"
+                                component={Topic}
+                            ></PrivateRoute>
+
+                            <Route component={NotFound}></Route>
+
+                        </Switch>
+                    </div>
+                </div>
+            );
         }
 
-        return (
-            <div className="App">
-                <AppHeader
-                   isAuthenticated={this.state.isAuthenticated}
-                   currentUser={this.state.currentUser}
-                   onLogout={this.handleLogout}/>
 
-                <div className="container">
-                    <Switch>
-
-                        <Route exact path="/" component={Home}></Route>
-
-                        <Route path="/glossary" component={Glossary}></Route>
-
-                        <Route path="/login" 
-                            render={(props) => <Login 
-                                onLogin={this.handleLogin} 
-                                {...props} />}>
-                        </Route>
-
-                        <Route path="/signup" component={Signup}></Route>
-
-                        <PrivateRoute
-                            exact path="/:username"
-                            authenticated={this.state.isAuthenticated}
-                            currentUser={this.state.currentUser}
-                            component={UserProfile}
-                        >
-                        </PrivateRoute>
-
-                        <PrivateRoute
-                            path="/:username/topics/created"
-                            authenticated={this.state.isAuthenticated}
-                            currentUser={this.state.currentUser}
-                            component={UserCreatedTopicList}
-                        >
-                        </PrivateRoute>
-
-                        <PrivateRoute
-                            path="/:username/topics/enrolled"
-                            authenticated={this.state.isAuthenticated}
-                            currentUser={this.state.currentUser}
-                            component={UserEnrolledTopicList}
-                        >
-                        </PrivateRoute>
-
-                        <PrivateRoute 
-                            authenticated={this.state.isAuthenticated} 
-                            path="/topic/new"
-                            currentUser={this.state.currentUser}
-                            component={CreateTopic}
-                        ></PrivateRoute>
-
-                        <PrivateRoute
-                            authenticated={this.state.isAuthenticated}
-                            path="/topic/:topicId/content"
-                            component={AddContent}
-                        ></PrivateRoute>
-
-                        <PrivateRoute
-                            authenticated={this.state.isAuthenticated}
-                            path="/topic/:topicId"
-                            component={Topic}
-                        ></PrivateRoute>
-
-                        <Route component={NotFound}></Route>
-
-                    </Switch>
-                </div>
-            </div>
-        );
     }
 }
 

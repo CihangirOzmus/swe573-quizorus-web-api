@@ -11,6 +11,7 @@ class Topic extends Component{
             topic: {
                 contentList:[]
             },
+            activeTab: '',
             isLoading: false
         };
         this.loadTopicById = this.loadTopicById.bind(this);
@@ -27,7 +28,7 @@ class Topic extends Component{
 
         axios(options)
             .then(res => {
-                this.setState({topic : res.data})
+                this.setState({topic : res.data, activeTab: res.data.contentList[0].id})
             }).catch(err => {
                 this.setState({isLoading: false})
             });
@@ -45,7 +46,6 @@ class Topic extends Component{
 
         const topic = this.state.topic;
         const contentList = this.state.topic.contentList;
-        console.log(contentList);
 
         const contentListLeftColumn = contentList.map((content, contentId) => {
             return (
@@ -58,7 +58,7 @@ class Topic extends Component{
         const contentListRightColumn = contentList.map((content, contentId) => {
             return (
                 <Tab.Pane key={contentId} eventKey={content.id}>
-                    <p>{content.text}</p>
+                    <div className="text-left" dangerouslySetInnerHTML={{ __html: content.text }} ></div>
                 </Tab.Pane>
             )
         });
@@ -74,21 +74,25 @@ class Topic extends Component{
                         <Link className="btn btn-outline-info" to={`/topic/${topic.id}/content`}>Add Learning Path</Link>
                     </p>
                 </Jumbotron>
+                {
+                    this.state.activeTab && (
+                        <Tab.Container id="list-group-tabs-example" defaultActiveKey={this.state.activeTab}>
+                            <Row>
+                                <Col sm={3}>
+                                    <ListGroup>
+                                        {contentListLeftColumn}
+                                    </ListGroup>
+                                </Col>
+                                <Col sm={9}>
+                                    <Tab.Content>
+                                        {contentListRightColumn}
+                                    </Tab.Content>
+                                </Col>
+                            </Row>
+                        </Tab.Container>
+                    )
+                }
 
-                <Tab.Container id="list-group-tabs-example" defaultActiveKey="0">
-                    <Row>
-                        <Col sm={3}>
-                            <ListGroup>
-                                {contentListLeftColumn}
-                            </ListGroup>
-                        </Col>
-                        <Col sm={9}>
-                            <Tab.Content>
-                                {contentListRightColumn}
-                            </Tab.Content>
-                        </Col>
-                    </Row>
-                </Tab.Container>
 
             </React.Fragment>
         )
