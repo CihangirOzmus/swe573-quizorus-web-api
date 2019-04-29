@@ -28,7 +28,12 @@ class Topic extends Component{
 
         axios(options)
             .then(res => {
-                this.setState({topic : res.data, activeTab: res.data.contentList[0].id})
+                if(res.data.contentList.length > 0){
+                    this.setState({topic : res.data, activeTab: res.data.contentList[0].id})
+                }else{
+                    this.setState({topic : res.data})
+                }
+
             }).catch(err => {
                 this.setState({isLoading: false})
             });

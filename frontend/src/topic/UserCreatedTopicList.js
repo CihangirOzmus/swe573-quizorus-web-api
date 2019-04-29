@@ -95,7 +95,7 @@ class UserCreatedTopicList extends Component{
 
         return(
             <div>
-                <h1 className="text-danger m-5">Created Topics by @{this.props.currentUser.username}</h1>
+                <h1 className="text-info m-5">Created Topics</h1>
                 <Table striped bordered hover>
                     <thead>
                     <tr>
