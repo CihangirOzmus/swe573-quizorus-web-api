@@ -14,6 +14,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -53,6 +54,18 @@ public class ContentController {
 
         return ResponseEntity.badRequest().body(new ApiResponse(false, "Topic does not exist"));
 
+    }
+
+    @DeleteMapping("/{contentId}")
+    @PreAuthorize("hasRole('USER')")
+    @Transactional
+    public ResponseEntity<ApiResponse> deleteContentById(@CurrentUser UserPrincipal currentUser, @PathVariable Long contentId){
+        boolean result = contentService.deleteContentById(contentId, currentUser);
+
+        if (result){
+            return ResponseEntity.ok().body(new ApiResponse(true, "Content deleted successfully"));
+        }
+        return ResponseEntity.badRequest().body(new ApiResponse(false, "Content can be deleted by its owner"));
     }
 
 }
