@@ -2,10 +2,12 @@ package com.quizorus.backend.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.quizorus.backend.model.audit.UserDateAudit;
+import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.util.List;
 
 @Entity
 @Table(name = "contents")
@@ -23,13 +25,22 @@ public class Content extends UserDateAudit {
     @Size(max = 1000)
     private String text;
 
-//    @Nullable
-//    @OneToOne(cascade = CascadeType.ALL)
-//    private Quiz quiz;
-
     @JsonIgnore
     @ManyToOne
     private Topic topic;
+
+    @Nullable
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "content")
+    private List<Question> questionList;
+
+    @Nullable
+    public List<Question> getQuestionList() {
+        return questionList;
+    }
+
+    public void setQuestionList(@Nullable List<Question> questionList) {
+        this.questionList = questionList;
+    }
 
     public Topic getTopic() {
         return topic;
@@ -63,12 +74,4 @@ public class Content extends UserDateAudit {
         this.text = text;
     }
 
-//    @Nullable
-//    public Quiz getQuiz() {
-//        return quiz;
-//    }
-//
-//    public void setQuiz(@Nullable Quiz quiz) {
-//        this.quiz = quiz;
-//    }
 }

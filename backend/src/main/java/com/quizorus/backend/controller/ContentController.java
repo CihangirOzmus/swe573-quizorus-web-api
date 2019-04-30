@@ -3,12 +3,10 @@ package com.quizorus.backend.controller;
 import com.quizorus.backend.model.Content;
 import com.quizorus.backend.model.Topic;
 import com.quizorus.backend.payload.ApiResponse;
-import com.quizorus.backend.repository.ContentRepository;
 import com.quizorus.backend.repository.TopicRepository;
 import com.quizorus.backend.security.CurrentUser;
 import com.quizorus.backend.security.UserPrincipal;
 import com.quizorus.backend.service.ContentService;
-import com.quizorus.backend.service.TopicService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,9 +39,9 @@ public class ContentController {
 
         if (topic != null && currentUser.getId().equals(topic.getCreatedBy())){
             content.setTopic(topic);
-            contentService.createContent(content);
             topic.getContentList().add(content);
             topicRepository.save(topic);
+
             URI location = ServletUriComponentsBuilder
                     .fromCurrentRequest().path("/{contentId}")
                     .buildAndExpand(content.getId()).toUri();

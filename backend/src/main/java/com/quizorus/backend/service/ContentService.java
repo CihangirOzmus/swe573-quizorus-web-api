@@ -32,7 +32,6 @@ public class ContentService {
         Content content = new Content();
         content.setTitle(contentRequest.getTitle());
         content.setText(contentRequest.getText());
-
         return contentRepository.save(content);
     }
 
