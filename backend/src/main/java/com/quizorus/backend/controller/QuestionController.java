@@ -51,8 +51,6 @@ public class QuestionController {
                     .fromCurrentRequest().path("/{questionId}")
                     .buildAndExpand(question.getId()).toUri();
 
-            System.out.println(location);
-
             return ResponseEntity.created(location)
                     .body(new ApiResponse(true, "Question created successfully"));
         }

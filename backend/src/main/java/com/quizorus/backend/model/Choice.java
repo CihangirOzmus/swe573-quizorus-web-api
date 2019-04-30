@@ -5,6 +5,7 @@ import com.quizorus.backend.model.audit.UserDateAudit;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Entity
@@ -19,7 +20,7 @@ public class Choice extends UserDateAudit {
     @Size(max = 255)
     private String text;
 
-    @NotBlank
+    @NotNull
     private Boolean isCorrect;
 
     @JsonIgnore

@@ -1,7 +1,6 @@
 package com.quizorus.backend.service;
 
 import com.quizorus.backend.model.Question;
-import com.quizorus.backend.repository.ContentRepository;
 import com.quizorus.backend.repository.QuestionRepository;
 import com.quizorus.backend.security.UserPrincipal;
 import org.slf4j.Logger;
@@ -17,7 +16,6 @@ public class QuestionService {
 
     private static final Logger logger = LoggerFactory.getLogger(QuestionService.class);
 
-
     public Question createQuestion(Question questionRequest) {
         Question question = new Question();
         question.setText(questionRequest.getText());
@@ -32,6 +30,5 @@ public class QuestionService {
         }
         return false;
     }
-
 
 }
