@@ -3,6 +3,7 @@ package com.quizorus.backend.service;
 import com.quizorus.backend.model.Question;
 import com.quizorus.backend.repository.ContentRepository;
 import com.quizorus.backend.repository.QuestionRepository;
+import com.quizorus.backend.security.UserPrincipal;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,15 @@ public class QuestionService {
         Question question = new Question();
         question.setText(questionRequest.getText());
         return questionRepository.save(question);
+    }
+
+    public boolean deleteQuestionById(Long questionId, UserPrincipal currentUser){
+        Question question = questionRepository.findById(questionId).orElse(null);
+        if (question != null && currentUser.getId().equals(question.getCreatedBy())){
+            questionRepository.deleteQuestionById(questionId);
+            return true;
+        }
+        return false;
     }
 
 

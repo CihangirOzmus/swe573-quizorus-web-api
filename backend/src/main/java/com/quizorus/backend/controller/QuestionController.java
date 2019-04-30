@@ -59,4 +59,15 @@ public class QuestionController {
 
         return ResponseEntity.badRequest().body(new ApiResponse(false, "Content does not exist"));
     }
+
+    @DeleteMapping("/{questionId}")
+    @PreAuthorize("hasRole('USER')")
+    @Transactional
+    public ResponseEntity<ApiResponse> deleteQuestionById(@CurrentUser UserPrincipal currentUser, @PathVariable Long questionId){
+        boolean result = questionService.deleteQuestionById(questionId, currentUser);
+        if (result){
+            return ResponseEntity.ok().body(new ApiResponse(true, "Question deleted successfully"));
+        }
+        return ResponseEntity.badRequest().body(new ApiResponse(false, "Question can be deleted by its owner"));
+    }
 }
