@@ -93,6 +93,7 @@ public class TopicService {
         topic.setTitle(topicRequest.getTitle());
         topic.setDescription(topicRequest.getDescription());
         topic.setWikiData(topicRequest.getWikiData());
+        topic.setImageUrl(topicRequest.getImageUrl());
 
         return topicRepository.save(topic);
     }

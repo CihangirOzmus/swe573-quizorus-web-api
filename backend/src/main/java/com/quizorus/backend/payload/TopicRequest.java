@@ -19,10 +19,22 @@ public class TopicRequest {
     private String description;
 
     @Nullable
+    private String imageUrl;
+
+    @Nullable
     private ArrayList<String> wikiData;
 
     @Nullable
     private List<Content> contentList;
+
+    @Nullable
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(@Nullable String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
 
     @Nullable
     public List<Content> getContentList() {

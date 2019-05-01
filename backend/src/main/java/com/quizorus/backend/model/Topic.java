@@ -26,11 +26,23 @@ public class Topic extends UserDateAudit {
     private String description;
 
     @Nullable
+    private String imageUrl;
+
+    @Nullable
     private ArrayList<String> wikiData;
 
     @Nullable
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "topic")
     private List<Content> contentList;
+
+    @Nullable
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(@Nullable String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
 
     @Nullable
     public List<Content> getContentList() {

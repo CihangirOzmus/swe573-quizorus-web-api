@@ -15,6 +15,15 @@ public class TopicResponse {
     private Instant creationDateTime;
     private ArrayList<String> wikiData;
     private List<Content> contentList;
+    private String imageUrl;
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
 
     public List<Content> getContentList() {
         return contentList;
