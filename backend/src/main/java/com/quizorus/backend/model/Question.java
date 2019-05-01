@@ -20,7 +20,7 @@ public class Question extends UserDateAudit {
     @Size(max = 255)
     private String text;
 
-    @OneToMany(mappedBy = "question", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
     private List<Choice> choiceList;
 
     @JsonIgnore

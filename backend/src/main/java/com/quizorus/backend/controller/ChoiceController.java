@@ -39,7 +39,7 @@ public class ChoiceController {
 
         Question question = questionRepository.findById(questionId).orElse(null);
 
-        if ( question != null && currentUser.getId().equals(question.getId())){
+        if ( question != null && currentUser.getId().equals(question.getCreatedBy())){
             choice.setQuestion(question);
             question.getChoiceList().add(choice);
             questionRepository.save(question);
