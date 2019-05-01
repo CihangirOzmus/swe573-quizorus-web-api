@@ -31,6 +31,17 @@ public class ContentController {
 
     private static final Logger logger = LoggerFactory.getLogger(ContentController.class);
 
+    @GetMapping("/{topicId}/{contentId}")
+    @PreAuthorize("hasRole('USER')")
+    public ResponseEntity<Content> getContent(@PathVariable Long topicId, @PathVariable Long contentId, @CurrentUser UserPrincipal currentUser){
+        Topic topic = topicRepository.findById(topicId).orElse(null);
+        if (topic != null){
+            Content content = contentService.getContentById(contentId);
+            return ResponseEntity.ok().body(content);
+        }
+        return ResponseEntity.notFound().build();
+    }
+
     @PostMapping("/{topicId}")
     @PreAuthorize("hasRole('USER')")
     public ResponseEntity<?> createContentWithTopicId(@PathVariable Long topicId, @CurrentUser UserPrincipal currentUser, @Valid @RequestBody Content content){
