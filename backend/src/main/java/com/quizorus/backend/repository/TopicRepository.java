@@ -16,7 +16,7 @@ public interface TopicRepository extends JpaRepository<Topic, Long> {
 
     Optional<Topic> findTopicByContentList(Long contentId);
 
-    Page<Topic> findByCreatedBy(Long userId, Pageable pageable);
+    List<Topic> findByCreatedBy(Long userId);
 
     long countByCreatedBy(Long userId);
 

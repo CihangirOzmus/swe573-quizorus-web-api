@@ -2,14 +2,12 @@ package com.quizorus.backend.controller;
 
 import com.quizorus.backend.model.Topic;
 import com.quizorus.backend.payload.ApiResponse;
-import com.quizorus.backend.payload.PagedResponse;
 import com.quizorus.backend.payload.TopicRequest;
 import com.quizorus.backend.payload.TopicResponse;
 import com.quizorus.backend.repository.TopicRepository;
 import com.quizorus.backend.repository.UserRepository;
 import com.quizorus.backend.security.CurrentUser;
 import com.quizorus.backend.security.UserPrincipal;
-
 import com.quizorus.backend.service.TopicService;
 import com.quizorus.backend.util.AppConstants;
 import org.slf4j.Logger;
@@ -22,6 +20,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/topics")
@@ -40,10 +39,10 @@ public class TopicController {
     private static final Logger logger = LoggerFactory.getLogger(TopicController.class);
 
     @GetMapping
-    public PagedResponse<TopicResponse> getTopics(@CurrentUser UserPrincipal currentUser,
-                                                  @RequestParam(value = "page", defaultValue = AppConstants.DEFAULT_PAGE_NUMBER) int page,
-                                                  @RequestParam(value = "size", defaultValue = AppConstants.DEFAULT_PAGE_SIZE) int size){
-        return topicService.getAllTopics(currentUser, page, size);
+    public List<Topic> getTopics(@CurrentUser UserPrincipal currentUser,
+                                 @RequestParam(value = "page", defaultValue = AppConstants.DEFAULT_PAGE_NUMBER) int page,
+                                 @RequestParam(value = "size", defaultValue = AppConstants.DEFAULT_PAGE_SIZE) int size){
+        return topicService.getAllTopics(currentUser);
     }
 
     @PostMapping
@@ -61,7 +60,7 @@ public class TopicController {
     }
 
     @GetMapping("/topic/{topicId}")
-    public TopicResponse getTopicById(@CurrentUser UserPrincipal currentUser, @PathVariable Long topicId){
+    public Topic getTopicById(@CurrentUser UserPrincipal currentUser, @PathVariable Long topicId){
         return topicService.getTopicById(topicId, currentUser);
     }
 
@@ -75,11 +74,9 @@ public class TopicController {
     }
 
     @GetMapping("/{username}")
-    public PagedResponse<TopicResponse> getTopicsByUsername(@PathVariable String username,
-                                                  @CurrentUser UserPrincipal currentUser,
-                                                  @RequestParam(value = "page", defaultValue = AppConstants.DEFAULT_PAGE_NUMBER) int page,
-                                                  @RequestParam(value = "size", defaultValue = AppConstants.DEFAULT_PAGE_SIZE) int size){
-        return topicService.getTopicsCreatedBy(username, currentUser, page, size);
+    public List<Topic> getTopicsByUsername(@PathVariable String username,
+                                                  @CurrentUser UserPrincipal currentUser){
+        return topicService.getTopicsCreatedBy(username, currentUser);
     }
 
 }

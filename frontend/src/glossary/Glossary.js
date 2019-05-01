@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { Button, Row, InputGroup } from 'react-bootstrap';
 import { withRouter } from 'react-router-dom';
-import {API_BASE_URL, TOPIC_LIST_SIZE} from '../constants';
+import { API_BASE_URL } from '../constants';
 import './Glossary.css';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -12,28 +12,17 @@ class Glossary extends Component {
         super(props);
         this.state = {
             topics: [],
-            page: 0,
-            size: 10,
-            totalElements: 0,
-            totalPages: 0,
-            last: true,
             isLoading: false,
             input:''
         };
         this.loadTopicList = this.loadTopicList.bind(this);
-        this.handleLoadMore = this.handleLoadMore.bind(this);
     }
 
-    loadTopicList(page, size=TOPIC_LIST_SIZE){
-        let url = API_BASE_URL + "/topics?page=" + page + "&size=" + size;
+    loadTopicList(){
+        let url = API_BASE_URL + "/topics";
         axios.get(url).then(res => {
             this.setState({
-                topics: res.data.content,
-                page: res.data.page,
-                size: res.data.size,
-                totalElements: res.data.totalElements,
-                totalPages: res.data.totalPages,
-                last: res.data.last,
+                topics: res.data,
                 isLoading: false
             })
         }).catch(err => {
@@ -45,13 +34,6 @@ class Glossary extends Component {
     componentDidMount() {
         this.loadTopicList(this.state.page, this.state.size);
     }
-
-
-    handleLoadMore(){
-        console.log("more topics loaded!..");
-        this.loadTopicList(this.state.page + 1);
-    }
-
 
     onChangeHandler(e) {
         this.setState({

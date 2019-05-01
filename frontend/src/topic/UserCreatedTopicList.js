@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {ACCESS_TOKEN, API_BASE_URL, TOPIC_LIST_SIZE} from "../constants";
+import { ACCESS_TOKEN, API_BASE_URL } from "../constants";
 import axios from "axios";
 import {Badge, Button, Table} from "react-bootstrap";
 import {Link} from "react-router-dom";
@@ -9,40 +9,24 @@ class UserCreatedTopicList extends Component{
         super(props);
         this.state = {
             topics: [],
-            page: 0,
-            size: 10,
-            totalElements: 0,
-            totalPages: 0,
-            last: true,
             isLoading: false
         };
         this.loadUserCreatedTopics = this.loadUserCreatedTopics.bind(this);
-        this.handleLoadMore = this.handleLoadMore.bind(this);
         this.handleDeleteTopicById = this.handleDeleteTopicById.bind(this);
     }
 
-    loadUserCreatedTopics(page, size=TOPIC_LIST_SIZE){
+    loadUserCreatedTopics(){
         const username = this.props.currentUser.username;
-        let url = API_BASE_URL + `/users/${username}/topics/?page=${page}&size=${size}`;
+        let url = API_BASE_URL + `/users/${username}/topics/`;
 
         axios.get(url).then(res => {
             this.setState({
-                topics: res.data.content,
-                page: res.data.page,
-                size: res.data.size,
-                totalElements: res.data.totalElements,
-                totalPages: res.data.totalPages,
-                last: res.data.last,
+                topics: res.data,
                 isLoading: false
             })
         }).catch(err => {
             this.setState({isLoading: false})
         });
-    }
-
-    handleLoadMore(){
-        console.log("more topics loaded!..");
-        this.loadTopicList(this.state.page + 1);
     }
 
     handleDeleteTopicById(topicIdToDelete){

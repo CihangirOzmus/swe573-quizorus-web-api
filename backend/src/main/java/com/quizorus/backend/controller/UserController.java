@@ -1,6 +1,7 @@
 package com.quizorus.backend.controller;
 
 import com.quizorus.backend.exception.ResourceNotFoundException;
+import com.quizorus.backend.model.Topic;
 import com.quizorus.backend.model.User;
 import com.quizorus.backend.payload.*;
 import com.quizorus.backend.repository.TopicRepository;
@@ -14,6 +15,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api")
@@ -56,11 +59,8 @@ public class UserController {
     }
 
     @GetMapping("/users/{username}/topics")
-    public PagedResponse<TopicResponse> getTopicsCreatedBy(@PathVariable(value = "username") String username,
-                                                           @CurrentUser UserPrincipal currentUser,
-                                                           @RequestParam(value = "page", defaultValue = AppConstants.DEFAULT_PAGE_NUMBER) int page,
-                                                           @RequestParam(value = "size", defaultValue = AppConstants.DEFAULT_PAGE_SIZE) int size) {
-        return topicService.getTopicsCreatedBy(username, currentUser, page, size);
+    public List<Topic> getTopicsCreatedBy(@PathVariable(value = "username") String username, @CurrentUser UserPrincipal currentUser) {
+        return topicService.getTopicsCreatedBy(username, currentUser);
     }
 
 }
