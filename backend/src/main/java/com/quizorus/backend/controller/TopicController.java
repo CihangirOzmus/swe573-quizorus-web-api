@@ -2,14 +2,11 @@ package com.quizorus.backend.controller;
 
 import com.quizorus.backend.model.Topic;
 import com.quizorus.backend.payload.ApiResponse;
-import com.quizorus.backend.payload.TopicRequest;
-import com.quizorus.backend.payload.TopicResponse;
 import com.quizorus.backend.repository.TopicRepository;
 import com.quizorus.backend.repository.UserRepository;
 import com.quizorus.backend.security.CurrentUser;
 import com.quizorus.backend.security.UserPrincipal;
 import com.quizorus.backend.service.TopicService;
-import com.quizorus.backend.util.AppConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,15 +36,13 @@ public class TopicController {
     private static final Logger logger = LoggerFactory.getLogger(TopicController.class);
 
     @GetMapping
-    public List<Topic> getTopics(@CurrentUser UserPrincipal currentUser,
-                                 @RequestParam(value = "page", defaultValue = AppConstants.DEFAULT_PAGE_NUMBER) int page,
-                                 @RequestParam(value = "size", defaultValue = AppConstants.DEFAULT_PAGE_SIZE) int size){
+    public List<Topic> getTopics(@CurrentUser UserPrincipal currentUser){
         return topicService.getAllTopics(currentUser);
     }
 
     @PostMapping
     @PreAuthorize("hasRole('USER')")
-    public ResponseEntity<?> createTopic(@Valid @RequestBody TopicRequest topicRequest){
+    public ResponseEntity<?> createTopic(@Valid @RequestBody Topic topicRequest){
         Topic topic = topicService.createTopic(topicRequest);
 
         URI location = ServletUriComponentsBuilder

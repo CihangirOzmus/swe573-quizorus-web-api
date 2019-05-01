@@ -9,7 +9,6 @@ import com.quizorus.backend.repository.UserRepository;
 import com.quizorus.backend.security.CurrentUser;
 import com.quizorus.backend.security.UserPrincipal;
 import com.quizorus.backend.service.TopicService;
-import com.quizorus.backend.util.AppConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -21,6 +21,7 @@ class Glossary extends Component {
     loadTopicList(){
         let url = API_BASE_URL + "/topics";
         axios.get(url).then(res => {
+            console.log(res.data);
             this.setState({
                 topics: res.data,
                 isLoading: false
@@ -67,7 +68,7 @@ class Glossary extends Component {
                                         <p>
                                             <span className="badge badge-success">{topic.contentList.length}</span> Learning Path {' '}
                                             <span className="badge badge-warning">??</span> Questions {' '}
-                                            <span className="badge badge-light">Created by</span> @{topic.createdBy.username} {' '}
+                                            <span className="badge badge-light">Created by</span> @{topic.createdBy} {' '}
                                         </p>
                                         <Button variant="info" block>Enroll</Button>
                                     </div>

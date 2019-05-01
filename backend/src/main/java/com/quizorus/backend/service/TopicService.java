@@ -1,24 +1,17 @@
 package com.quizorus.backend.service;
 
-import com.quizorus.backend.exception.BadRequestException;
 import com.quizorus.backend.exception.ResourceNotFoundException;
 import com.quizorus.backend.model.Topic;
 import com.quizorus.backend.model.User;
-import com.quizorus.backend.payload.TopicRequest;
-import com.quizorus.backend.payload.TopicResponse;
 import com.quizorus.backend.repository.TopicRepository;
 import com.quizorus.backend.repository.UserRepository;
 import com.quizorus.backend.security.UserPrincipal;
-import com.quizorus.backend.util.AppConstants;
-import com.quizorus.backend.util.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 
 @Service
 public class TopicService {
@@ -46,7 +39,7 @@ public class TopicService {
         return topics;
     }
 
-    public Topic createTopic(TopicRequest topicRequest) {
+    public Topic createTopic(Topic topicRequest) {
         Topic topic = new Topic();
         topic.setTitle(topicRequest.getTitle());
         topic.setDescription(topicRequest.getDescription());
