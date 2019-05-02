@@ -24,12 +24,6 @@ import java.util.List;
 public class TopicController {
 
     @Autowired
-    private TopicRepository topicRepository;
-
-    @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
     private TopicService topicService;
 
 

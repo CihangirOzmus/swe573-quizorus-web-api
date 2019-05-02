@@ -15,15 +15,12 @@ public class ChoiceService {
     @Autowired
     private ChoiceRepository choiceRepository;
 
-    @Autowired
-    private QuestionRepository questionRepository;
-
     private static final Logger logger = LoggerFactory.getLogger(ChoiceService.class);
 
     public boolean deleteChoiceById(Long choiceId, UserPrincipal currentUser) {
         Choice choice = choiceRepository.findById(choiceId).orElse(null);
         if (choice != null && currentUser.getId().equals(choice.getCreatedBy())){
-            questionRepository.deleteQuestionById(choiceId);
+            choiceRepository.deleteById(choiceId);
             return true;
         }
         return false;

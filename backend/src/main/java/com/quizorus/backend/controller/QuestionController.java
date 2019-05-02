@@ -30,9 +30,6 @@ public class QuestionController {
     @Autowired
     private ContentRepository contentRepository;
 
-    @Autowired
-    private TopicRepository topicRepository;
-
     private static final Logger logger = LoggerFactory.getLogger(QuestionController.class);
 
     @PostMapping("/{contentId}")
