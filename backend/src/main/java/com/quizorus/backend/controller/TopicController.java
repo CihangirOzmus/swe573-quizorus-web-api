@@ -2,8 +2,6 @@ package com.quizorus.backend.controller;
 
 import com.quizorus.backend.model.Topic;
 import com.quizorus.backend.payload.ApiResponse;
-import com.quizorus.backend.repository.TopicRepository;
-import com.quizorus.backend.repository.UserRepository;
 import com.quizorus.backend.security.CurrentUser;
 import com.quizorus.backend.security.UserPrincipal;
 import com.quizorus.backend.service.TopicService;
@@ -25,7 +23,6 @@ public class TopicController {
 
     @Autowired
     private TopicService topicService;
-
 
     private static final Logger logger = LoggerFactory.getLogger(TopicController.class);
 
