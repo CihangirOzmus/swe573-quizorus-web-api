@@ -1,8 +1,8 @@
 package com.quizorus.backend.controller;
 
 import com.quizorus.backend.exception.ResourceNotFoundException;
-import com.quizorus.backend.model.Topic;
-import com.quizorus.backend.model.User;
+import com.quizorus.backend.model.TopicEntity;
+import com.quizorus.backend.model.UserEntity;
 import com.quizorus.backend.payload.*;
 import com.quizorus.backend.repository.TopicRepository;
 import com.quizorus.backend.repository.UserRepository;
@@ -47,8 +47,8 @@ public class UserController {
 
     @GetMapping("/users/{username}")
     public UserProfile getUserProfile(@PathVariable(value = "username") String username) {
-        User user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new ResourceNotFoundException("User", "username", username));
+        UserEntity user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new ResourceNotFoundException("UserEntity", "username", username));
 
         long topicCount = topicRepository.countByCreatedBy(user.getId());
 
@@ -58,7 +58,7 @@ public class UserController {
     }
 
     @GetMapping("/users/{username}/topics")
-    public List<Topic> getTopicsCreatedBy(@PathVariable(value = "username") String username, @CurrentUser UserPrincipal currentUser) {
+    public List<TopicEntity> getTopicsCreatedBy(@PathVariable(value = "username") String username, @CurrentUser UserPrincipal currentUser) {
         return topicService.getTopicsCreatedBy(username, currentUser);
     }
 

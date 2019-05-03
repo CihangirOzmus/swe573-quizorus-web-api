@@ -3,7 +3,7 @@ package com.quizorus.backend.controller;
 import com.quizorus.backend.exception.AppException;
 import com.quizorus.backend.model.Role;
 import com.quizorus.backend.model.RoleName;
-import com.quizorus.backend.model.User;
+import com.quizorus.backend.model.UserEntity;
 import com.quizorus.backend.payload.ApiResponse;
 import com.quizorus.backend.payload.JwtAuthenticationResponse;
 import com.quizorus.backend.payload.LoginRequest;
@@ -77,22 +77,22 @@ public class AuthController {
         }
 
         // Creating user's account
-        User user = new User(signUpRequest.getName(), signUpRequest.getUsername(),
+        UserEntity user = new UserEntity(signUpRequest.getName(), signUpRequest.getUsername(),
                 signUpRequest.getEmail(), signUpRequest.getPassword());
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
         Role userRole = roleRepository.findByName(RoleName.ROLE_USER)
-                .orElseThrow(() -> new AppException("User Role not set."));
+                .orElseThrow(() -> new AppException("UserEntity Role not set."));
 
         user.setRoles(Collections.singleton(userRole));
 
-        User result = userRepository.save(user);
+        UserEntity result = userRepository.save(user);
 
         URI location = ServletUriComponentsBuilder
                 .fromCurrentContextPath().path("/api/users/{username}")
                 .buildAndExpand(result.getUsername()).toUri();
 
-        return ResponseEntity.created(location).body(new ApiResponse(true, "User registered successfully"));
+        return ResponseEntity.created(location).body(new ApiResponse(true, "UserEntity registered successfully"));
     }
 }

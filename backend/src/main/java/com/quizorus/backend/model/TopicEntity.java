@@ -11,7 +11,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "topics")
-public class Topic extends UserDateAudit {
+public class TopicEntity extends UserDateAudit {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,7 +33,7 @@ public class Topic extends UserDateAudit {
 
     @Nullable
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "topic")
-    private List<Content> contentList;
+    private List<ContentEntity> contentList;
 
     @Nullable
     public String getImageUrl() {
@@ -45,11 +45,11 @@ public class Topic extends UserDateAudit {
     }
 
     @Nullable
-    public List<Content> getContentList() {
+    public List<ContentEntity> getContentList() {
         return contentList;
     }
 
-    public void setContentList(@Nullable List<Content> contentList) {
+    public void setContentList(@Nullable List<ContentEntity> contentList) {
         this.contentList = contentList;
     }
 

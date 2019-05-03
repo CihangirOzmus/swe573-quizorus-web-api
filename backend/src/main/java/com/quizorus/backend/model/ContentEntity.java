@@ -11,7 +11,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "contents")
-public class Content extends UserDateAudit {
+public class ContentEntity extends UserDateAudit {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,26 +27,26 @@ public class Content extends UserDateAudit {
 
     @JsonIgnore
     @ManyToOne
-    private Topic topic;
+    private TopicEntity topic;
 
     @Nullable
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "content")
-    private List<Question> questionList;
+    private List<QuestionEntity> questionList;
 
     @Nullable
-    public List<Question> getQuestionList() {
+    public List<QuestionEntity> getQuestionList() {
         return questionList;
     }
 
-    public void setQuestionList(@Nullable List<Question> questionList) {
+    public void setQuestionList(@Nullable List<QuestionEntity> questionList) {
         this.questionList = questionList;
     }
 
-    public Topic getTopic() {
+    public TopicEntity getTopic() {
         return topic;
     }
 
-    public void setTopic(Topic topic) {
+    public void setTopic(TopicEntity topic) {
         this.topic = topic;
     }
 

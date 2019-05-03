@@ -1,6 +1,6 @@
 package com.quizorus.backend.controller;
 
-import com.quizorus.backend.model.Topic;
+import com.quizorus.backend.model.TopicEntity;
 import com.quizorus.backend.payload.ApiResponse;
 import com.quizorus.backend.security.CurrentUser;
 import com.quizorus.backend.security.UserPrincipal;
@@ -27,26 +27,26 @@ public class TopicController {
     private static final Logger logger = LoggerFactory.getLogger(TopicController.class);
 
     @GetMapping
-    public List<Topic> getTopics(@CurrentUser UserPrincipal currentUser){
+    public List<TopicEntity> getTopics(@CurrentUser UserPrincipal currentUser){
         return topicService.getAllTopics(currentUser);
     }
 
     @PostMapping
     @PreAuthorize("hasRole('USER')")
-    public ResponseEntity<?> createTopic(@Valid @RequestBody Topic topicRequest){
-        Topic topic = topicService.createTopic(topicRequest);
+    public ResponseEntity<?> createTopic(@Valid @RequestBody TopicEntity topicRequest){
+        TopicEntity topic = topicService.createTopic(topicRequest);
 
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest().path("/{topicId}")
                 .buildAndExpand(topic.getId()).toUri();
 
         return ResponseEntity.created(location)
-                .body(new ApiResponse(true, "Topic created successfully"));
+                .body(new ApiResponse(true, "TopicEntity created successfully"));
 
     }
 
     @GetMapping("/topic/{topicId}")
-    public Topic getTopicById(@CurrentUser UserPrincipal currentUser, @PathVariable Long topicId){
+    public TopicEntity getTopicById(@CurrentUser UserPrincipal currentUser, @PathVariable Long topicId){
         return topicService.getTopicById(topicId, currentUser);
     }
 
@@ -54,14 +54,14 @@ public class TopicController {
     public ResponseEntity<ApiResponse> deleteTopicById(@CurrentUser UserPrincipal currentUser, @PathVariable Long topicId){
         boolean result = topicService.deleteTopicById(topicId, currentUser);
         if (result){
-            return ResponseEntity.ok().body(new ApiResponse(true, "Topic deleted successfully"));
+            return ResponseEntity.ok().body(new ApiResponse(true, "TopicEntity deleted successfully"));
         }
-        return ResponseEntity.badRequest().body(new ApiResponse(false, "Topic can be deleted by its owner"));
+        return ResponseEntity.badRequest().body(new ApiResponse(false, "TopicEntity can be deleted by its owner"));
     }
 
     @GetMapping("/{username}")
-    public List<Topic> getTopicsByUsername(@PathVariable String username,
-                                                  @CurrentUser UserPrincipal currentUser){
+    public List<TopicEntity> getTopicsByUsername(@PathVariable String username,
+                                                 @CurrentUser UserPrincipal currentUser){
         return topicService.getTopicsCreatedBy(username, currentUser);
     }
 

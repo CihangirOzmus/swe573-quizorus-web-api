@@ -1,7 +1,7 @@
 package com.quizorus.backend.controller;
 
-import com.quizorus.backend.model.Content;
-import com.quizorus.backend.model.Topic;
+import com.quizorus.backend.model.ContentEntity;
+import com.quizorus.backend.model.TopicEntity;
 import com.quizorus.backend.payload.ApiResponse;
 import com.quizorus.backend.repository.TopicRepository;
 import com.quizorus.backend.security.CurrentUser;
@@ -33,10 +33,10 @@ public class ContentController {
 
     @GetMapping("/{topicId}/{contentId}")
     @PreAuthorize("hasRole('USER')")
-    public ResponseEntity<Content> getContent(@PathVariable Long topicId, @PathVariable Long contentId, @CurrentUser UserPrincipal currentUser){
-        Topic topic = topicRepository.findById(topicId).orElse(null);
+    public ResponseEntity<ContentEntity> getContent(@PathVariable Long topicId, @PathVariable Long contentId, @CurrentUser UserPrincipal currentUser){
+        TopicEntity topic = topicRepository.findById(topicId).orElse(null);
         if (topic != null){
-            Content content = contentService.getContentById(contentId);
+            ContentEntity content = contentService.getContentById(contentId);
             return ResponseEntity.ok().body(content);
         }
         return ResponseEntity.notFound().build();
@@ -44,9 +44,9 @@ public class ContentController {
 
     @PostMapping("/{topicId}")
     @PreAuthorize("hasRole('USER')")
-    public ResponseEntity<?> createContentWithTopicId(@PathVariable Long topicId, @CurrentUser UserPrincipal currentUser, @Valid @RequestBody Content content){
+    public ResponseEntity<?> createContentWithTopicId(@PathVariable Long topicId, @CurrentUser UserPrincipal currentUser, @Valid @RequestBody ContentEntity content){
 
-        Topic topic = topicRepository.findById(topicId).orElse(null);
+        TopicEntity topic = topicRepository.findById(topicId).orElse(null);
 
         if (topic != null && currentUser.getId().equals(topic.getCreatedBy())){
             content.setTopic(topic);
@@ -58,10 +58,10 @@ public class ContentController {
                     .buildAndExpand(content.getId()).toUri();
 
             return ResponseEntity.created(location)
-                    .body(new ApiResponse(true, "Content created successfully"));
+                    .body(new ApiResponse(true, "ContentEntity created successfully"));
         }
 
-        return ResponseEntity.badRequest().body(new ApiResponse(false, "Topic does not exist"));
+        return ResponseEntity.badRequest().body(new ApiResponse(false, "TopicEntity does not exist"));
 
     }
 
@@ -72,9 +72,9 @@ public class ContentController {
         boolean result = contentService.deleteContentById(contentId, currentUser);
 
         if (result){
-            return ResponseEntity.ok().body(new ApiResponse(true, "Content deleted successfully"));
+            return ResponseEntity.ok().body(new ApiResponse(true, "ContentEntity deleted successfully"));
         }
-        return ResponseEntity.badRequest().body(new ApiResponse(false, "Content can be deleted by its owner"));
+        return ResponseEntity.badRequest().body(new ApiResponse(false, "ContentEntity can be deleted by its owner"));
     }
 
 }

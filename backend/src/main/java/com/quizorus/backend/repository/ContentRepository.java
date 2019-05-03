@@ -1,6 +1,6 @@
 package com.quizorus.backend.repository;
 
-import com.quizorus.backend.model.Content;
+import com.quizorus.backend.model.ContentEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -8,11 +8,11 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface ContentRepository extends JpaRepository<Content, Long> {
+public interface ContentRepository extends JpaRepository<ContentEntity, Long> {
 
-    Optional<Content> findById(Long contentId);
+    Optional<ContentEntity> findById(Long contentId);
 
-    List<Content> findByCreatedBy(Long userId);
+    List<ContentEntity> findByCreatedBy(Long userId);
 
     Long countByCreatedBy(Long userId);
 

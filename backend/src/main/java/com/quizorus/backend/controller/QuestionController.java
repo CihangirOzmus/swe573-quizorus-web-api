@@ -1,10 +1,9 @@
 package com.quizorus.backend.controller;
 
-import com.quizorus.backend.model.Content;
-import com.quizorus.backend.model.Question;
+import com.quizorus.backend.model.ContentEntity;
+import com.quizorus.backend.model.QuestionEntity;
 import com.quizorus.backend.payload.ApiResponse;
 import com.quizorus.backend.repository.ContentRepository;
-import com.quizorus.backend.repository.TopicRepository;
 import com.quizorus.backend.security.CurrentUser;
 import com.quizorus.backend.security.UserPrincipal;
 import com.quizorus.backend.service.QuestionService;
@@ -35,9 +34,9 @@ public class QuestionController {
     @PostMapping("/{contentId}")
     @PreAuthorize("hasRole('USER')")
     @Transactional
-    public ResponseEntity<?> createQuestionWithContentId(@PathVariable Long contentId, @CurrentUser UserPrincipal currentUser, @Valid @RequestBody Question question){
+    public ResponseEntity<?> createQuestionWithContentId(@PathVariable Long contentId, @CurrentUser UserPrincipal currentUser, @Valid @RequestBody QuestionEntity question){
 
-        Content content = contentRepository.findById(contentId).orElse(null);
+        ContentEntity content = contentRepository.findById(contentId).orElse(null);
 
         if (content != null && currentUser.getId().equals(content.getCreatedBy())){
             question.setContent(content);
@@ -49,10 +48,10 @@ public class QuestionController {
                     .buildAndExpand(question.getId()).toUri();
 
             return ResponseEntity.created(location)
-                    .body(new ApiResponse(true, "Question created successfully"));
+                    .body(new ApiResponse(true, "QuestionEntity created successfully"));
         }
 
-        return ResponseEntity.badRequest().body(new ApiResponse(false, "Content does not exist"));
+        return ResponseEntity.badRequest().body(new ApiResponse(false, "ContentEntity does not exist"));
     }
 
     @DeleteMapping("/{questionId}")
@@ -61,8 +60,8 @@ public class QuestionController {
     public ResponseEntity<ApiResponse> deleteQuestionById(@CurrentUser UserPrincipal currentUser, @PathVariable Long questionId){
         boolean result = questionService.deleteQuestionById(questionId, currentUser);
         if (result){
-            return ResponseEntity.ok().body(new ApiResponse(true, "Question deleted successfully"));
+            return ResponseEntity.ok().body(new ApiResponse(true, "QuestionEntity deleted successfully"));
         }
-        return ResponseEntity.badRequest().body(new ApiResponse(false, "Question can be deleted by its owner"));
+        return ResponseEntity.badRequest().body(new ApiResponse(false, "QuestionEntity can be deleted by its owner"));
     }
 }

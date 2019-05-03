@@ -4,14 +4,13 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.quizorus.backend.model.audit.UserDateAudit;
 
 import javax.persistence.*;
-import javax.validation.constraints.Max;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.util.List;
 
 @Entity
-@Table(name = "questions")
-public class Question extends UserDateAudit {
+@Table(name = "choices")
+public class ChoiceEntity extends UserDateAudit {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,12 +20,12 @@ public class Question extends UserDateAudit {
     @Size(max = 255)
     private String text;
 
-    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
-    private List<Choice> choiceList;
+    @NotNull
+    private Boolean isCorrect;
 
     @JsonIgnore
     @ManyToOne
-    private Content content;
+    private QuestionEntity question;
 
     public Long getId() {
         return id;
@@ -44,19 +43,19 @@ public class Question extends UserDateAudit {
         this.text = text;
     }
 
-    public List<Choice> getChoiceList() {
-        return choiceList;
+    public Boolean getCorrect() {
+        return isCorrect;
     }
 
-    public void setChoiceList(List<Choice> choiceList) {
-        this.choiceList = choiceList;
+    public void setCorrect(Boolean correct) {
+        isCorrect = correct;
     }
 
-    public Content getContent() {
-        return content;
+    public QuestionEntity getQuestion() {
+        return question;
     }
 
-    public void setContent(Content content) {
-        this.content = content;
+    public void setQuestion(QuestionEntity question) {
+        this.question = question;
     }
 }

@@ -1,7 +1,7 @@
 package com.quizorus.backend.controller;
 
-import com.quizorus.backend.model.Choice;
-import com.quizorus.backend.model.Question;
+import com.quizorus.backend.model.ChoiceEntity;
+import com.quizorus.backend.model.QuestionEntity;
 import com.quizorus.backend.payload.ApiResponse;
 import com.quizorus.backend.repository.QuestionRepository;
 import com.quizorus.backend.security.CurrentUser;
@@ -34,9 +34,9 @@ public class ChoiceController {
     @PostMapping("/{questionId}")
     @PreAuthorize("hasRole('USER')")
     @Transactional
-    public ResponseEntity<?> createChoiceWithQuestionId(@PathVariable Long questionId, @CurrentUser UserPrincipal currentUser, @Valid @RequestBody Choice choice){
+    public ResponseEntity<?> createChoiceWithQuestionId(@PathVariable Long questionId, @CurrentUser UserPrincipal currentUser, @Valid @RequestBody ChoiceEntity choice){
 
-        Question question = questionRepository.findById(questionId).orElse(null);
+        QuestionEntity question = questionRepository.findById(questionId).orElse(null);
 
         if ( question != null && currentUser.getId().equals(question.getCreatedBy())){
             choice.setQuestion(question);
@@ -48,10 +48,10 @@ public class ChoiceController {
                     .buildAndExpand(question.getId()).toUri();
 
             return ResponseEntity.created(location)
-                    .body(new ApiResponse(true, "Choice created successfully"));
+                    .body(new ApiResponse(true, "ChoiceEntity created successfully"));
         }
 
-        return ResponseEntity.badRequest().body(new ApiResponse(false, "Question does not exist"));
+        return ResponseEntity.badRequest().body(new ApiResponse(false, "QuestionEntity does not exist"));
     }
 
     @DeleteMapping("/{choiceId}")
@@ -60,8 +60,8 @@ public class ChoiceController {
     public ResponseEntity<ApiResponse> deleteChoiceById(@CurrentUser UserPrincipal currentUser, @PathVariable Long choiceId){
         boolean result = choiceService.deleteChoiceById(choiceId, currentUser);
         if (result){
-            return ResponseEntity.ok().body(new ApiResponse(true, "Choice deleted successfully"));
+            return ResponseEntity.ok().body(new ApiResponse(true, "ChoiceEntity deleted successfully"));
         }
-        return ResponseEntity.badRequest().body(new ApiResponse(false, "Choice can be deleted by its owner"));
+        return ResponseEntity.badRequest().body(new ApiResponse(false, "ChoiceEntity can be deleted by its owner"));
     }
 }

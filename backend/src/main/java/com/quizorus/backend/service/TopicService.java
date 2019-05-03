@@ -1,8 +1,8 @@
 package com.quizorus.backend.service;
 
 import com.quizorus.backend.exception.ResourceNotFoundException;
-import com.quizorus.backend.model.Topic;
-import com.quizorus.backend.model.User;
+import com.quizorus.backend.model.TopicEntity;
+import com.quizorus.backend.model.UserEntity;
 import com.quizorus.backend.repository.TopicRepository;
 import com.quizorus.backend.repository.UserRepository;
 import com.quizorus.backend.security.UserPrincipal;
@@ -24,23 +24,23 @@ public class TopicService {
 
     private static final Logger logger = LoggerFactory.getLogger(TopicService.class);
 
-    public List<Topic> getAllTopics(UserPrincipal currentUser){
-        List<Topic> topics = topicRepository.findAll();
+    public List<TopicEntity> getAllTopics(UserPrincipal currentUser){
+        List<TopicEntity> topics = topicRepository.findAll();
         return topics;
     }
 
-    public List<Topic> getTopicsCreatedBy(String username, UserPrincipal currentUser) {
+    public List<TopicEntity> getTopicsCreatedBy(String username, UserPrincipal currentUser) {
 
-        User user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new ResourceNotFoundException("User", "username", username));
+        UserEntity user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new ResourceNotFoundException("UserEntity", "username", username));
 
-        List<Topic> topics = topicRepository.findByCreatedBy(user.getId());
+        List<TopicEntity> topics = topicRepository.findByCreatedBy(user.getId());
 
         return topics;
     }
 
-    public Topic createTopic(Topic topicRequest) {
-        Topic topic = new Topic();
+    public TopicEntity createTopic(TopicEntity topicRequest) {
+        TopicEntity topic = new TopicEntity();
         topic.setTitle(topicRequest.getTitle());
         topic.setDescription(topicRequest.getDescription());
         topic.setWikiData(topicRequest.getWikiData());
@@ -49,15 +49,15 @@ public class TopicService {
         return topicRepository.save(topic);
     }
 
-    public Topic getTopicById(Long topicId, UserPrincipal currentUser) {
-        Topic topic = topicRepository.findById(topicId).orElseThrow(
-                () -> new ResourceNotFoundException("Topic", "id", topicId));
+    public TopicEntity getTopicById(Long topicId, UserPrincipal currentUser) {
+        TopicEntity topic = topicRepository.findById(topicId).orElseThrow(
+                () -> new ResourceNotFoundException("TopicEntity", "id", topicId));
 
         return topic;
     }
 
     public boolean deleteTopicById(Long topicId, UserPrincipal currentUser){
-        Topic topic = topicRepository.findById(topicId).orElse(null);
+        TopicEntity topic = topicRepository.findById(topicId).orElse(null);
         if (topic != null && currentUser.getId().equals(topic.getCreatedBy())){
             topicRepository.deleteById(topicId);
             return true;
