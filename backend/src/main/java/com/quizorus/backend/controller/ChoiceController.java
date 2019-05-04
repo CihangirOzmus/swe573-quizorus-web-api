@@ -29,7 +29,7 @@ public class ChoiceController {
     @Autowired
     private QuestionRepository questionRepository;
 
-    private static final Logger logger = LoggerFactory.getLogger(ChoiceController.class);
+    //private static final Logger logger = LoggerFactory.getLogger(ChoiceController.class);
 
     @PostMapping("/{questionId}")
     @PreAuthorize("hasRole('USER')")
@@ -58,10 +58,6 @@ public class ChoiceController {
     @PreAuthorize("hasRole('USER')")
     @Transactional
     public ResponseEntity<ApiResponse> deleteChoiceById(@CurrentUser UserPrincipal currentUser, @PathVariable Long choiceId){
-        boolean result = choiceService.deleteChoiceById(choiceId, currentUser);
-        if (result){
-            return ResponseEntity.ok().body(new ApiResponse(true, "ChoiceEntity deleted successfully"));
-        }
-        return ResponseEntity.badRequest().body(new ApiResponse(false, "ChoiceEntity can be deleted by its owner"));
+        return choiceService.deleteChoiceById(currentUser, choiceId);
     }
 }

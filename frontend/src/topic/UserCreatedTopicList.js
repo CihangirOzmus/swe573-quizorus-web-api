@@ -59,7 +59,7 @@ class UserCreatedTopicList extends Component{
         const topicsView = topics.map((topic, topicIndex) => {
             return (
                 <tr key={topicIndex}>
-                    <td>{topicIndex+1 === 1 ? <Badge variant="success">New</Badge> : topicIndex + 1}</td>
+                    <td>{topicIndex+1}</td>
                     <td>{topic.title}</td>
                     <td>{topic.description}</td>
                     <td>

@@ -43,7 +43,7 @@ export function createTopic(topicData) {
 
 export function createContent(contentData, topicId) {
     return request({
-        url: API_BASE_URL + `/contents/${topicId}`,
+        url: API_BASE_URL + `/topics/${topicId}/contents`,
         method: 'POST',
         body: JSON.stringify(contentData)
     });

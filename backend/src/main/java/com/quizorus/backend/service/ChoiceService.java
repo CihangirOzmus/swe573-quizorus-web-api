@@ -1,27 +1,29 @@
 package com.quizorus.backend.service;
 
 import com.quizorus.backend.model.ChoiceEntity;
+import com.quizorus.backend.payload.ApiResponse;
 import com.quizorus.backend.repository.ChoiceRepository;
 import com.quizorus.backend.security.UserPrincipal;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 @Service
 public class ChoiceService {
 
-    @Autowired
     private ChoiceRepository choiceRepository;
 
-    private static final Logger logger = LoggerFactory.getLogger(ChoiceService.class);
+    public ChoiceService(ChoiceRepository choiceRepository) {
+        this.choiceRepository = choiceRepository;
+    }
 
-    public boolean deleteChoiceById(Long choiceId, UserPrincipal currentUser) {
+    //private static final Logger logger = LoggerFactory.getLogger(ChoiceService.class);
+
+    public ResponseEntity<ApiResponse> deleteChoiceById(UserPrincipal currentUser, Long choiceId) {
         ChoiceEntity choice = choiceRepository.findById(choiceId).orElse(null);
         if (choice != null && currentUser.getId().equals(choice.getCreatedBy())){
             choiceRepository.deleteById(choiceId);
-            return true;
+            return ResponseEntity.ok().body(new ApiResponse(true, "Choice deleted successfully"));
         }
-        return false;
+        return ResponseEntity.badRequest().body(new ApiResponse(false, "Failed to delete choice"));
     }
 }

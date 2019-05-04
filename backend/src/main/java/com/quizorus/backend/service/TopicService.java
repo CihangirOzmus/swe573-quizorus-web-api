@@ -1,11 +1,13 @@
 package com.quizorus.backend.service;
 
 import com.quizorus.backend.exception.ResourceNotFoundException;
+import com.quizorus.backend.model.ContentEntity;
 import com.quizorus.backend.model.TopicEntity;
 import com.quizorus.backend.model.UserEntity;
 import com.quizorus.backend.payload.ApiResponse;
 import com.quizorus.backend.repository.TopicRepository;
 import com.quizorus.backend.repository.UserRepository;
+import com.quizorus.backend.security.CurrentUser;
 import com.quizorus.backend.security.UserPrincipal;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -33,30 +35,6 @@ public class TopicService {
         return ResponseEntity.ok().body(topics);
     }
 
-    public ResponseEntity<TopicEntity> createTopic(TopicEntity topicRequest) {
-        TopicEntity topic = new TopicEntity();
-        topic.setTitle(topicRequest.getTitle());
-        topic.setDescription(topicRequest.getDescription());
-        topic.setWikiData(topicRequest.getWikiData());
-        topic.setImageUrl(topicRequest.getImageUrl());
-        TopicEntity createdTopic = topicRepository.save(topic);
-
-        URI location = ServletUriComponentsBuilder
-                .fromCurrentRequest().path("/{topicId}")
-                .buildAndExpand(topic.getId()).toUri();
-
-        return ResponseEntity.created(location).body(createdTopic);
-    }
-
-    public ResponseEntity<ApiResponse> deleteTopicById(Long topicId, UserPrincipal currentUser){
-        TopicEntity topic = topicRepository.findById(topicId).orElse(null);
-        if (topic != null && currentUser.getId().equals(topic.getCreatedBy())){
-            topicRepository.deleteById(topicId);
-            return ResponseEntity.ok().body(new ApiResponse(true, "Topic deleted"));
-        }
-        return ResponseEntity.badRequest().body(new ApiResponse(false, "Failed to delete topic"));
-    }
-
     public ResponseEntity<List<TopicEntity>> getTopicsCreatedBy(String username, UserPrincipal currentUser) {
 
         UserEntity user = userRepository.findByUsername(username)
@@ -72,6 +50,44 @@ public class TopicService {
                 () -> new ResourceNotFoundException("TopicEntity", "id", topicId));
 
         return ResponseEntity.ok().body(topicById);
+    }
+
+    public ResponseEntity<TopicEntity> createTopic(TopicEntity topicRequest) {
+        TopicEntity topic = new TopicEntity();
+        topic.setTitle(topicRequest.getTitle());
+        topic.setDescription(topicRequest.getDescription());
+        topic.setWikiData(topicRequest.getWikiData());
+        topic.setImageUrl(topicRequest.getImageUrl());
+        TopicEntity createdTopic = topicRepository.save(topic);
+
+        URI location = ServletUriComponentsBuilder
+                .fromCurrentRequest().path("/{topicId}")
+                .buildAndExpand(topic.getId()).toUri();
+
+        return ResponseEntity.created(location).body(createdTopic);
+    }
+
+    public ResponseEntity<ApiResponse> createContentByTopicId(UserPrincipal currentUser, Long topicId, ContentEntity contentRequest){
+        TopicEntity topic = topicRepository.findById(topicId).orElse(null);
+
+        if (topic != null && currentUser.getId().equals(topic.getCreatedBy())){
+            contentRequest.setTopic(topic);
+            topic.getContentList().add(contentRequest);
+            topicRepository.save(topic);
+
+            return ResponseEntity.ok().body(new ApiResponse(true, "Content created successfully"));
+        }
+
+        return ResponseEntity.badRequest().body(new ApiResponse(false, "Failed to create content"));
+    }
+
+    public ResponseEntity<ApiResponse> deleteTopicById(Long topicId, UserPrincipal currentUser){
+        TopicEntity topic = topicRepository.findById(topicId).orElse(null);
+        if (topic != null && currentUser.getId().equals(topic.getCreatedBy())){
+            topicRepository.deleteById(topicId);
+            return ResponseEntity.ok().body(new ApiResponse(true, "Topic deleted"));
+        }
+        return ResponseEntity.badRequest().body(new ApiResponse(false, "Failed to delete topic"));
     }
 
 }

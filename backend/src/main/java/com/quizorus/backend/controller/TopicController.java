@@ -1,5 +1,6 @@
 package com.quizorus.backend.controller;
 
+import com.quizorus.backend.model.ContentEntity;
 import com.quizorus.backend.model.TopicEntity;
 import com.quizorus.backend.payload.ApiResponse;
 import com.quizorus.backend.security.CurrentUser;
@@ -29,20 +30,9 @@ public class TopicController {
         return topicService.getAllTopics(currentUser);
     }
 
-    @PostMapping
-    @PreAuthorize("hasRole('USER')")
-    public ResponseEntity<TopicEntity> createTopic(@Valid @RequestBody TopicEntity topicRequest){
-        return topicService.createTopic(topicRequest);
-    }
-
-    @DeleteMapping("/topic/{topicId}")
-    public ResponseEntity<ApiResponse> deleteTopicById(@CurrentUser UserPrincipal currentUser, @PathVariable Long topicId){
-        return topicService.deleteTopicById(topicId, currentUser);
-    }
-
     @GetMapping("/{username}")
     public ResponseEntity<List<TopicEntity>> getTopicsByUsername(@PathVariable String username,
-                                                 @CurrentUser UserPrincipal currentUser){
+                                                                 @CurrentUser UserPrincipal currentUser){
         return topicService.getTopicsCreatedBy(username, currentUser);
     }
 
@@ -50,5 +40,22 @@ public class TopicController {
     public ResponseEntity<TopicEntity> getTopicById(@CurrentUser UserPrincipal currentUser, @PathVariable Long topicId){
         return topicService.getTopicById(topicId, currentUser);
     }
+
+    @PostMapping
+    @PreAuthorize("hasRole('USER')")
+    public ResponseEntity<TopicEntity> createTopic(@Valid @RequestBody TopicEntity topicRequest){
+        return topicService.createTopic(topicRequest);
+    }
+
+    @PostMapping("/{topicId}/contents")
+    public ResponseEntity<ApiResponse> createContentByTopicId(@CurrentUser UserPrincipal currentUser, @PathVariable Long topicId, @Valid @RequestBody ContentEntity contentRequest){
+        return topicService.createContentByTopicId(currentUser,topicId, contentRequest);
+    }
+
+    @DeleteMapping("/topic/{topicId}")
+    public ResponseEntity<ApiResponse> deleteTopicById(@CurrentUser UserPrincipal currentUser, @PathVariable Long topicId){
+        return topicService.deleteTopicById(topicId, currentUser);
+    }
+
 
 }
