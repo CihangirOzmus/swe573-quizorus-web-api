@@ -21,7 +21,6 @@ class Glossary extends Component {
     loadTopicList(){
         let url = API_BASE_URL + "/topics";
         axios.get(url).then(res => {
-            console.log(res.data);
             this.setState({
                 topics: res.data,
                 isLoading: false

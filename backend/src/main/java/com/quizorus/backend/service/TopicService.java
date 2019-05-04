@@ -3,66 +3,75 @@ package com.quizorus.backend.service;
 import com.quizorus.backend.exception.ResourceNotFoundException;
 import com.quizorus.backend.model.TopicEntity;
 import com.quizorus.backend.model.UserEntity;
+import com.quizorus.backend.payload.ApiResponse;
 import com.quizorus.backend.repository.TopicRepository;
 import com.quizorus.backend.repository.UserRepository;
 import com.quizorus.backend.security.UserPrincipal;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import java.util.*;
+import java.net.URI;
+import java.util.List;
 
 @Service
 public class TopicService {
 
-    @Autowired
     private TopicRepository topicRepository;
 
-    @Autowired
     private UserRepository userRepository;
 
-    private static final Logger logger = LoggerFactory.getLogger(TopicService.class);
+    public TopicService(TopicRepository topicRepository, UserRepository userRepository) {
+        this.topicRepository = topicRepository;
+        this.userRepository = userRepository;
+    }
 
-    public List<TopicEntity> getAllTopics(UserPrincipal currentUser){
+    //private static final Logger logger = LoggerFactory.getLogger(TopicService.class);
+
+    public ResponseEntity<List<TopicEntity>> getAllTopics(UserPrincipal currentUser){
         List<TopicEntity> topics = topicRepository.findAll();
-        return topics;
+        return ResponseEntity.ok().body(topics);
     }
 
-    public List<TopicEntity> getTopicsCreatedBy(String username, UserPrincipal currentUser) {
-
-        UserEntity user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new ResourceNotFoundException("UserEntity", "username", username));
-
-        List<TopicEntity> topics = topicRepository.findByCreatedBy(user.getId());
-
-        return topics;
-    }
-
-    public TopicEntity createTopic(TopicEntity topicRequest) {
+    public ResponseEntity<TopicEntity> createTopic(TopicEntity topicRequest) {
         TopicEntity topic = new TopicEntity();
         topic.setTitle(topicRequest.getTitle());
         topic.setDescription(topicRequest.getDescription());
         topic.setWikiData(topicRequest.getWikiData());
         topic.setImageUrl(topicRequest.getImageUrl());
+        TopicEntity createdTopic = topicRepository.save(topic);
 
-        return topicRepository.save(topic);
+        URI location = ServletUriComponentsBuilder
+                .fromCurrentRequest().path("/{topicId}")
+                .buildAndExpand(topic.getId()).toUri();
+
+        return ResponseEntity.created(location).body(createdTopic);
     }
 
-    public TopicEntity getTopicById(Long topicId, UserPrincipal currentUser) {
-        TopicEntity topic = topicRepository.findById(topicId).orElseThrow(
-                () -> new ResourceNotFoundException("TopicEntity", "id", topicId));
-
-        return topic;
-    }
-
-    public boolean deleteTopicById(Long topicId, UserPrincipal currentUser){
+    public ResponseEntity<ApiResponse> deleteTopicById(Long topicId, UserPrincipal currentUser){
         TopicEntity topic = topicRepository.findById(topicId).orElse(null);
         if (topic != null && currentUser.getId().equals(topic.getCreatedBy())){
             topicRepository.deleteById(topicId);
-            return true;
+            return ResponseEntity.ok().body(new ApiResponse(true, "Topic deleted"));
         }
-        return false;
+        return ResponseEntity.badRequest().body(new ApiResponse(false, "Failed to delete topic"));
+    }
+
+    public ResponseEntity<List<TopicEntity>> getTopicsCreatedBy(String username, UserPrincipal currentUser) {
+
+        UserEntity user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new ResourceNotFoundException("UserEntity", "username", username));
+
+        List<TopicEntity> topicList = topicRepository.findByCreatedBy(user.getId());
+
+        return ResponseEntity.ok().body(topicList);
+    }
+
+    public ResponseEntity<TopicEntity> getTopicById(Long topicId, UserPrincipal currentUser) {
+        TopicEntity topicById = topicRepository.findById(topicId).orElseThrow(
+                () -> new ResourceNotFoundException("TopicEntity", "id", topicId));
+
+        return ResponseEntity.ok().body(topicById);
     }
 
 }
