@@ -3,6 +3,7 @@ package com.quizorus.backend.service;
 import com.quizorus.backend.model.ContentEntity;
 import com.quizorus.backend.model.QuestionEntity;
 import com.quizorus.backend.payload.ApiResponse;
+import com.quizorus.backend.payload.ContentResponse;
 import com.quizorus.backend.repository.ContentRepository;
 import com.quizorus.backend.security.UserPrincipal;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,10 +19,16 @@ public class ContentService {
 
     //private static final Logger logger = LoggerFactory.getLogger(ContentService.class);
 
-    public ResponseEntity<ContentEntity> getContentById(UserPrincipal currentUser,Long contentId){
+    public ResponseEntity<ContentResponse> getContentById(UserPrincipal currentUser, Long contentId){
         ContentEntity contentById = contentRepository.findById(contentId).orElse(null);
+        ContentResponse contentResponse = new ContentResponse();
+        contentResponse.setId(contentById.getId());
+        contentResponse.setTitle(contentById.getTitle());
+        contentResponse.setText(contentById.getText());
+        contentResponse.setTopicId(contentById.getTopic().getId());
+
         if (contentById != null){
-            return ResponseEntity.ok().body(contentById);
+            return ResponseEntity.ok().body(contentResponse);
         }
         return ResponseEntity.notFound().build();
     }

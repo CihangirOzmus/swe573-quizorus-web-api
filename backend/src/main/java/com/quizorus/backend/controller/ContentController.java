@@ -4,6 +4,7 @@ import com.quizorus.backend.model.ContentEntity;
 import com.quizorus.backend.model.QuestionEntity;
 import com.quizorus.backend.model.TopicEntity;
 import com.quizorus.backend.payload.ApiResponse;
+import com.quizorus.backend.payload.ContentResponse;
 import com.quizorus.backend.repository.TopicRepository;
 import com.quizorus.backend.security.CurrentUser;
 import com.quizorus.backend.security.UserPrincipal;
@@ -29,7 +30,7 @@ public class ContentController {
     //private static final Logger logger = LoggerFactory.getLogger(ContentController.class);
     @GetMapping("/{contentId}")
     @PreAuthorize("hasRole('USER')")
-    public ResponseEntity<ContentEntity> getContentById(@CurrentUser UserPrincipal currentUser, @PathVariable Long contentId){
+    public ResponseEntity<ContentResponse> getContentById(@CurrentUser UserPrincipal currentUser, @PathVariable Long contentId){
         return contentService.getContentById(currentUser, contentId);
     }
 
