@@ -134,14 +134,16 @@ class Topic extends Component{
             const questions = content.questionList;
             return (
                 <Tab.Pane key={contentId} eventKey={content.id}>
-                    <h4 className="mb-4 fontMedium">{content.title}
-                        <Button className="btn-sm ml-2" variant="success" style={{ paddingTop: '0', paddingBottom: '0', marginTop: '-3px' }} onClick={() => this.handleShow(content.id)}>
-                            <FontAwesomeIcon icon={faPlus} /> Question
+                    <h4 className="mb-4 fontMedium">
+                        <Button className="btn-sm ml-2" variant="info" style={{ paddingTop: '0', paddingBottom: '0', marginTop: '-3px' }} onClick={() => this.handleShow(content.id)}>
+                            <FontAwesomeIcon icon={faPlus} /> Add Question
                         </Button>
-                        <Button className="ml-2 btn-sm" style={{ paddingTop: '0', paddingBottom: '0', marginTop: '-3px' }} variant="outline-danger" onClick={() => this.handleDeleteContentById(content.id)}><FontAwesomeIcon icon={faTrash} /></Button>
-                        <Link className="btn  btn-outline-primary btn-sm ml-2" style={{ paddingTop: '0', paddingBottom: '0', marginTop: '-3px' }} to={`/content/${content.id}`}><FontAwesomeIcon icon={faEdit} /></Link>
+                        <Link className="btn  btn-outline-warning btn-sm ml-2" style={{ paddingTop: '0', paddingBottom: '0', marginTop: '-3px' }} to={`/content/${content.id}`}><FontAwesomeIcon icon={faEdit} />Update Content</Link>
+                        <Button className="ml-2 btn-sm" style={{ paddingTop: '0', paddingBottom: '0', marginTop: '-3px' }} variant="outline-danger" onClick={() => this.handleDeleteContentById(content.id)}><FontAwesomeIcon icon={faTrash} />Delete Content</Button>
                     </h4>
-                    <div className="text-left" dangerouslySetInnerHTML={{ __html: content.text }} ></div>
+                    <div className="materialText">
+                        <div className="text-left" dangerouslySetInnerHTML={{ __html: content.text }} ></div>
+                    </div>
 
                     {
                         questions.length > 0 && (
@@ -153,10 +155,10 @@ class Topic extends Component{
                                         return (
                                             <div key={questionId}>
                                                 <p><strong>Q{questionId + 1}:</strong> {question.text}
-                                                    <Button className="btn-sm ml-2" variant="success" style={{ paddingTop: '0', paddingBottom: '0', marginTop: '-3px' }} onClick={() => this.handleShowOption(question.id)}>
-                                                        <FontAwesomeIcon icon={faPlus} /> Option
+                                                    <Button className="btn-sm ml-2" variant="info" style={{ paddingTop: '0', paddingBottom: '0', marginTop: '-3px' }} onClick={() => this.handleShowOption(question.id)}>
+                                                        <FontAwesomeIcon icon={faPlus} /> Add Option
                                                     </Button>
-                                                    <Button className="ml-2 btn-sm" style={{ paddingTop: '0', paddingBottom: '0', marginTop: '-3px' }} variant="outline-danger" onClick={() => this.handleDeleteQuestionById(question.id)}><FontAwesomeIcon icon={faTrash} /></Button>
+                                                    <Button className="ml-2 btn-sm" style={{ paddingTop: '0', paddingBottom: '0', marginTop: '-3px' }} variant="outline-danger" onClick={() => this.handleDeleteQuestionById(question.id)}><FontAwesomeIcon icon={faTrash} />Delete Option</Button>
                                                 </p>
 
                                                 {

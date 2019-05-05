@@ -71,6 +71,7 @@ class UserCreatedTopicList extends Component{
                     <td>???</td>
                     <td>
                         <Link className="btn btn-outline-info" to={`/topic/${topic.id}`}>Details</Link>
+                        <Link className="btn btn-outline-warning ml-2" to={`/topic/${topic.id}/edit`}>Edit</Link>
                         <Button className="ml-2" variant="outline-danger" onClick={() => this.handleDeleteTopicById(topic.id)}>Delete</Button>
                     </td>
                 </tr>

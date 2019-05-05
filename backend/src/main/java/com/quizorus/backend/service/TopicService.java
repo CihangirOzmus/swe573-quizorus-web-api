@@ -60,13 +60,13 @@ public class TopicService {
             if (existingTopic != null && currentUser.getId().equals(existingTopic.getCreatedBy())){
                 existingTopic.setTitle(topicRequest.getTitle());
                 existingTopic.setDescription(topicRequest.getDescription());
-                existingTopic.setWikiData(topicRequest.getWikiData());
+                //existingTopic.setWikiData(topicRequest.getWikiData());
                 existingTopic.setImageUrl(topicRequest.getImageUrl());
                 TopicEntity updatedTopic = topicRepository.save(existingTopic);
                 return ResponseEntity.ok().body(updatedTopic);
             }
         }
-        
+
         TopicEntity topic = new TopicEntity();
         topic.setTitle(topicRequest.getTitle());
         topic.setDescription(topicRequest.getDescription());

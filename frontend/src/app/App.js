@@ -18,6 +18,7 @@ import UserCreatedTopicList from "../topic/UserCreatedTopicList";
 import UserEnrolledTopicList from "../topic/UserEnrolledTopicList";
 import UserProfile from "../user/UserProfile";
 import Topic from "../topic/Topic";
+import EditTopic from "../topic/EditTopic";
 import AddContent from "../learningpath/AddContent";
 import EditContent from "../learningpath/EditContent";
 
@@ -132,6 +133,13 @@ class App extends Component {
                                 path="/topic/new"
                                 currentUser={this.state.currentUser}
                                 component={CreateTopic}
+                            ></PrivateRoute>
+
+                            <PrivateRoute
+                                authenticated={this.state.isAuthenticated}
+                                path="/topic/:topicId/edit"
+                                currentUser={this.state.currentUser}
+                                component={EditTopic}
                             ></PrivateRoute>
 
                             <PrivateRoute
