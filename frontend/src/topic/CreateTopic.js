@@ -15,12 +15,14 @@ class CreateTopic extends Component {
         this.state = {
             title: '',
             description:'',
+            imageUrl:'',
             wikiDataSearch: [],
             wikiData:[]
         };
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleTitleChange = this.handleTitleChange.bind(this);
         this.handleDescriptionChange = this.handleDescriptionChange.bind(this);
+        this.handleImageUrlChange = this.handleImageUrlChange.bind(this);
         this.handleKeywordChange = this.handleKeywordChange.bind(this);
         this.handleSelect = this.handleSelect.bind(this);
     }
@@ -31,6 +33,7 @@ class CreateTopic extends Component {
         const newTopic = {
             title: this.state.title,
             description: this.state.description,
+            imageUrl: this.state.imageUrl,
             wikiData: this.state.wikiData
         };
 
@@ -56,6 +59,11 @@ class CreateTopic extends Component {
     handleDescriptionChange(event){
         const value = event.target.value;
         this.setState({description : value})
+    }
+
+    handleImageUrlChange(event){
+        const value = event.target.value;
+        this.setState({imageUrl : value})
     }
 
     handleKeywordChange(event){
@@ -134,6 +142,19 @@ class CreateTopic extends Component {
                                 type="text" 
                                 placeholder="Short Description"
                                 onChange={this.handleDescriptionChange}
+                            />
+                        </Col>
+                    </Form.Group>
+
+                    <Form.Group className="row" controlId="formPlaintextImageUrl" >
+                        <Form.Label column sm="4">
+                            Image URL
+                        </Form.Label>
+                        <Col sm="8">
+                            <Form.Control
+                                type="text"
+                                placeholder="Image URL"
+                                onChange={this.handleImageUrlChange}
                             />
                         </Col>
                     </Form.Group>

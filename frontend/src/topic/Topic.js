@@ -3,6 +3,7 @@ import {ACCESS_TOKEN, API_BASE_URL} from "../constants";
 import axios from "axios";
 import {Col, Jumbotron, ListGroup, Row, Tab} from "react-bootstrap";
 import {Link} from "react-router-dom";
+import './topic.css';
 
 class Topic extends Component{
     constructor(props){
@@ -78,6 +79,7 @@ class Topic extends Component{
                     <p>
                         <Link className="btn btn-outline-info" to={`/topic/${topic.id}/content`}>Add Learning Path</Link>
                     </p>
+                    <img src={topic.imageUrl} alt={topic.title} className="rounded topicImageSize"/>
                 </Jumbotron>
                 {
                     this.state.activeTab && (

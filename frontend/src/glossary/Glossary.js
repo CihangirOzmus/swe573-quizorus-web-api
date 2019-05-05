@@ -52,7 +52,7 @@ class Glossary extends Component {
                     <div className="card mb-3" style={{minWidth: "100%"}}>
                         <div className="row no-gutters align-items-center">
                             <div className="col-md-4">
-                                <img src={"https://via.placeholder.com/200x200"} className="rounded" alt={topic.title}/>
+                                <img src={topic.imageUrl} className="rounded imageSize" alt={topic.title}/>
                             </div>
                             <div className="col-md-8">
                                 <div className="card-body">
@@ -67,7 +67,6 @@ class Glossary extends Component {
                                         <p>
                                             <span className="badge badge-success">{topic.contentList.length}</span> Learning Path {' '}
                                             <span className="badge badge-warning">??</span> Questions {' '}
-                                            <span className="badge badge-light">Created by</span> @{topic.createdBy} {' '}
                                         </p>
                                         <Button variant="info" block>Enroll</Button>
                                     </div>
