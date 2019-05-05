@@ -6,16 +6,17 @@ import com.quizorus.backend.payload.ApiResponse;
 import com.quizorus.backend.payload.ContentResponse;
 import com.quizorus.backend.repository.ContentRepository;
 import com.quizorus.backend.security.UserPrincipal;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 
 @Service
 public class ContentService {
 
-    @Autowired
     private ContentRepository contentRepository;
+
+    public ContentService(ContentRepository contentRepository) {
+        this.contentRepository = contentRepository;
+    }
 
     //private static final Logger logger = LoggerFactory.getLogger(ContentService.class);
 

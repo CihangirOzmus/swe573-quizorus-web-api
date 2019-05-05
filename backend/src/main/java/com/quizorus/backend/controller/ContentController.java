@@ -21,11 +21,11 @@ import javax.validation.Valid;
 @RequestMapping("/api/contents")
 public class ContentController {
 
-    @Autowired
     private ContentService contentService;
 
-    @Autowired
-    private TopicRepository topicRepository;
+    public ContentController(ContentService contentService) {
+        this.contentService = contentService;
+    }
 
     //private static final Logger logger = LoggerFactory.getLogger(ContentController.class);
     @GetMapping("/{contentId}")
