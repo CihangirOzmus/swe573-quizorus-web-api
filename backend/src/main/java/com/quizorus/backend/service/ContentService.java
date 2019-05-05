@@ -17,10 +17,13 @@ public class ContentService {
     private ContentRepository contentRepository;
 
     //private static final Logger logger = LoggerFactory.getLogger(ContentService.class);
-    // delete after refactor getContent(topicId, contentId)
-    public ContentEntity getContentById(Long contentId){
+
+    public ResponseEntity<ContentEntity> getContentById(UserPrincipal currentUser,Long contentId){
         ContentEntity contentById = contentRepository.findById(contentId).orElse(null);
-        return contentById;
+        if (contentById != null){
+            return ResponseEntity.ok().body(contentById);
+        }
+        return ResponseEntity.notFound().build();
     }
 
     public ResponseEntity<ApiResponse> createQuestionByContentId(UserPrincipal currentUser, Long contentId, QuestionEntity questionRequest){

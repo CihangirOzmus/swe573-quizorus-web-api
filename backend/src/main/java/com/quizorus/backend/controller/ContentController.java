@@ -27,16 +27,10 @@ public class ContentController {
     private TopicRepository topicRepository;
 
     //private static final Logger logger = LoggerFactory.getLogger(ContentController.class);
-    // need to refactor that one
-    @GetMapping("/{topicId}/{contentId}")
+    @GetMapping("/{contentId}")
     @PreAuthorize("hasRole('USER')")
-    public ResponseEntity<ContentEntity> getContent(@PathVariable Long topicId, @PathVariable Long contentId, @CurrentUser UserPrincipal currentUser){
-        TopicEntity topic = topicRepository.findById(topicId).orElse(null);
-        if (topic != null){
-            ContentEntity content = contentService.getContentById(contentId);
-            return ResponseEntity.ok().body(content);
-        }
-        return ResponseEntity.notFound().build();
+    public ResponseEntity<ContentEntity> getContentById(@CurrentUser UserPrincipal currentUser, @PathVariable Long contentId){
+        return contentService.getContentById(currentUser, contentId);
     }
 
     @PostMapping("/{contentId}/questions")
