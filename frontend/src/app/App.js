@@ -19,6 +19,8 @@ import UserEnrolledTopicList from "../topic/UserEnrolledTopicList";
 import UserProfile from "../user/UserProfile";
 import Topic from "../topic/Topic";
 import AddContent from "../learningpath/AddContent";
+import EditContent from "../learningpath/EditContent";
+
 
 class App extends Component {
     constructor(props) {
@@ -136,6 +138,12 @@ class App extends Component {
                                 authenticated={this.state.isAuthenticated}
                                 path="/topic/:topicId/content"
                                 component={AddContent}
+                            ></PrivateRoute>
+
+                            <PrivateRoute
+                                authenticated={this.state.isAuthenticated}
+                                path="/content/:contentId"
+                                component={EditContent}
                             ></PrivateRoute>
 
                             <PrivateRoute

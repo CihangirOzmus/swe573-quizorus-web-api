@@ -52,7 +52,21 @@ public class TopicService {
         return ResponseEntity.ok().body(topicById);
     }
 
-    public ResponseEntity<TopicEntity> createTopic(TopicEntity topicRequest) {
+    public ResponseEntity<TopicEntity> createTopic(UserPrincipal currentUser, TopicEntity topicRequest) {
+
+        if (topicRequest.getId() != null){
+            TopicEntity existingTopic = topicRepository.findById(topicRequest.getId()).orElse(null);
+
+            if (existingTopic != null && currentUser.getId().equals(existingTopic.getCreatedBy())){
+                existingTopic.setTitle(topicRequest.getTitle());
+                existingTopic.setDescription(topicRequest.getDescription());
+                existingTopic.setWikiData(topicRequest.getWikiData());
+                existingTopic.setImageUrl(topicRequest.getImageUrl());
+                TopicEntity updatedTopic = topicRepository.save(existingTopic);
+                return ResponseEntity.ok().body(updatedTopic);
+            }
+        }
+        
         TopicEntity topic = new TopicEntity();
         topic.setTitle(topicRequest.getTitle());
         topic.setDescription(topicRequest.getDescription());
@@ -60,11 +74,7 @@ public class TopicService {
         topic.setImageUrl(topicRequest.getImageUrl());
         TopicEntity createdTopic = topicRepository.save(topic);
 
-        URI location = ServletUriComponentsBuilder
-                .fromCurrentRequest().path("/{topicId}")
-                .buildAndExpand(topic.getId()).toUri();
-
-        return ResponseEntity.created(location).body(createdTopic);
+        return ResponseEntity.ok().body(createdTopic);
     }
 
     public ResponseEntity<ApiResponse> createContentByTopicId(UserPrincipal currentUser, Long topicId, ContentEntity contentRequest){

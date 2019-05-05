@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.jws.soap.SOAPBinding;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -43,8 +44,8 @@ public class TopicController {
 
     @PostMapping
     @PreAuthorize("hasRole('USER')")
-    public ResponseEntity<TopicEntity> createTopic(@Valid @RequestBody TopicEntity topicRequest){
-        return topicService.createTopic(topicRequest);
+    public ResponseEntity<TopicEntity> createTopic(@CurrentUser UserPrincipal currentUser, @Valid @RequestBody TopicEntity topicRequest){
+        return topicService.createTopic(currentUser, topicRequest);
     }
 
     @PostMapping("/{topicId}/contents")

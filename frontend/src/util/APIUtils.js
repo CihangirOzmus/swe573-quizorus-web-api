@@ -49,11 +49,19 @@ export function createContent(contentData, topicId) {
     });
 }
 
-export function castVote(voteData) {
+export function createQuestion(questionData, contentId) {
     return request({
-        url: API_BASE_URL + "/polls/" + voteData.pollId + "/votes",
+        url: API_BASE_URL + `/contents/${contentId}/questions`,
         method: 'POST',
-        body: JSON.stringify(voteData)
+        body: JSON.stringify(questionData)
+    });
+}
+
+export function createOption(optionData, questionId) {
+    return request({
+        url: API_BASE_URL + `/questions/${questionId}/choices`,
+        method: 'POST',
+        body: JSON.stringify(optionData)
     });
 }
 
