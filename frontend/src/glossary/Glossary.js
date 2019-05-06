@@ -48,7 +48,7 @@ class Glossary extends Component {
         const topics = this.state.topics;
         const topicsView = topics.filter(topic => this.state.input === '' || topic.title.toLowerCase().indexOf(this.state.input) > -1).map((topic, topicIndex) => {
             return (
-                <Row className="justify-content-center mb-1" key={topicIndex}>
+                <Row className="justify-content-center mb-5" key={topicIndex}>
                     <div className="card mb-3" style={{minWidth: "100%"}}>
                         <div className="row no-gutters align-items-center">
                             <div className="col-md-4">

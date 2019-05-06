@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import { ACCESS_TOKEN, API_BASE_URL } from "../constants";
 import axios from "axios";
-import {Col, ListGroup, Row, Tab, Button, Modal, Jumbotron} from "react-bootstrap";
+import {Col, ListGroup, Row, Tab, Button, Modal, Jumbotron, Container} from "react-bootstrap";
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { createQuestion, createOption } from "../util/APIUtils";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faChevronRight, faPlus, faTrash, faEdit } from '@fortawesome/free-solid-svg-icons'
+import { faPlus, faTrash, faEdit } from '@fortawesome/free-solid-svg-icons'
 import toast from "toasted-notes";
-import './topic.css';
+import './Topic.css';
 
 class Topic extends Component{
     constructor(props){
@@ -153,7 +153,7 @@ class Topic extends Component{
                                     questions.map((question, questionId) => {
                                         const choices = question.choiceList
                                         return (
-                                            <div key={questionId}>
+                                            <div key={questionId} style={{ paddingLeft: '20px', textAlign: "left" }}>
                                                 <p><strong>Q{questionId + 1}:</strong> {question.text}
                                                     <Button className="btn-sm ml-2" variant="info" style={{ paddingTop: '0', paddingBottom: '0', marginTop: '-3px' }} onClick={() => this.handleShowOption(question.id)}>
                                                         <FontAwesomeIcon icon={faPlus} /> Add Option
@@ -167,7 +167,7 @@ class Topic extends Component{
                                                             {
                                                                 choices.map((choice, choiceId) => {
                                                                     return (
-                                                                        <div key={choiceId} style={{ paddingLeft: '20px' }}>
+                                                                        <div key={choiceId} style={{ paddingLeft: '20px', textAlign: "left" }}>
                                                                             <input type="radio" value="1" name="choice" /> {choice.text}
                                                                             {choice.correct && " (correct)"}
                                                                         </div>
@@ -307,20 +307,26 @@ class Topic extends Component{
                     </Modal.Body>
                 </Modal>
 
-                <Jumbotron>
-                    <h1 className="font-weight-light">{topic.title}</h1>
-                    <p className="font-italic">
-                        {topic.description}
-                    </p>
-                    <p>
-                        <Link className="btn btn-outline-info" to={`/topic/${topic.id}/content`}>Add Learning Path</Link>
-                    </p>
-                    <img src={topic.imageUrl} alt={topic.title} className="rounded border topicImageSize"/>
-                </Jumbotron>
+                <Container className="p-5">
+                    <Row>
+                        <Col lg="8">
+                            <img src={topic.imageUrl} alt={topic.title} className="rounded border topicImageSize"/>
+                        </Col>
+                        <Col className="text-left" lg="4">
+                            <h1 className="font-weight-light">{topic.title}</h1>
+                            <p className="font-italic">
+                                {topic.description}
+                            </p>
+                            <p>
+                                <Link className="btn btn-outline-info" to={`/topic/${topic.id}/content`}>Add Learning Path</Link>
+                            </p>
+                        </Col>
+                    </Row>
+                </Container>
                 {
                     this.state.activeTab && (
                         <Tab.Container id="list-group-tabs-example" defaultActiveKey={this.state.activeTab}>
-                            <Row>
+                            <Row className="mb-5 pb-5">
                                 <Col sm={3}>
                                     <ListGroup>
                                         {contentListLeftColumn}

@@ -3,7 +3,6 @@ import { ACCESS_TOKEN, API_BASE_URL } from "../constants";
 import axios from "axios";
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { Button } from "react-bootstrap";
-import { Link } from "react-router-dom";
 import { createContent } from "../util/APIUtils";
 import toast from "toasted-notes";
 import EditorField from "../texteditor/EditorField"

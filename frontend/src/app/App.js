@@ -21,6 +21,7 @@ import Topic from "../topic/Topic";
 import EditTopic from "../topic/EditTopic";
 import AddContent from "../learningpath/AddContent";
 import EditContent from "../learningpath/EditContent";
+import Footer from "../common/Footer";
 
 
 class App extends Component {
@@ -88,7 +89,6 @@ class App extends Component {
                         isAuthenticated={this.state.isAuthenticated}
                         currentUser={this.state.currentUser}
                         onLogout={this.handleLogout}/>
-
                     <div className="container">
                         <Switch>
 
@@ -164,6 +164,7 @@ class App extends Component {
 
                         </Switch>
                     </div>
+                    <Footer/>
                 </div>
             );
         }

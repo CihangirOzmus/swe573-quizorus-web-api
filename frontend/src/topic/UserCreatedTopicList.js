@@ -1,8 +1,8 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import { ACCESS_TOKEN, API_BASE_URL } from "../constants";
 import axios from "axios";
-import {Badge, Button, Table} from "react-bootstrap";
-import {Link} from "react-router-dom";
+import { Button, Table } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 class UserCreatedTopicList extends Component{
     constructor(props){
@@ -68,7 +68,6 @@ class UserCreatedTopicList extends Component{
                         })}
                     </td>
                     <td>{topic.contentList.length}</td>
-                    <td>???</td>
                     <td>
                         <Link className="btn btn-outline-info" to={`/topic/${topic.id}`}>Details</Link>
                         <Link className="btn btn-outline-warning ml-2" to={`/topic/${topic.id}/edit`}>Edit</Link>
@@ -89,7 +88,6 @@ class UserCreatedTopicList extends Component{
                         <th>Short Description</th>
                         <th>Wikidata</th>
                         <th>#Learning Path</th>
-                        <th>#Question</th>
                         <th>Action</th>
                     </tr>
                     </thead>
