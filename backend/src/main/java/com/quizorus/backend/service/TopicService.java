@@ -105,8 +105,4 @@ public class TopicService {
         return ResponseEntity.ok().body(new ApiResponse(true, "Enrolled to topic successfully"));
     }
 
-    /*public ResponseEntity<List<TopicEntity>> getEnrolledTopicList(UserPrincipal currentUser, String username) {
-
-    }*/
-
 }

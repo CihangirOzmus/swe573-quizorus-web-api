@@ -1,5 +1,6 @@
 package com.quizorus.backend.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.quizorus.backend.model.audit.UserDateAudit;
 import org.springframework.lang.Nullable;
 
@@ -36,12 +37,8 @@ public class TopicEntity extends UserDateAudit {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "topic")
     private List<ContentEntity> contentList;
 
-    @Nullable
-    @ManyToMany
-    @JoinTable(name = "enrolled_user_list",
-                joinColumns = @JoinColumn(name = "topic_id"),
-                inverseJoinColumns = @JoinColumn(name = "user_id")
-    )
+    @JsonIgnore
+    @ManyToMany(mappedBy = "enrolledTopicList")
     private List<UserEntity> enrolledUserList;
 
     public List<UserEntity> getEnrolledUserList() {

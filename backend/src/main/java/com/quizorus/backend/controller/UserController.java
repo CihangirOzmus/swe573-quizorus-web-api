@@ -52,7 +52,7 @@ public class UserController {
 
     /*@GetMapping("/users/{username}/enrolled")
     public ResponseEntity<List<TopicEntity>> getEnrolledTopics(@CurrentUser UserPrincipal currentUser ,@PathVariable String username){
-        return topicService.getEnrolledTopicList(currentUser, username);
+        return userService.getEnrolledTopicList(currentUser, username);
     }*/
 
 }

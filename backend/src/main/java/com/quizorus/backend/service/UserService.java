@@ -36,9 +36,7 @@ public class UserService {
                 .orElseThrow(() -> new ResourceNotFoundException("UserEntity", "username", username));
 
         long topicCount = topicRepository.countByCreatedBy(user.getId());
-
         UserProfile userProfile = new UserProfile(user.getId(), user.getUsername(), user.getName(), user.getCreatedAt(), topicCount);
-
         return userProfile;
     }
 
