@@ -49,13 +49,6 @@ public class UserEntity extends DateAudit {
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
 
-    @ManyToMany
-    @JoinTable(name = "user_enrolled_topics",
-               joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "topic_id")
-    )
-    private Set<TopicEntity> enrolledTopics = new HashSet<>();
-
     public UserEntity() {
 
     }
@@ -65,15 +58,6 @@ public class UserEntity extends DateAudit {
         this.username = username;
         this.email = email;
         this.password = password;
-    }
-
-
-    public Set<TopicEntity> getEnrolledTopics() {
-        return enrolledTopics;
-    }
-
-    public void setEnrolledTopics(Set<TopicEntity> enrolledTopics) {
-        this.enrolledTopics = enrolledTopics;
     }
 
     public Long getId() {

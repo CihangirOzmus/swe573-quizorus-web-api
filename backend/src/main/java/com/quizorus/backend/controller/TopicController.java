@@ -10,7 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import javax.jws.soap.SOAPBinding;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -32,12 +31,14 @@ public class TopicController {
     }
 
     @GetMapping("/{username}")
+    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<List<TopicEntity>> getTopicsByUsername(@PathVariable String username,
                                                                  @CurrentUser UserPrincipal currentUser){
-        return topicService.getTopicsCreatedBy(username, currentUser);
+        return topicService.getTopicsCreatedByUsername(username, currentUser);
     }
 
     @GetMapping("/topic/{topicId}")
+    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<TopicEntity> getTopicById(@CurrentUser UserPrincipal currentUser, @PathVariable Long topicId){
         return topicService.getTopicById(topicId, currentUser);
     }
@@ -49,14 +50,21 @@ public class TopicController {
     }
 
     @PostMapping("/{topicId}/contents")
+    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<ApiResponse> createContentByTopicId(@CurrentUser UserPrincipal currentUser, @PathVariable Long topicId, @Valid @RequestBody ContentEntity contentRequest){
         return topicService.createContentByTopicId(currentUser,topicId, contentRequest);
     }
 
     @DeleteMapping("/topic/{topicId}")
+    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<ApiResponse> deleteTopicById(@CurrentUser UserPrincipal currentUser, @PathVariable Long topicId){
         return topicService.deleteTopicById(topicId, currentUser);
     }
 
+    @PostMapping("{topicId}/enroll/{username}")
+    @PreAuthorize("hasRole('USER')")
+    public ResponseEntity<ApiResponse> enrollToTopicByUsername(@CurrentUser UserPrincipal currentUser, @PathVariable Long topicId, @PathVariable String username){
+        return topicService.enrollToTopicByUsername(currentUser, topicId, username);
+    }
 
 }

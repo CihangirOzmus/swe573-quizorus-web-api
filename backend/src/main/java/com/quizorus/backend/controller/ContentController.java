@@ -1,15 +1,11 @@
 package com.quizorus.backend.controller;
 
-import com.quizorus.backend.model.ContentEntity;
 import com.quizorus.backend.model.QuestionEntity;
-import com.quizorus.backend.model.TopicEntity;
 import com.quizorus.backend.payload.ApiResponse;
 import com.quizorus.backend.payload.ContentResponse;
-import com.quizorus.backend.repository.TopicRepository;
 import com.quizorus.backend.security.CurrentUser;
 import com.quizorus.backend.security.UserPrincipal;
 import com.quizorus.backend.service.ContentService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;

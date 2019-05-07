@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 public class UserService {
 
     private UserRepository userRepository;
-
     private TopicRepository topicRepository;
 
     public UserService(UserRepository userRepository, TopicRepository topicRepository) {
@@ -42,4 +41,5 @@ public class UserService {
 
         return userProfile;
     }
+
 }

@@ -7,20 +7,16 @@ import com.quizorus.backend.model.UserEntity;
 import com.quizorus.backend.payload.ApiResponse;
 import com.quizorus.backend.repository.TopicRepository;
 import com.quizorus.backend.repository.UserRepository;
-import com.quizorus.backend.security.CurrentUser;
 import com.quizorus.backend.security.UserPrincipal;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import java.net.URI;
 import java.util.List;
 
 @Service
 public class TopicService {
 
     private TopicRepository topicRepository;
-
     private UserRepository userRepository;
 
     public TopicService(TopicRepository topicRepository, UserRepository userRepository) {
@@ -35,8 +31,7 @@ public class TopicService {
         return ResponseEntity.ok().body(topics);
     }
 
-    public ResponseEntity<List<TopicEntity>> getTopicsCreatedBy(String username, UserPrincipal currentUser) {
-
+    public ResponseEntity<List<TopicEntity>> getTopicsCreatedByUsername(String username, UserPrincipal currentUser) {
         UserEntity user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new ResourceNotFoundException("UserEntity", "username", username));
 
@@ -99,5 +94,19 @@ public class TopicService {
         }
         return ResponseEntity.badRequest().body(new ApiResponse(false, "Failed to delete topic"));
     }
+
+    public ResponseEntity<ApiResponse> enrollToTopicByUsername(UserPrincipal currentUser, Long topicId, String username){
+        TopicEntity topicToEnroll = topicRepository.findById(topicId).orElseThrow(() -> new ResourceNotFoundException("TopicEntity", "topicId", topicId));
+        UserEntity userToEnroll = userRepository.findByUsername(username).orElseThrow(() -> new ResourceNotFoundException("UserEntity", "username", username));
+
+        topicToEnroll.getEnrolledUserList().add(userToEnroll);
+        topicRepository.save(topicToEnroll);
+
+        return ResponseEntity.ok().body(new ApiResponse(true, "Enrolled to topic successfully"));
+    }
+
+    /*public ResponseEntity<List<TopicEntity>> getEnrolledTopicList(UserPrincipal currentUser, String username) {
+
+    }*/
 
 }

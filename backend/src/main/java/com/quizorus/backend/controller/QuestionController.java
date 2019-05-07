@@ -37,4 +37,5 @@ public class QuestionController {
     public ResponseEntity<ApiResponse> deleteQuestionById(@CurrentUser UserPrincipal currentUser, @PathVariable Long questionId){
         return questionService.deleteQuestionById(questionId, currentUser);
     }
+
 }

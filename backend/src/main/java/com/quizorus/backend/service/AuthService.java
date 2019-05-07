@@ -11,7 +11,6 @@ import com.quizorus.backend.payload.SignUpRequest;
 import com.quizorus.backend.repository.RoleRepository;
 import com.quizorus.backend.repository.UserRepository;
 import com.quizorus.backend.security.JwtTokenProvider;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -29,13 +28,9 @@ import java.util.Collections;
 public class AuthService {
 
     private AuthenticationManager authenticationManager;
-
     private UserRepository userRepository;
-
     private RoleRepository roleRepository;
-
     private PasswordEncoder passwordEncoder;
-
     private JwtTokenProvider tokenProvider;
 
     public AuthService(AuthenticationManager authenticationManager, UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder, JwtTokenProvider tokenProvider) {

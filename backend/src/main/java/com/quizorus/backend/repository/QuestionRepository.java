@@ -8,7 +8,8 @@ import java.util.Optional;
 
 @Repository
 public interface QuestionRepository extends JpaRepository<QuestionEntity, Long> {
-    Optional<QuestionEntity> findById(Long questionId);
 
+    Optional<QuestionEntity> findById(Long questionId);
     void deleteQuestionById(Long questionId);
+
 }

@@ -37,6 +37,22 @@ public class TopicEntity extends UserDateAudit {
     private List<ContentEntity> contentList;
 
     @Nullable
+    @ManyToMany
+    @JoinTable(name = "enrolled_user_list",
+                joinColumns = @JoinColumn(name = "topic_id"),
+                inverseJoinColumns = @JoinColumn(name = "user_id")
+    )
+    private List<UserEntity> enrolledUserList;
+
+    public List<UserEntity> getEnrolledUserList() {
+        return enrolledUserList;
+    }
+
+    public void setEnrolledUserList(List<UserEntity> enrolledUserList) {
+        this.enrolledUserList = enrolledUserList;
+    }
+
+    @Nullable
     public String getImageUrl() {
         return imageUrl;
     }

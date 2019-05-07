@@ -9,12 +9,13 @@ import java.util.Optional;
 
 @Repository
 public interface TopicRepository extends JpaRepository<TopicEntity, Long> {
-    Optional<TopicEntity> findById(Long topicId);
 
+    Optional<TopicEntity> findById(Long topicId);
     List<TopicEntity> findByCreatedBy(Long userId);
 
-    long countByCreatedBy(Long userId);
+//    List<TopicEntity> findByEnrolledUserId(String username);
 
+    long countByCreatedBy(Long userId);
     void deleteById(Long topicId);
 
 }
