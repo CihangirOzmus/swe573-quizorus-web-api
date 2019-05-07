@@ -1,6 +1,7 @@
 package com.quizorus.backend.repository;
 
 import com.quizorus.backend.model.TopicEntity;
+import com.quizorus.backend.model.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -14,5 +15,6 @@ public interface TopicRepository extends JpaRepository<TopicEntity, Long> {
     List<TopicEntity> findByCreatedBy(Long userId);
     long countByCreatedBy(Long userId);
     void deleteById(Long topicId);
+    List<TopicEntity> findTopicEntitiesByEnrolledUserListContains(UserEntity user);
 
 }

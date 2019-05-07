@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class TopicService {
@@ -45,6 +46,12 @@ public class TopicService {
                 () -> new ResourceNotFoundException("TopicEntity", "id", topicId));
 
         return ResponseEntity.ok().body(topicById);
+    }
+
+    public ResponseEntity<List<TopicEntity>> getTopicsByEnrolledUserId(UserPrincipal currentUser, Long userId){
+        UserEntity userById = userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("User", "id", userId));
+        List<TopicEntity> enrolledTopicList = topicRepository.findTopicEntitiesByEnrolledUserListContains(userById);
+        return ResponseEntity.ok().body(enrolledTopicList);
     }
 
     public ResponseEntity<TopicEntity> createTopic(UserPrincipal currentUser, TopicEntity topicRequest) {

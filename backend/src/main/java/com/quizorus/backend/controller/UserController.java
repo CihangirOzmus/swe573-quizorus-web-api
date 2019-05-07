@@ -50,9 +50,4 @@ public class UserController {
         return topicService.getTopicsCreatedByUsername(username, currentUser);
     }
 
-    /*@GetMapping("/users/{username}/enrolled")
-    public ResponseEntity<List<TopicEntity>> getEnrolledTopics(@CurrentUser UserPrincipal currentUser ,@PathVariable String username){
-        return userService.getEnrolledTopicList(currentUser, username);
-    }*/
-
 }

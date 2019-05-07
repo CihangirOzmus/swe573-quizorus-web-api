@@ -61,10 +61,15 @@ public class TopicController {
         return topicService.deleteTopicById(topicId, currentUser);
     }
 
-    @PostMapping("{topicId}/enroll/{username}")
+    @PostMapping("/{topicId}/enroll/{username}")
     @PreAuthorize("hasRole('USER')")
     public ResponseEntity<ApiResponse> enrollToTopicByUsername(@CurrentUser UserPrincipal currentUser, @PathVariable Long topicId, @PathVariable String username){
         return topicService.enrollToTopicByUsername(currentUser, topicId, username);
+    }
+
+    @GetMapping("/enrolled/{userId}")
+    public ResponseEntity<List<TopicEntity>> getEnrolledTopics(@CurrentUser UserPrincipal currentUser ,@PathVariable Long userId){
+        return topicService.getTopicsByEnrolledUserId(currentUser, userId);
     }
 
 }

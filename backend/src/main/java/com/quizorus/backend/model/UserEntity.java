@@ -1,5 +1,6 @@
 package com.quizorus.backend.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.NaturalId;
 import org.springframework.lang.Nullable;
 
@@ -50,12 +51,9 @@ public class UserEntity extends DateAudit {
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
 
+    @JsonIgnore
     @Nullable
-    @ManyToMany
-    @JoinTable(name = "enrolled_topic_list",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "topic_id")
-    )
+    @ManyToMany(mappedBy = "enrolledUserList")
     private List<TopicEntity> enrolledTopicList;
 
     public UserEntity() {

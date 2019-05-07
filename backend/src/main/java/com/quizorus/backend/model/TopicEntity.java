@@ -9,7 +9,6 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Table(name = "topics")
@@ -37,8 +36,12 @@ public class TopicEntity extends UserDateAudit {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "topic")
     private List<ContentEntity> contentList;
 
-    @JsonIgnore
-    @ManyToMany(mappedBy = "enrolledTopicList")
+    @Nullable
+    @ManyToMany
+    @JoinTable(name = "enrolled_topic_list",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "topic_id")
+    )
     private List<UserEntity> enrolledUserList;
 
     public List<UserEntity> getEnrolledUserList() {
