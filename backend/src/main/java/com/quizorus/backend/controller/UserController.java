@@ -1,17 +1,13 @@
 package com.quizorus.backend.controller;
 
-import com.quizorus.backend.exception.ResourceNotFoundException;
 import com.quizorus.backend.model.TopicEntity;
-import com.quizorus.backend.model.UserEntity;
-import com.quizorus.backend.payload.*;
-import com.quizorus.backend.repository.TopicRepository;
-import com.quizorus.backend.repository.UserRepository;
+import com.quizorus.backend.payload.UserIdentityAvailability;
+import com.quizorus.backend.payload.UserProfile;
+import com.quizorus.backend.payload.UserSummary;
 import com.quizorus.backend.security.CurrentUser;
 import com.quizorus.backend.security.UserPrincipal;
 import com.quizorus.backend.service.TopicService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.quizorus.backend.service.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -22,45 +18,38 @@ import java.util.List;
 @RequestMapping("/api")
 public class UserController {
 
-    @Autowired
-    private UserRepository userRepository;
+    private UserService userService;
 
-    @Autowired
-    private TopicRepository topicRepository;
-
-    @Autowired
     private TopicService topicService;
 
-    private static final Logger logger = LoggerFactory.getLogger(UserController.class);
+    public UserController(UserService userService, TopicService topicService) {
+        this.userService = userService;
+        this.topicService = topicService;
+    }
+
+    //private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
     @GetMapping("/user/me")
     @PreAuthorize("hasRole('USER')")
     public UserSummary getCurrentUser(@CurrentUser UserPrincipal currentUser){
-        UserSummary userSummary = new UserSummary(currentUser.getId(), currentUser.getUsername(), currentUser.getName());
-        return userSummary;
+        return userService.getCurrentUser(currentUser);
     }
 
     @GetMapping("/user/checkUsernameAvailability")
-    public UserIdentityAvailability checkUsernameAvailability(@RequestParam(value = "email") String email){
-        Boolean isAvailable = !userRepository.existsByEmail(email);
-        return new UserIdentityAvailability(isAvailable);
+    public UserIdentityAvailability checkUsernameAvailability(@RequestParam String email){
+        return userService.checkUsernameAvailability(email);
     }
 
     @GetMapping("/users/{username}")
-    public UserProfile getUserProfile(@PathVariable(value = "username") String username) {
-        UserEntity user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new ResourceNotFoundException("UserEntity", "username", username));
-
-        long topicCount = topicRepository.countByCreatedBy(user.getId());
-
-        UserProfile userProfile = new UserProfile(user.getId(), user.getUsername(), user.getName(), user.getCreatedAt(), topicCount);
-
-        return userProfile;
+    public UserProfile getUserProfile(@PathVariable String username) {
+        return userService.getUserProfileByUsername(username);
     }
 
     @GetMapping("/users/{username}/topics")
-    public ResponseEntity<List<TopicEntity>> getTopicsCreatedBy(@PathVariable(value = "username") String username, @CurrentUser UserPrincipal currentUser) {
+    public ResponseEntity<List<TopicEntity>> getTopicsCreatedBy(@PathVariable String username, @CurrentUser UserPrincipal currentUser) {
         return topicService.getTopicsCreatedBy(username, currentUser);
     }
+
+
 
 }

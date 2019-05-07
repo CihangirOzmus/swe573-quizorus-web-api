@@ -4,7 +4,6 @@ import com.quizorus.backend.model.ChoiceEntity;
 import com.quizorus.backend.model.QuestionEntity;
 import com.quizorus.backend.payload.ApiResponse;
 import com.quizorus.backend.repository.QuestionRepository;
-import com.quizorus.backend.security.CurrentUser;
 import com.quizorus.backend.security.UserPrincipal;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
