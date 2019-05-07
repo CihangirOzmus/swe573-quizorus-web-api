@@ -158,7 +158,7 @@ class Topic extends Component{
                                                     <Button className="btn-sm ml-2" variant="info" style={{ paddingTop: '0', paddingBottom: '0', marginTop: '-3px' }} onClick={() => this.handleShowOption(question.id)}>
                                                         <FontAwesomeIcon icon={faPlus} /> Add Option
                                                     </Button>
-                                                    <Button className="ml-2 btn-sm" style={{ paddingTop: '0', paddingBottom: '0', marginTop: '-3px' }} variant="outline-danger" onClick={() => this.handleDeleteQuestionById(question.id)}><FontAwesomeIcon icon={faTrash} />Delete Option</Button>
+                                                    <Button className="ml-2 btn-sm" style={{ paddingTop: '0', paddingBottom: '0', marginTop: '-3px' }} variant="outline-danger" onClick={() => this.handleDeleteQuestionById(question.id)}><FontAwesomeIcon icon={faTrash} />Delete Question</Button>
                                                 </p>
 
                                                 {
