@@ -68,7 +68,6 @@ class CreateTopic extends Component {
 
     handleKeywordChange(event){
         clearTimeout(this.timer);
-
         const value = event.target.value;
         if ( value !== ''){
             this.timer = setTimeout(() => {
@@ -98,22 +97,24 @@ class CreateTopic extends Component {
     render() {
         const wikidatas = this.state.wikiDataSearch;
         const wikidataResultList = wikidatas.map((wiki, wikiIndex) => {
-            return (
-                // if the description is empty, empty row seen, try domates
-                <Row key={wikiIndex} className="border border-info p-1 m-1 text-left">
-                    {wiki.description && (
+            if (wiki.description) {
+                return (
+                    <Row key={wikiIndex} className="border border-info p-1 m-1 text-left">
+
                         <React.Fragment>
                             <Col md="1"><Form.Check onChange={this.handleSelect}
-                                type="checkbox"
-                                id="default-checkbox"
-                                value={wiki.concepturi}
+                                                    type="checkbox"
+                                                    id="default-checkbox"
+                                                    value={wiki.concepturi}
                             /></Col>
                             <Col md="9"><Badge variant="secondary">Description: </Badge> {wiki.description}</Col>
                             <Col md="2"><Badge variant="secondary">Url: </Badge> <a href={wiki.concepturi} target="_blank" rel="noopener noreferrer">WikiData Page</a></Col>
                         </React.Fragment>
-                    )}
-                </Row>
-            )
+
+                    </Row>
+                )
+            }
+            return null;
         });
 
         return (

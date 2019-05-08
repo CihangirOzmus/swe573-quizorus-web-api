@@ -1,6 +1,5 @@
 package com.quizorus.backend.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.quizorus.backend.model.audit.UserDateAudit;
 import org.springframework.lang.Nullable;
 

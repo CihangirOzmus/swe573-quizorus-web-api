@@ -1,30 +1,23 @@
 import React, { Component } from 'react';
 import { ACCESS_TOKEN, API_BASE_URL } from "../constants";
 import { Formik, Form, Field, ErrorMessage } from 'formik';
-import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 import { createTopic } from '../util/APIUtils';
 import { withRouter } from 'react-router-dom';
 import toast from "toasted-notes";
-import wdk from "wikidata-sdk";
 import axios from "axios";
-import { Row } from "react-bootstrap";
 
 class EditTopic extends Component {
     constructor(props) {
         super(props);
-        this.timer = null;
         this.state = {
             title: '',
             description: '',
             imageUrl: '',
-            wikiDataSearch: [],
-            wikiData: [],
             topic: false
         };
         this.handleTitleChange = this.handleTitleChange.bind(this);
         this.handleDescriptionChange = this.handleDescriptionChange.bind(this);
-        this.handleKeywordChange = this.handleKeywordChange.bind(this);
         this.handleSelect = this.handleSelect.bind(this);
         this.handleImageUrlChange = this.handleImageUrlChange.bind(this);
     }
@@ -44,28 +37,6 @@ class EditTopic extends Component {
     handleImageUrlChange(event) {
         const value = event.target.value;
         this.setState({ imageUrl: value })
-    }
-
-    handleKeywordChange(event) {
-        clearTimeout(this.timer);
-
-        const value = event.target.value;
-        if (value !== '') {
-            this.timer = setTimeout(() => {
-                const url = wdk.searchEntities(value, 'en', 5, 'json');
-                axios.get(url)
-                    .then(response => {
-                        if (response.data.search.length > 0) {
-                            this.setState({ wikiDataSearch: response.data.search })
-                            toast.notify("Found in WikiData!", { position: "top-right" })
-                        } else {
-                            toast.notify("Keyword can not found!", { position: "top-right" });
-                        }
-                    })
-            }, 1000)
-        } else {
-            this.setState({ wikiDataSearch: [] })
-        }
     }
 
     handleSelect(event) {
@@ -100,25 +71,6 @@ class EditTopic extends Component {
     render() {
         const vm = this.state;
         const props = this.props;
-        const wikidatas = this.state.wikiDataSearch;
-        const wikidataResultList = wikidatas.map((wiki, wikiIndex) => {
-            return (
-                // if the description is empty, empty row seen, try domates
-                <Row key={wikiIndex} className="border-bottom border-info p-1 m-1 text-left">
-                    {wiki.description && (
-                        <React.Fragment>
-                            <Col md="1"><Form.Check onChange={this.handleSelect}
-                                                    type="checkbox"
-                                                    id="default-checkbox"
-                                                    value={wiki.concepturi}
-                            /></Col>
-                            <Col md="9">{wiki.description}</Col>
-                            <Col md="2"><a href={wiki.concepturi} target="_blank" rel="noopener noreferrer">Visit</a></Col>
-                        </React.Fragment>
-                    )}
-                </Row>
-            )
-        });
 
         return (
 
@@ -154,10 +106,10 @@ class EditTopic extends Component {
 
                                         createTopic(newTopic, topicId)
                                             .then(res => {
-                                                toast.notify("Content updated successfully.", { position: "top-right" });
+                                                toast.notify("Content updated successfully.", { position: "bottom-right" });
                                                 props.history.push(`/topic/${topicId}`);
                                             }).catch(err => {
-                                            toast.notify("Topic does not exist!", { position: "top-right" });
+                                            toast.notify("Topic does not exist!", { position: "bottom-right" });
                                         });
 
                                         setSubmitting(false);

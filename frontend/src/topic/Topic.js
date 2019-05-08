@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { ACCESS_TOKEN, API_BASE_URL } from "../constants";
 import axios from "axios";
-import {Col, ListGroup, Row, Tab, Button, Modal, Jumbotron, Container} from "react-bootstrap";
+import {Col, ListGroup, Row, Tab, Button, Modal, Container} from "react-bootstrap";
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { createQuestion, createOption } from "../util/APIUtils";
 import { Link } from "react-router-dom";

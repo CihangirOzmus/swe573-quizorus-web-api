@@ -19,12 +19,11 @@ public class TopicService {
     private TopicRepository topicRepository;
     private UserRepository userRepository;
 
+
     public TopicService(TopicRepository topicRepository, UserRepository userRepository) {
         this.topicRepository = topicRepository;
         this.userRepository = userRepository;
     }
-
-    //private static final Logger logger = LoggerFactory.getLogger(TopicService.class);
 
     public ResponseEntity<List<TopicEntity>> getAllTopics(UserPrincipal currentUser){
         List<TopicEntity> topics = topicRepository.findAll();
