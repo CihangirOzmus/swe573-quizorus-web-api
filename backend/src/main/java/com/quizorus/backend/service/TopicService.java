@@ -5,7 +5,6 @@ import com.quizorus.backend.model.ContentEntity;
 import com.quizorus.backend.model.TopicEntity;
 import com.quizorus.backend.model.UserEntity;
 import com.quizorus.backend.payload.ApiResponse;
-import com.quizorus.backend.payload.UserSummary;
 import com.quizorus.backend.repository.TopicRepository;
 import com.quizorus.backend.repository.UserRepository;
 import com.quizorus.backend.security.UserPrincipal;
@@ -13,7 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class TopicService {
@@ -47,12 +45,6 @@ public class TopicService {
                 () -> new ResourceNotFoundException("TopicEntity", "id", topicId));
 
         return ResponseEntity.ok().body(topicById);
-    }
-
-    public ResponseEntity<List<TopicEntity>> getTopicsByEnrolledUserId(UserPrincipal currentUser, Long userId){
-        UserEntity userById = userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("User", "id", userId));
-        List<TopicEntity> enrolledTopicList = topicRepository.findTopicEntitiesByEnrolledUserListContains(userById);
-        return ResponseEntity.ok().body(enrolledTopicList);
     }
 
     public ResponseEntity<TopicEntity> createTopic(UserPrincipal currentUser, TopicEntity topicRequest) {
@@ -106,12 +98,14 @@ public class TopicService {
     public ResponseEntity<ApiResponse> enrollToTopicByUsername(UserPrincipal currentUser, Long topicId, String username){
         TopicEntity topicToEnroll = topicRepository.findById(topicId).orElseThrow(() -> new ResourceNotFoundException("TopicEntity", "topicId", topicId));
         UserEntity userToEnroll = userRepository.findByUsername(username).orElseThrow(() -> new ResourceNotFoundException("UserEntity", "username", username));
-        UserSummary userSummary = new UserSummary(currentUser.getId(), currentUser.getUsername(), currentUser.getName());
-
         topicToEnroll.getEnrolledUserList().add(userToEnroll);
         topicRepository.save(topicToEnroll);
-
         return ResponseEntity.ok().body(new ApiResponse(true, "Enrolled to topic successfully"));
     }
 
+    public ResponseEntity<List<TopicEntity>> getTopicsByEnrolledUserId(UserPrincipal currentUser, Long userId){
+        UserEntity userById = userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("User", "id", userId));
+        List<TopicEntity> enrolledTopicList = topicRepository.findTopicEntitiesByEnrolledUserListContains(userById);
+        return ResponseEntity.ok().body(enrolledTopicList);
+    }
 }
