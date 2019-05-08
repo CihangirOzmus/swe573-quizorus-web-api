@@ -1,8 +1,5 @@
 package com.quizorus.backend.DTO;
 
-
-import java.util.List;
-
 public class TopicEntityDTO {
 
     Long id;
@@ -10,7 +7,7 @@ public class TopicEntityDTO {
     String description;
     String imageUrl;
     // wikidata
-    List<ContentEntityDTO> contentDTOList;
-    List<UserEntityDTO> enrolledUserList;
+    Long numberOfContents;
+    Long numberOfQuestions;
 
 }

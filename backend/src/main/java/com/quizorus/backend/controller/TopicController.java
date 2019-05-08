@@ -6,6 +6,7 @@ import com.quizorus.backend.payload.ApiResponse;
 import com.quizorus.backend.security.CurrentUser;
 import com.quizorus.backend.security.UserPrincipal;
 import com.quizorus.backend.service.TopicService;
+import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -18,12 +19,12 @@ import java.util.List;
 public class TopicController {
 
     private TopicService topicService;
+    private ModelMapper modelMapper;
 
-    public TopicController(TopicService topicService) {
+    public TopicController(TopicService topicService, ModelMapper modelMapper) {
         this.topicService = topicService;
+        this.modelMapper = modelMapper;
     }
-
-    //private static final Logger logger = LoggerFactory.getLogger(TopicController.class);
 
     @GetMapping
     public ResponseEntity<List<TopicEntity>> getAllTopics(@CurrentUser UserPrincipal currentUser){

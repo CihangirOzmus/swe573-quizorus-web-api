@@ -2,9 +2,9 @@ package com.quizorus.backend.DTO;
 
 public class UserEntityDTO {
 
-    Long id;
-    String username;
-    String name;
+    private Long id;
+    private String username;
+    private String name;
 
     public Long getId() {
         return id;
