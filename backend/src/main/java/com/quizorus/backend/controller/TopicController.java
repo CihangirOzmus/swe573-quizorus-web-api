@@ -32,15 +32,14 @@ public class TopicController {
 
     @GetMapping("/{username}")
     @PreAuthorize("hasRole('USER')")
-    public ResponseEntity<List<TopicEntity>> getTopicsByUsername(@PathVariable String username,
-                                                                 @CurrentUser UserPrincipal currentUser){
-        return topicService.getTopicsCreatedByUsername(username, currentUser);
+    public ResponseEntity<List<TopicEntity>> getCreatedTopicsByUsername(@CurrentUser UserPrincipal currentUser, @PathVariable String username){
+        return topicService.getTopicsCreatedByUsername(currentUser, username);
     }
 
     @GetMapping("/topic/{topicId}")
     @PreAuthorize("hasRole('USER')")
-    public ResponseEntity<TopicEntity> getTopicById(@CurrentUser UserPrincipal currentUser, @PathVariable Long topicId){
-        return topicService.getTopicById(topicId, currentUser);
+    public ResponseEntity<TopicEntity> getCreatedTopicById(@CurrentUser UserPrincipal currentUser, @PathVariable Long topicId){
+        return topicService.getCreatedTopicById(currentUser, topicId);
     }
 
     @PostMapping

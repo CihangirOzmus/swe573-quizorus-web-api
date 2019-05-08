@@ -5,6 +5,7 @@ import com.quizorus.backend.model.ContentEntity;
 import com.quizorus.backend.model.TopicEntity;
 import com.quizorus.backend.model.UserEntity;
 import com.quizorus.backend.payload.ApiResponse;
+import com.quizorus.backend.payload.UserSummary;
 import com.quizorus.backend.repository.TopicRepository;
 import com.quizorus.backend.repository.UserRepository;
 import com.quizorus.backend.security.UserPrincipal;
@@ -32,7 +33,7 @@ public class TopicService {
         return ResponseEntity.ok().body(topics);
     }
 
-    public ResponseEntity<List<TopicEntity>> getTopicsCreatedByUsername(String username, UserPrincipal currentUser) {
+    public ResponseEntity<List<TopicEntity>> getTopicsCreatedByUsername(UserPrincipal currentUser, String username) {
         UserEntity user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new ResourceNotFoundException("UserEntity", "username", username));
 
@@ -41,7 +42,7 @@ public class TopicService {
         return ResponseEntity.ok().body(topicList);
     }
 
-    public ResponseEntity<TopicEntity> getTopicById(Long topicId, UserPrincipal currentUser) {
+    public ResponseEntity<TopicEntity> getCreatedTopicById(UserPrincipal currentUser, Long topicId) {
         TopicEntity topicById = topicRepository.findById(topicId).orElseThrow(
                 () -> new ResourceNotFoundException("TopicEntity", "id", topicId));
 
@@ -105,6 +106,7 @@ public class TopicService {
     public ResponseEntity<ApiResponse> enrollToTopicByUsername(UserPrincipal currentUser, Long topicId, String username){
         TopicEntity topicToEnroll = topicRepository.findById(topicId).orElseThrow(() -> new ResourceNotFoundException("TopicEntity", "topicId", topicId));
         UserEntity userToEnroll = userRepository.findByUsername(username).orElseThrow(() -> new ResourceNotFoundException("UserEntity", "username", username));
+        UserSummary userSummary = new UserSummary(currentUser.getId(), currentUser.getUsername(), currentUser.getName());
 
         topicToEnroll.getEnrolledUserList().add(userToEnroll);
         topicRepository.save(topicToEnroll);

@@ -47,7 +47,7 @@ public class UserController {
 
     @GetMapping("/users/{username}/topics")
     public ResponseEntity<List<TopicEntity>> getTopicsCreatedByUsername(@PathVariable String username, @CurrentUser UserPrincipal currentUser) {
-        return topicService.getTopicsCreatedByUsername(username, currentUser);
+        return topicService.getTopicsCreatedByUsername(currentUser, username);
     }
 
 }
