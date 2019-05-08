@@ -1,9 +1,9 @@
 package com.quizorus.backend.controller;
 
+import com.quizorus.backend.DTO.UserEntityDTO;
 import com.quizorus.backend.model.TopicEntity;
 import com.quizorus.backend.payload.UserIdentityAvailability;
 import com.quizorus.backend.payload.UserProfile;
-import com.quizorus.backend.payload.UserSummary;
 import com.quizorus.backend.security.CurrentUser;
 import com.quizorus.backend.security.UserPrincipal;
 import com.quizorus.backend.service.TopicService;
@@ -27,11 +27,9 @@ public class UserController {
         this.topicService = topicService;
     }
 
-    //private static final Logger logger = LoggerFactory.getLogger(UserController.class);
-
     @GetMapping("/user/me")
     @PreAuthorize("hasRole('USER')")
-    public UserSummary getCurrentUser(@CurrentUser UserPrincipal currentUser){
+    public UserEntityDTO getCurrentUser(@CurrentUser UserPrincipal currentUser){
         return userService.getCurrentUser(currentUser);
     }
 

@@ -1,13 +1,14 @@
 package com.quizorus.backend.service;
 
+import com.quizorus.backend.DTO.UserEntityDTO;
 import com.quizorus.backend.exception.ResourceNotFoundException;
 import com.quizorus.backend.model.UserEntity;
 import com.quizorus.backend.payload.UserIdentityAvailability;
 import com.quizorus.backend.payload.UserProfile;
-import com.quizorus.backend.payload.UserSummary;
 import com.quizorus.backend.repository.TopicRepository;
 import com.quizorus.backend.repository.UserRepository;
 import com.quizorus.backend.security.UserPrincipal;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -15,15 +16,16 @@ public class UserService {
 
     private UserRepository userRepository;
     private TopicRepository topicRepository;
+    private ModelMapper modelMapper;
 
-    public UserService(UserRepository userRepository, TopicRepository topicRepository) {
+    public UserService(UserRepository userRepository, TopicRepository topicRepository, ModelMapper modelMapper) {
         this.userRepository = userRepository;
         this.topicRepository = topicRepository;
+        this.modelMapper = modelMapper;
     }
 
-    public UserSummary getCurrentUser(UserPrincipal currentUser){
-        UserSummary userSummary = new UserSummary(currentUser.getId(), currentUser.getUsername(), currentUser.getName());
-        return userSummary;
+    public UserEntityDTO getCurrentUser(UserPrincipal currentUser){
+        return modelMapper.map(currentUser, UserEntityDTO.class);
     }
 
     public UserIdentityAvailability checkUsernameAvailability(String email){
