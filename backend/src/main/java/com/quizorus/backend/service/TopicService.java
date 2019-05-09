@@ -1,6 +1,6 @@
 package com.quizorus.backend.service;
 
-import com.quizorus.backend.DTO.TopicEntityDTO;
+import com.quizorus.backend.dto.TopicResponse;
 import com.quizorus.backend.exception.ResourceNotFoundException;
 import com.quizorus.backend.model.ContentEntity;
 import com.quizorus.backend.model.TopicEntity;
@@ -29,32 +29,32 @@ public class TopicService {
         this.modelMapper = modelMapper;
     }
 
-    public ResponseEntity<List<TopicEntityDTO>> getAllTopics(UserPrincipal currentUser){
+    public ResponseEntity<List<TopicResponse>> getAllTopics(UserPrincipal currentUser){
         List<TopicEntity> topics = topicRepository.findAll();
-        List<TopicEntityDTO> topicEntityDTOList = topics.stream()
-                .map(topicEntity -> modelMapper.map(topicEntity, TopicEntityDTO.class))
+        List<TopicResponse> topicResponseList = topics.stream()
+                .map(topicEntity -> modelMapper.map(topicEntity, TopicResponse.class))
                 .collect(Collectors.toList());
-        return ResponseEntity.ok().body(topicEntityDTOList);
+        return ResponseEntity.ok().body(topicResponseList);
     }
 
-    public ResponseEntity<List<TopicEntityDTO>> getTopicsCreatedByUsername(UserPrincipal currentUser, String username) {
+    public ResponseEntity<List<TopicResponse>> getTopicsCreatedByUsername(UserPrincipal currentUser, String username) {
         UserEntity user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new ResourceNotFoundException("UserEntity", "username", username));
         List<TopicEntity> topicList = topicRepository.findByCreatedBy(user.getId());
-        List<TopicEntityDTO> topicEntityDTOList = topicList.stream()
-                .map(topicEntity -> modelMapper.map(topicEntity, TopicEntityDTO.class))
+        List<TopicResponse> topicResponseList = topicList.stream()
+                .map(topicEntity -> modelMapper.map(topicEntity, TopicResponse.class))
                 .collect(Collectors.toList());
-        return ResponseEntity.ok().body(topicEntityDTOList);
+        return ResponseEntity.ok().body(topicResponseList);
     }
 
-    public ResponseEntity<TopicEntityDTO> getCreatedTopicById(UserPrincipal currentUser, Long topicId) {
+    public ResponseEntity<TopicResponse> getCreatedTopicById(UserPrincipal currentUser, Long topicId) {
         TopicEntity topicById = topicRepository.findById(topicId).orElseThrow(
                 () -> new ResourceNotFoundException("TopicEntity", "id", topicId));
-        TopicEntityDTO topicEntityDTO = modelMapper.map(topicById, TopicEntityDTO.class);
-        return ResponseEntity.ok().body(topicEntityDTO);
+        TopicResponse topicResponse = modelMapper.map(topicById, TopicResponse.class);
+        return ResponseEntity.ok().body(topicResponse);
     }
 
-    public ResponseEntity<TopicEntityDTO> createTopic(UserPrincipal currentUser, TopicEntity topicRequest) {
+    public ResponseEntity<TopicResponse> createTopic(UserPrincipal currentUser, TopicEntity topicRequest) {
         if (topicRequest.getId() != null){
             TopicEntity existingTopic = topicRepository.findById(topicRequest.getId()).orElse(null);
             if (existingTopic != null && currentUser.getId().equals(existingTopic.getCreatedBy())){
@@ -64,8 +64,8 @@ public class TopicService {
                 existingTopic.setImageUrl(topicRequest.getImageUrl());
                 TopicEntity updatedTopic;
                 updatedTopic = topicRepository.save(existingTopic);
-                TopicEntityDTO updatedTopicEntityDTO = modelMapper.map(updatedTopic, TopicEntityDTO.class);
-                return ResponseEntity.ok().body(updatedTopicEntityDTO);
+                TopicResponse updatedTopicResponse = modelMapper.map(updatedTopic, TopicResponse.class);
+                return ResponseEntity.ok().body(updatedTopicResponse);
             }
         }
         TopicEntity topic = new TopicEntity();
@@ -74,7 +74,7 @@ public class TopicService {
         topic.setWikiData(topicRequest.getWikiData());
         topic.setImageUrl(topicRequest.getImageUrl());
         TopicEntity createdTopic = topicRepository.save(topic);
-        TopicEntityDTO createdTopicDTO = modelMapper.map(createdTopic, TopicEntityDTO.class);
+        TopicResponse createdTopicDTO = modelMapper.map(createdTopic, TopicResponse.class);
         return ResponseEntity.ok().body(createdTopicDTO);
     }
 
@@ -106,11 +106,11 @@ public class TopicService {
         return ResponseEntity.ok().body(new ApiResponse(true, "Enrolled to topic successfully"));
     }
 
-    public ResponseEntity<List<TopicEntityDTO>> getTopicsByEnrolledUserId(UserPrincipal currentUser, Long userId){
+    public ResponseEntity<List<TopicResponse>> getTopicsByEnrolledUserId(UserPrincipal currentUser, Long userId){
         UserEntity userById = userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("User", "id", userId));
         List<TopicEntity> enrolledTopicList = topicRepository.findTopicEntitiesByEnrolledUserListContains(userById);
-        List<TopicEntityDTO> enrolledTopicDTOList = enrolledTopicList.stream()
-                .map(topicEntity -> modelMapper.map(topicEntity, TopicEntityDTO.class))
+        List<TopicResponse> enrolledTopicDTOList = enrolledTopicList.stream()
+                .map(topicEntity -> modelMapper.map(topicEntity, TopicResponse.class))
                 .collect(Collectors.toList());
         return ResponseEntity.ok().body(enrolledTopicDTOList);
     }

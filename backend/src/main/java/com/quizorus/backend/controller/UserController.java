@@ -1,7 +1,7 @@
 package com.quizorus.backend.controller;
 
-import com.quizorus.backend.DTO.TopicEntityDTO;
-import com.quizorus.backend.DTO.UserEntityDTO;
+import com.quizorus.backend.dto.TopicResponse;
+import com.quizorus.backend.dto.UserResponse;
 import com.quizorus.backend.payload.UserIdentityAvailability;
 import com.quizorus.backend.payload.UserProfile;
 import com.quizorus.backend.security.CurrentUser;
@@ -29,7 +29,7 @@ public class UserController {
 
     @GetMapping("/user/me")
     @PreAuthorize("hasRole('USER')")
-    public UserEntityDTO getCurrentUser(@CurrentUser UserPrincipal currentUser){
+    public UserResponse getCurrentUser(@CurrentUser UserPrincipal currentUser){
         return userService.getCurrentUser(currentUser);
     }
 
@@ -44,7 +44,7 @@ public class UserController {
     }
 
     @GetMapping("/users/{username}/topics")
-    public ResponseEntity<List<TopicEntityDTO>> getTopicsCreatedByUsername(@PathVariable String username, @CurrentUser UserPrincipal currentUser) {
+    public ResponseEntity<List<TopicResponse>> getTopicsCreatedByUsername(@PathVariable String username, @CurrentUser UserPrincipal currentUser) {
         return topicService.getTopicsCreatedByUsername(currentUser, username);
     }
 

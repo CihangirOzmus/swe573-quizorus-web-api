@@ -1,11 +1,11 @@
-package com.quizorus.backend.DTO;
+package com.quizorus.backend.dto;
 
 import com.quizorus.backend.model.ContentEntity;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class TopicEntityDTO {
+public class TopicResponse {
     private Long id;
     private String title;
     private String description;

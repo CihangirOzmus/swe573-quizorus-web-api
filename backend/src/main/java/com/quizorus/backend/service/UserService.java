@@ -1,6 +1,6 @@
 package com.quizorus.backend.service;
 
-import com.quizorus.backend.DTO.UserEntityDTO;
+import com.quizorus.backend.dto.UserResponse;
 import com.quizorus.backend.exception.ResourceNotFoundException;
 import com.quizorus.backend.model.UserEntity;
 import com.quizorus.backend.payload.UserIdentityAvailability;
@@ -24,8 +24,8 @@ public class UserService {
         this.modelMapper = modelMapper;
     }
 
-    public UserEntityDTO getCurrentUser(UserPrincipal currentUser){
-        return modelMapper.map(currentUser, UserEntityDTO.class);
+    public UserResponse getCurrentUser(UserPrincipal currentUser){
+        return modelMapper.map(currentUser, UserResponse.class);
     }
 
     public UserIdentityAvailability checkUsernameAvailability(String email){

@@ -1,6 +1,6 @@
-package com.quizorus.backend.DTO;
+package com.quizorus.backend.dto;
 
-public class UserEntityDTO {
+public class UserResponse {
 
     private Long id;
     private String username;
