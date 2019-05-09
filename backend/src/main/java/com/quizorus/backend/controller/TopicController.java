@@ -1,5 +1,6 @@
 package com.quizorus.backend.controller;
 
+import com.quizorus.backend.DTO.TopicEntityDTO;
 import com.quizorus.backend.model.ContentEntity;
 import com.quizorus.backend.model.TopicEntity;
 import com.quizorus.backend.payload.ApiResponse;
@@ -24,25 +25,25 @@ public class TopicController {
     }
 
     @GetMapping
-    public ResponseEntity<List<TopicEntity>> getAllTopics(@CurrentUser UserPrincipal currentUser){
+    public ResponseEntity<List<TopicEntityDTO>> getAllTopics(@CurrentUser UserPrincipal currentUser){
         return topicService.getAllTopics(currentUser);
     }
 
     @GetMapping("/{username}")
     @PreAuthorize("hasRole('USER')")
-    public ResponseEntity<List<TopicEntity>> getCreatedTopicsByUsername(@CurrentUser UserPrincipal currentUser, @PathVariable String username){
+    public ResponseEntity<List<TopicEntityDTO>> getCreatedTopicsByUsername(@CurrentUser UserPrincipal currentUser, @PathVariable String username){
         return topicService.getTopicsCreatedByUsername(currentUser, username);
     }
 
     @GetMapping("/topic/{topicId}")
     @PreAuthorize("hasRole('USER')")
-    public ResponseEntity<TopicEntity> getCreatedTopicById(@CurrentUser UserPrincipal currentUser, @PathVariable Long topicId){
+    public ResponseEntity<TopicEntityDTO> getCreatedTopicById(@CurrentUser UserPrincipal currentUser, @PathVariable Long topicId){
         return topicService.getCreatedTopicById(currentUser, topicId);
     }
 
     @PostMapping
     @PreAuthorize("hasRole('USER')")
-    public ResponseEntity<TopicEntity> createTopic(@CurrentUser UserPrincipal currentUser, @Valid @RequestBody TopicEntity topicRequest){
+    public ResponseEntity<TopicEntityDTO> createTopic(@CurrentUser UserPrincipal currentUser, @Valid @RequestBody TopicEntity topicRequest){
         return topicService.createTopic(currentUser, topicRequest);
     }
 
@@ -65,7 +66,7 @@ public class TopicController {
     }
 
     @GetMapping("/enrolled/{userId}")
-    public ResponseEntity<List<TopicEntity>> getEnrolledTopics(@CurrentUser UserPrincipal currentUser ,@PathVariable Long userId){
+    public ResponseEntity<List<TopicEntityDTO>> getEnrolledTopics(@CurrentUser UserPrincipal currentUser ,@PathVariable Long userId){
         return topicService.getTopicsByEnrolledUserId(currentUser, userId);
     }
 

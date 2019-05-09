@@ -1,7 +1,7 @@
 package com.quizorus.backend.controller;
 
+import com.quizorus.backend.DTO.TopicEntityDTO;
 import com.quizorus.backend.DTO.UserEntityDTO;
-import com.quizorus.backend.model.TopicEntity;
 import com.quizorus.backend.payload.UserIdentityAvailability;
 import com.quizorus.backend.payload.UserProfile;
 import com.quizorus.backend.security.CurrentUser;
@@ -44,7 +44,7 @@ public class UserController {
     }
 
     @GetMapping("/users/{username}/topics")
-    public ResponseEntity<List<TopicEntity>> getTopicsCreatedByUsername(@PathVariable String username, @CurrentUser UserPrincipal currentUser) {
+    public ResponseEntity<List<TopicEntityDTO>> getTopicsCreatedByUsername(@PathVariable String username, @CurrentUser UserPrincipal currentUser) {
         return topicService.getTopicsCreatedByUsername(currentUser, username);
     }
 
