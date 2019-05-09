@@ -2,6 +2,7 @@ package com.quizorus.backend.service;
 
 import com.quizorus.backend.dto.UserResponse;
 import com.quizorus.backend.exception.ResourceNotFoundException;
+import com.quizorus.backend.model.TopicEntity;
 import com.quizorus.backend.model.UserEntity;
 import com.quizorus.backend.payload.UserIdentityAvailability;
 import com.quizorus.backend.payload.UserProfile;
@@ -10,6 +11,8 @@ import com.quizorus.backend.repository.UserRepository;
 import com.quizorus.backend.security.UserPrincipal;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class UserService {
@@ -37,9 +40,10 @@ public class UserService {
         UserEntity user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new ResourceNotFoundException("UserEntity", "username", username));
 
-        long topicCount = topicRepository.countByCreatedBy(user.getId());
-        UserProfile userProfile = new UserProfile(user.getId(), user.getUsername(), user.getName(), user.getCreatedAt(), topicCount);
-        return userProfile;
+        Long createdTopicCount = topicRepository.countByCreatedBy(user.getId());
+        List<TopicEntity> enrolledTopicEntityList = topicRepository.findTopicEntitiesByEnrolledUserListContains(user);
+        Long enrolledTopicCount = (long) enrolledTopicEntityList.size();
+        return new UserProfile(user.getId(), user.getUsername(), user.getName(), user.getCreatedAt(), createdTopicCount, enrolledTopicCount);
     }
 
 }

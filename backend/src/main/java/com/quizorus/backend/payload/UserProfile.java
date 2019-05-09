@@ -8,14 +8,16 @@ public class UserProfile {
     private String username;
     private String name;
     private Instant joinedAt;
-    private Long topicCount;
+    private Long createdTopicCount;
+    private Long enrolledTopicCount;
 
-    public UserProfile(Long id, String username, String name, Instant joinedAt, Long topicCount) {
+    public UserProfile(Long id, String username, String name, Instant joinedAt, Long createdTopicCount, Long enrolledTopicCount) {
         this.id = id;
         this.username = username;
         this.name = name;
         this.joinedAt = joinedAt;
-        this.topicCount = topicCount;
+        this.createdTopicCount = createdTopicCount;
+        this.enrolledTopicCount = enrolledTopicCount;
     }
 
     public Long getId() {
@@ -50,11 +52,19 @@ public class UserProfile {
         this.joinedAt = joinedAt;
     }
 
-    public Long getTopicCount() {
-        return topicCount;
+    public Long getCreatedTopicCount() {
+        return createdTopicCount;
     }
 
-    public void setTopicCount(Long topicCount) {
-        this.topicCount = topicCount;
+    public void setCreatedTopicCount(Long createdTopicCount) {
+        this.createdTopicCount = createdTopicCount;
+    }
+
+    public Long getEnrolledTopicCount() {
+        return enrolledTopicCount;
+    }
+
+    public void setEnrolledTopicCount(Long enrolledTopicCount) {
+        this.enrolledTopicCount = enrolledTopicCount;
     }
 }
