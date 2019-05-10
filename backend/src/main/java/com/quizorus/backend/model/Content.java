@@ -38,9 +38,4 @@ public class Content extends UserDatabaseDateAudit {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "content")
     private List<Question> questionList;
 
-    @Nullable
-    public List<Question> getQuestionList() {
-        return questionList;
-    }
-
 }

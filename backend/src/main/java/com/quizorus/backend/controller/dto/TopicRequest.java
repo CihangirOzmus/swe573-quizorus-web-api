@@ -1,13 +1,11 @@
 package com.quizorus.backend.controller.dto;
 
-import com.quizorus.backend.model.Content;
 import lombok.*;
 import org.springframework.lang.Nullable;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.util.ArrayList;
-import java.util.List;
 
 @Getter
 @Setter
@@ -29,8 +27,5 @@ public class TopicRequest {
 
     @Nullable
     private ArrayList<String> wikiData;
-
-    @Nullable
-    private List<Content> contentList;
 
 }

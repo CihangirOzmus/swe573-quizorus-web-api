@@ -17,7 +17,7 @@ public class TopicResponse {
     private String title;
     private String description;
     private String imageUrl;
-    private String createdBy;
+    private Long createdBy;
     private ArrayList<String> wikiData;
     private List<Content> contentList;
 
