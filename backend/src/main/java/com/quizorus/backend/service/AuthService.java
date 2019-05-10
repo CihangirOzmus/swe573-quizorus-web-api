@@ -3,11 +3,11 @@ package com.quizorus.backend.service;
 import com.quizorus.backend.exception.AppException;
 import com.quizorus.backend.model.Role;
 import com.quizorus.backend.model.RoleName;
-import com.quizorus.backend.model.UserEntity;
-import com.quizorus.backend.payload.ApiResponse;
-import com.quizorus.backend.payload.JwtAuthenticationResponse;
-import com.quizorus.backend.payload.LoginRequest;
-import com.quizorus.backend.payload.SignUpRequest;
+import com.quizorus.backend.model.User;
+import com.quizorus.backend.controller.dto.ApiResponse;
+import com.quizorus.backend.controller.dto.JwtAuthenticationResponse;
+import com.quizorus.backend.controller.dto.LoginRequest;
+import com.quizorus.backend.controller.dto.SignUpRequest;
 import com.quizorus.backend.repository.RoleRepository;
 import com.quizorus.backend.repository.UserRepository;
 import com.quizorus.backend.security.JwtTokenProvider;
@@ -65,23 +65,27 @@ public class AuthService {
         }
 
         // Creating user's account
-        UserEntity user = new UserEntity(signUpRequest.getName(), signUpRequest.getUsername(),
-                signUpRequest.getEmail(), signUpRequest.getPassword());
+        User user = User.builder()
+                .name(signUpRequest.getName())
+                .username(signUpRequest.getUsername())
+                .email(signUpRequest.getEmail())
+                .password(signUpRequest.getPassword())
+                .build();
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
         Role userRole = roleRepository.findByName(RoleName.ROLE_USER)
-                .orElseThrow(() -> new AppException("UserEntity Role not set."));
+                .orElseThrow(() -> new AppException("User Role not set."));
 
         user.setRoles(Collections.singleton(userRole));
 
-        UserEntity result = userRepository.save(user);
+        User result = userRepository.save(user);
 
         URI location = ServletUriComponentsBuilder
                 .fromCurrentContextPath().path("/api/users/{username}")
                 .buildAndExpand(result.getUsername()).toUri();
 
-        return ResponseEntity.created(location).body(new ApiResponse(true, "UserEntity registered successfully"));
+        return ResponseEntity.created(location).body(new ApiResponse(true, "User registered successfully"));
     }
 
 }

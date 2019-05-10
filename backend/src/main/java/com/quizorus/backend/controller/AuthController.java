@@ -1,9 +1,9 @@
 package com.quizorus.backend.controller;
 
-import com.quizorus.backend.payload.ApiResponse;
-import com.quizorus.backend.payload.JwtAuthenticationResponse;
-import com.quizorus.backend.payload.LoginRequest;
-import com.quizorus.backend.payload.SignUpRequest;
+import com.quizorus.backend.controller.dto.ApiResponse;
+import com.quizorus.backend.controller.dto.JwtAuthenticationResponse;
+import com.quizorus.backend.controller.dto.LoginRequest;
+import com.quizorus.backend.controller.dto.SignUpRequest;
 import com.quizorus.backend.service.AuthService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;

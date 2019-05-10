@@ -1,7 +1,7 @@
 package com.quizorus.backend.controller;
 
-import com.quizorus.backend.model.ChoiceEntity;
-import com.quizorus.backend.payload.ApiResponse;
+import com.quizorus.backend.model.Choice;
+import com.quizorus.backend.controller.dto.ApiResponse;
 import com.quizorus.backend.security.CurrentUser;
 import com.quizorus.backend.security.UserPrincipal;
 import com.quizorus.backend.service.QuestionService;
@@ -27,7 +27,7 @@ public class QuestionController {
     @PostMapping("/{questionId}/choices")
     @PreAuthorize("hasRole('USER')")
     @Transactional
-    public ResponseEntity<ApiResponse> createChoiceByQuestionId(@CurrentUser UserPrincipal currentUser, @PathVariable Long questionId, @Valid @RequestBody ChoiceEntity choiceRequest){
+    public ResponseEntity<ApiResponse> createChoiceByQuestionId(@CurrentUser UserPrincipal currentUser, @PathVariable Long questionId, @Valid @RequestBody Choice choiceRequest){
         return questionService.createChoiceByQuestionId(currentUser, questionId, choiceRequest);
     }
 

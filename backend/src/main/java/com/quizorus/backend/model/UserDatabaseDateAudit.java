@@ -1,9 +1,12 @@
-package com.quizorus.backend.model.audit;
+package com.quizorus.backend.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.quizorus.backend.model.DateAudit;
+import com.quizorus.backend.model.DatabaseDateAudit;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.data.annotation.CreatedBy;
-import org.springframework.data.annotation.LastModifiedBy;
 
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
@@ -13,18 +16,14 @@ import javax.persistence.MappedSuperclass;
         value = {"createdBy"},
         allowGetters = true
 )
-public abstract class UserDateAudit extends DateAudit {
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+public abstract class UserDatabaseDateAudit extends DatabaseDateAudit {
 
     @CreatedBy
     @Column(updatable = false)
     private Long createdBy;
-
-    public Long getCreatedBy() {
-        return createdBy;
-    }
-
-    public void setCreatedBy(Long createdBy) {
-        this.createdBy = createdBy;
-    }
 
 }

@@ -1,11 +1,11 @@
 package com.quizorus.backend.service;
 
-import com.quizorus.backend.dto.UserResponse;
+import com.quizorus.backend.controller.dto.UserResponse;
 import com.quizorus.backend.exception.ResourceNotFoundException;
-import com.quizorus.backend.model.TopicEntity;
-import com.quizorus.backend.model.UserEntity;
-import com.quizorus.backend.payload.UserIdentityAvailability;
-import com.quizorus.backend.payload.UserProfile;
+import com.quizorus.backend.model.Topic;
+import com.quizorus.backend.model.User;
+import com.quizorus.backend.controller.dto.UserIdentityAvailability;
+import com.quizorus.backend.controller.dto.UserProfile;
 import com.quizorus.backend.repository.TopicRepository;
 import com.quizorus.backend.repository.UserRepository;
 import com.quizorus.backend.security.UserPrincipal;
@@ -37,12 +37,12 @@ public class UserService {
     }
 
     public UserProfile getUserProfileByUsername(String username){
-        UserEntity user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new ResourceNotFoundException("UserEntity", "username", username));
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new ResourceNotFoundException("User", "username", username));
 
         Long createdTopicCount = topicRepository.countByCreatedBy(user.getId());
-        List<TopicEntity> enrolledTopicEntityList = topicRepository.findTopicEntitiesByEnrolledUserListContains(user);
-        Long enrolledTopicCount = (long) enrolledTopicEntityList.size();
+        List<Topic> enrolledTopicList = topicRepository.findTopicEntitiesByEnrolledUserListContains(user);
+        Long enrolledTopicCount = (long) enrolledTopicList.size();
         return new UserProfile(user.getId(), user.getUsername(), user.getName(), user.getCreatedAt(), createdTopicCount, enrolledTopicCount);
     }
 

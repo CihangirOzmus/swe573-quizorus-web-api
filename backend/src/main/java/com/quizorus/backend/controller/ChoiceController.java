@@ -1,6 +1,6 @@
 package com.quizorus.backend.controller;
 
-import com.quizorus.backend.payload.ApiResponse;
+import com.quizorus.backend.controller.dto.ApiResponse;
 import com.quizorus.backend.security.CurrentUser;
 import com.quizorus.backend.security.UserPrincipal;
 import com.quizorus.backend.service.ChoiceService;

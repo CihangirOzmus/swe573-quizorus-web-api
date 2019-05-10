@@ -1,8 +1,8 @@
 package com.quizorus.backend.service;
 
-import com.quizorus.backend.model.ChoiceEntity;
-import com.quizorus.backend.model.QuestionEntity;
-import com.quizorus.backend.payload.ApiResponse;
+import com.quizorus.backend.model.Choice;
+import com.quizorus.backend.model.Question;
+import com.quizorus.backend.controller.dto.ApiResponse;
 import com.quizorus.backend.repository.QuestionRepository;
 import com.quizorus.backend.security.UserPrincipal;
 import org.springframework.http.ResponseEntity;
@@ -19,8 +19,8 @@ public class QuestionService {
 
     //private static final Logger logger = LoggerFactory.getLogger(QuestionService.class);
 
-    public ResponseEntity<ApiResponse> createChoiceByQuestionId(UserPrincipal currentUser, Long questionId, ChoiceEntity choiceRequest){
-        QuestionEntity question = questionRepository.findById(questionId).orElse(null);
+    public ResponseEntity<ApiResponse> createChoiceByQuestionId(UserPrincipal currentUser, Long questionId, Choice choiceRequest){
+        Question question = questionRepository.findById(questionId).orElse(null);
         if (question != null && currentUser.getId().equals(question.getCreatedBy())){
             choiceRequest.setQuestion(question);
             question.getChoiceList().add(choiceRequest);
@@ -32,7 +32,7 @@ public class QuestionService {
     }
 
     public ResponseEntity<ApiResponse> deleteQuestionById(Long questionId, UserPrincipal currentUser){
-        QuestionEntity question = questionRepository.findById(questionId).orElse(null);
+        Question question = questionRepository.findById(questionId).orElse(null);
         if (question != null && currentUser.getId().equals(question.getCreatedBy())){
             questionRepository.deleteQuestionById(questionId);
             return ResponseEntity.ok().body(new ApiResponse(true, "Question deleted successfully"));

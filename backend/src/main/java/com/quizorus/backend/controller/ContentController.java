@@ -1,8 +1,8 @@
 package com.quizorus.backend.controller;
 
-import com.quizorus.backend.model.QuestionEntity;
-import com.quizorus.backend.payload.ApiResponse;
-import com.quizorus.backend.payload.ContentResponse;
+import com.quizorus.backend.model.Question;
+import com.quizorus.backend.controller.dto.ApiResponse;
+import com.quizorus.backend.controller.dto.ContentResponse;
 import com.quizorus.backend.security.CurrentUser;
 import com.quizorus.backend.security.UserPrincipal;
 import com.quizorus.backend.service.ContentService;
@@ -33,7 +33,7 @@ public class ContentController {
     @PostMapping("/{contentId}/questions")
     @PreAuthorize("hasRole('USER')")
     @Transactional
-    public ResponseEntity<?> createQuestionByContentId(@CurrentUser UserPrincipal currentUser, @PathVariable Long contentId, @Valid @RequestBody QuestionEntity questionRequest){
+    public ResponseEntity<?> createQuestionByContentId(@CurrentUser UserPrincipal currentUser, @PathVariable Long contentId, @Valid @RequestBody Question questionRequest){
         return contentService.createQuestionByContentId(currentUser, contentId, questionRequest);
     }
 

@@ -1,9 +1,9 @@
 package com.quizorus.backend.controller;
 
-import com.quizorus.backend.dto.TopicResponse;
-import com.quizorus.backend.dto.UserResponse;
-import com.quizorus.backend.payload.UserIdentityAvailability;
-import com.quizorus.backend.payload.UserProfile;
+import com.quizorus.backend.controller.dto.TopicResponse;
+import com.quizorus.backend.controller.dto.UserResponse;
+import com.quizorus.backend.controller.dto.UserIdentityAvailability;
+import com.quizorus.backend.controller.dto.UserProfile;
 import com.quizorus.backend.security.CurrentUser;
 import com.quizorus.backend.security.UserPrincipal;
 import com.quizorus.backend.service.TopicService;

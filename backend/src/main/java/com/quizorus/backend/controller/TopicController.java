@@ -1,9 +1,9 @@
 package com.quizorus.backend.controller;
 
-import com.quizorus.backend.dto.TopicResponse;
-import com.quizorus.backend.model.ContentEntity;
-import com.quizorus.backend.model.TopicEntity;
-import com.quizorus.backend.payload.ApiResponse;
+import com.quizorus.backend.controller.dto.TopicResponse;
+import com.quizorus.backend.model.Content;
+import com.quizorus.backend.model.Topic;
+import com.quizorus.backend.controller.dto.ApiResponse;
 import com.quizorus.backend.security.CurrentUser;
 import com.quizorus.backend.security.UserPrincipal;
 import com.quizorus.backend.service.TopicService;
@@ -43,13 +43,13 @@ public class TopicController {
 
     @PostMapping
     @PreAuthorize("hasRole('USER')")
-    public ResponseEntity<TopicResponse> createTopic(@CurrentUser UserPrincipal currentUser, @Valid @RequestBody TopicEntity topicRequest){
+    public ResponseEntity<TopicResponse> createTopic(@CurrentUser UserPrincipal currentUser, @Valid @RequestBody Topic topicRequest){
         return topicService.createTopic(currentUser, topicRequest);
     }
 
     @PostMapping("/{topicId}/contents")
     @PreAuthorize("hasRole('USER')")
-    public ResponseEntity<ApiResponse> createContentByTopicId(@CurrentUser UserPrincipal currentUser, @PathVariable Long topicId, @Valid @RequestBody ContentEntity contentRequest){
+    public ResponseEntity<ApiResponse> createContentByTopicId(@CurrentUser UserPrincipal currentUser, @PathVariable Long topicId, @Valid @RequestBody Content contentRequest){
         return topicService.createContentByTopicId(currentUser,topicId, contentRequest);
     }
 

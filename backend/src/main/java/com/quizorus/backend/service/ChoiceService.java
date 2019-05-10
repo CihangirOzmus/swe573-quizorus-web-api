@@ -1,7 +1,7 @@
 package com.quizorus.backend.service;
 
-import com.quizorus.backend.model.ChoiceEntity;
-import com.quizorus.backend.payload.ApiResponse;
+import com.quizorus.backend.model.Choice;
+import com.quizorus.backend.controller.dto.ApiResponse;
 import com.quizorus.backend.repository.ChoiceRepository;
 import com.quizorus.backend.security.UserPrincipal;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +19,7 @@ public class ChoiceService {
     //private static final Logger logger = LoggerFactory.getLogger(ChoiceService.class);
 
     public ResponseEntity<ApiResponse> deleteChoiceById(UserPrincipal currentUser, Long choiceId) {
-        ChoiceEntity choice = choiceRepository.findById(choiceId).orElse(null);
+        Choice choice = choiceRepository.findById(choiceId).orElse(null);
         if (choice != null && currentUser.getId().equals(choice.getCreatedBy())){
             choiceRepository.deleteById(choiceId);
             return ResponseEntity.ok().body(new ApiResponse(true, "Choice deleted successfully"));
