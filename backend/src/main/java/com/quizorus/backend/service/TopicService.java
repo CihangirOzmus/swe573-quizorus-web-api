@@ -9,7 +9,7 @@ import com.quizorus.backend.controller.dto.ApiResponse;
 import com.quizorus.backend.repository.TopicRepository;
 import com.quizorus.backend.repository.UserRepository;
 import com.quizorus.backend.security.UserPrincipal;
-import org.modelmapper.ModelMapper;
+import org.springframework.core.convert.support.ConfigurableConversionService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -21,18 +21,18 @@ public class TopicService {
 
     private TopicRepository topicRepository;
     private UserRepository userRepository;
-    private ModelMapper modelMapper;
+    private ConfigurableConversionService quizorusConversionService;
 
-    public TopicService(TopicRepository topicRepository, UserRepository userRepository, ModelMapper modelMapper) {
+    public TopicService(TopicRepository topicRepository, UserRepository userRepository, ConfigurableConversionService quizorusConversionService) {
         this.topicRepository = topicRepository;
         this.userRepository = userRepository;
-        this.modelMapper = modelMapper;
+        this.quizorusConversionService = quizorusConversionService;
     }
 
     public ResponseEntity<List<TopicResponse>> getAllTopics(UserPrincipal currentUser){
-        List<Topic> topics = topicRepository.findAll();
-        List<TopicResponse> topicResponseList = topics.stream()
-                .map(topicEntity -> modelMapper.map(topicEntity, TopicResponse.class))
+        List<TopicResponse> topicResponseList = topicRepository.findAll()
+                .stream()
+                .map(topic -> quizorusConversionService.convert(topic, TopicResponse.class))
                 .collect(Collectors.toList());
         return ResponseEntity.ok().body(topicResponseList);
     }
@@ -40,9 +40,10 @@ public class TopicService {
     public ResponseEntity<List<TopicResponse>> getTopicsCreatedByUsername(UserPrincipal currentUser, String username) {
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new ResourceNotFoundException("User", "username", username));
-        List<Topic> topicList = topicRepository.findByCreatedBy(user.getId());
-        List<TopicResponse> topicResponseList = topicList.stream()
-                .map(topicEntity -> modelMapper.map(topicEntity, TopicResponse.class))
+
+        List<TopicResponse> topicResponseList = topicRepository.findByCreatedBy(user.getId())
+                .stream()
+                .map(topic -> quizorusConversionService.convert(topic, TopicResponse.class))
                 .collect(Collectors.toList());
         return ResponseEntity.ok().body(topicResponseList);
     }
@@ -50,37 +51,39 @@ public class TopicService {
     public ResponseEntity<TopicResponse> getCreatedTopicById(UserPrincipal currentUser, Long topicId) {
         Topic topicById = topicRepository.findById(topicId).orElseThrow(
                 () -> new ResourceNotFoundException("Topic", "id", topicId));
-        TopicResponse topicResponse = modelMapper.map(topicById, TopicResponse.class);
-        return ResponseEntity.ok().body(topicResponse);
+
+        return ResponseEntity.ok().body(quizorusConversionService.convert(topicById, TopicResponse.class));
     }
 
     public ResponseEntity<TopicResponse> createTopic(UserPrincipal currentUser, Topic topicRequest) {
         if (topicRequest.getId() != null){
-            Topic existingTopic = topicRepository.findById(topicRequest.getId()).orElse(null);
-            if (existingTopic != null && currentUser.getId().equals(existingTopic.getCreatedBy())){
+            Topic existingTopic = topicRepository.findById(topicRequest.getId()).orElseThrow(() -> new ResourceNotFoundException("Topic", "id", topicRequest.getId()));
+
+            if (currentUser.getId().equals(existingTopic.getCreatedBy())){
                 existingTopic.setTitle(topicRequest.getTitle());
                 existingTopic.setDescription(topicRequest.getDescription());
                 //existingTopic.setWikiData(topicRequest.getWikiData());
                 existingTopic.setImageUrl(topicRequest.getImageUrl());
                 Topic updatedTopic;
                 updatedTopic = topicRepository.save(existingTopic);
-                TopicResponse updatedTopicResponse = modelMapper.map(updatedTopic, TopicResponse.class);
+                TopicResponse updatedTopicResponse = quizorusConversionService.convert(updatedTopic, TopicResponse.class);
                 return ResponseEntity.ok().body(updatedTopicResponse);
             }
         }
+
         Topic topic = new Topic();
         topic.setTitle(topicRequest.getTitle());
         topic.setDescription(topicRequest.getDescription());
         topic.setWikiData(topicRequest.getWikiData());
         topic.setImageUrl(topicRequest.getImageUrl());
         Topic createdTopic = topicRepository.save(topic);
-        TopicResponse createdTopicDTO = modelMapper.map(createdTopic, TopicResponse.class);
-        return ResponseEntity.ok().body(createdTopicDTO);
+
+        return ResponseEntity.ok().body(quizorusConversionService.convert(createdTopic, TopicResponse.class));
     }
 
     public ResponseEntity<ApiResponse> createContentByTopicId(UserPrincipal currentUser, Long topicId, Content contentRequest){
-        Topic topic = topicRepository.findById(topicId).orElse(null);
-        if (topic != null && currentUser.getId().equals(topic.getCreatedBy())){
+        Topic topic = topicRepository.findById(topicId).orElseThrow(() -> new ResourceNotFoundException("Topic", "id", topicId));
+        if (currentUser.getId().equals(topic.getCreatedBy())){
             contentRequest.setTopic(topic);
             topic.getContentList().add(contentRequest);
             topicRepository.save(topic);
@@ -90,8 +93,8 @@ public class TopicService {
     }
 
     public ResponseEntity<ApiResponse> deleteTopicById(Long topicId, UserPrincipal currentUser){
-        Topic topic = topicRepository.findById(topicId).orElse(null);
-        if (topic != null && currentUser.getId().equals(topic.getCreatedBy())){
+        Topic topic = topicRepository.findById(topicId).orElseThrow(() -> new ResourceNotFoundException("Topic", "id", topicId));
+        if (currentUser.getId().equals(topic.getCreatedBy())){
             topicRepository.deleteById(topicId);
             return ResponseEntity.ok().body(new ApiResponse(true, "Topic deleted"));
         }
@@ -110,7 +113,7 @@ public class TopicService {
         User userById = userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("User", "id", userId));
         List<Topic> enrolledTopicList = topicRepository.findTopicEntitiesByEnrolledUserListContains(userById);
         List<TopicResponse> enrolledTopicDTOList = enrolledTopicList.stream()
-                .map(topicEntity -> modelMapper.map(topicEntity, TopicResponse.class))
+                .map(topic -> quizorusConversionService.convert(topic, TopicResponse.class))
                 .collect(Collectors.toList());
         return ResponseEntity.ok().body(enrolledTopicDTOList);
     }
