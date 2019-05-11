@@ -268,7 +268,7 @@ class Topic extends Component{
                                     let questionId = this.state.modalQuestionId;
                                     const newOption = {
                                         text: values.text,
-                                        correct: values.correct
+                                        isCorrect: values.correct
                                     };
 
 

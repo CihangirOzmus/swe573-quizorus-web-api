@@ -57,4 +57,9 @@ public class User extends DatabaseDateAudit {
     @ManyToMany(mappedBy = "enrolledUserList")
     private List<Topic> enrolledTopicList;
 
+    @JsonIgnore
+    @Nullable
+    @ManyToMany(mappedBy = "answeredByUserList")
+    private List<Choice> answerList;
+
 }
