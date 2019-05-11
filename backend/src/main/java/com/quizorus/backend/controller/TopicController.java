@@ -44,13 +44,13 @@ public class TopicController {
     @PostMapping
     @PreAuthorize("hasRole('USER')")
     public ResponseEntity<TopicResponse> createTopic(@CurrentUser UserPrincipal currentUser, @Valid @RequestBody Topic topicRequest){
-        return topicService.createTopic(currentUser, topicRequest);
+        return topicService.createOrUpdateTopic(currentUser, topicRequest);
     }
 
     @PostMapping("/{topicId}/contents")
     @PreAuthorize("hasRole('USER')")
     public ResponseEntity<ApiResponse> createContentByTopicId(@CurrentUser UserPrincipal currentUser, @PathVariable Long topicId, @Valid @RequestBody Content contentRequest){
-        return topicService.createContentByTopicId(currentUser,topicId, contentRequest);
+        return topicService.createOrUpdateContentByTopicId(currentUser,topicId, contentRequest);
     }
 
     @DeleteMapping("/topic/{topicId}")

@@ -1,15 +1,15 @@
 package com.quizorus.backend.service;
 
+import com.quizorus.backend.controller.dto.UserIdentityAvailability;
+import com.quizorus.backend.controller.dto.UserProfile;
 import com.quizorus.backend.controller.dto.UserResponse;
 import com.quizorus.backend.exception.ResourceNotFoundException;
 import com.quizorus.backend.model.Topic;
 import com.quizorus.backend.model.User;
-import com.quizorus.backend.controller.dto.UserIdentityAvailability;
-import com.quizorus.backend.controller.dto.UserProfile;
 import com.quizorus.backend.repository.TopicRepository;
 import com.quizorus.backend.repository.UserRepository;
 import com.quizorus.backend.security.UserPrincipal;
-import org.modelmapper.ModelMapper;
+import org.springframework.core.convert.support.ConfigurableConversionService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,16 +19,16 @@ public class UserService {
 
     private UserRepository userRepository;
     private TopicRepository topicRepository;
-    private ModelMapper modelMapper;
+    private ConfigurableConversionService quizorusConversionService;
 
-    public UserService(UserRepository userRepository, TopicRepository topicRepository, ModelMapper modelMapper) {
+    public UserService(UserRepository userRepository, TopicRepository topicRepository, ConfigurableConversionService quizorusConversionService) {
         this.userRepository = userRepository;
         this.topicRepository = topicRepository;
-        this.modelMapper = modelMapper;
+        this.quizorusConversionService = quizorusConversionService;
     }
 
     public UserResponse getCurrentUser(UserPrincipal currentUser){
-        return modelMapper.map(currentUser, UserResponse.class);
+        return quizorusConversionService.convert(currentUser, UserResponse.class);
     }
 
     public UserIdentityAvailability checkUsernameAvailability(String email){

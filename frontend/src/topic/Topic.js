@@ -113,7 +113,6 @@ class Topic extends Component{
         this.loadTopicById();
     }
 
-
     render() {
         if (this.state.isLoading) {
             return <h1>isLoading!...</h1>
@@ -153,7 +152,7 @@ class Topic extends Component{
                                     questions.map((question, questionId) => {
                                         const choices = question.choiceList
                                         return (
-                                            <div key={questionId} style={{ paddingLeft: '20px', textAlign: "left" }}>
+                                            <div key={questionId} style={{ paddingLeft: '20px', textAlign: "left" , margin: '30px'}}>
                                                 <p><strong>Q{questionId + 1}:</strong> {question.text}
                                                     <Button className="btn-sm ml-2" variant="info" style={{ paddingTop: '0', paddingBottom: '0', marginTop: '-3px' }} onClick={() => this.handleShowOption(question.id)}>
                                                         <FontAwesomeIcon icon={faPlus} /> Add Option
@@ -167,7 +166,7 @@ class Topic extends Component{
                                                             {
                                                                 choices.map((choice, choiceId) => {
                                                                     return (
-                                                                        <div key={choiceId} style={{ paddingLeft: '20px', textAlign: "left" }}>
+                                                                        <div key={choiceId} style={{ paddingLeft: '20px', textAlign: "left", margin: '15px' }}>
                                                                             <input type="radio" value="1" name="choice" /> {choice.text}
                                                                             {choice.correct && " (correct)"}
                                                                         </div>

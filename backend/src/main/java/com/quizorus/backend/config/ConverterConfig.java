@@ -11,6 +11,7 @@ public class ConverterConfig {
 
     @Bean
     public ConfigurableConversionService quizorusConversionService(){
+        UserPrincipalToUserResponse userPrincipalToUserResponse = new UserPrincipalToUserResponse();
         TopicRequestToTopic topicRequestToTopic = new TopicRequestToTopic();
         TopicToTopicResponse topicToTopicResponse = new TopicToTopicResponse();
         ContentRequestToContent contentRequestToContent = new ContentRequestToContent();
@@ -18,6 +19,7 @@ public class ConverterConfig {
         QuestionRequestToQuestion questionRequestToQuestion = new QuestionRequestToQuestion();
         ChoiceRequestToChoice choiceRequestToChoice = new ChoiceRequestToChoice();
         ConfigurableConversionService conversionService = new GenericConversionService();
+        conversionService.addConverter(userPrincipalToUserResponse);
         conversionService.addConverter(topicRequestToTopic);
         conversionService.addConverter(topicToTopicResponse);
         conversionService.addConverter(contentRequestToContent);

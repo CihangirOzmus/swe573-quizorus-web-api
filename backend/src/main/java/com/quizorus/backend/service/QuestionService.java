@@ -17,8 +17,6 @@ public class QuestionService {
         this.questionRepository = questionRepository;
     }
 
-    //private static final Logger logger = LoggerFactory.getLogger(QuestionService.class);
-
     public ResponseEntity<ApiResponse> createChoiceByQuestionId(UserPrincipal currentUser, Long questionId, Choice choiceRequest){
         Question question = questionRepository.findById(questionId).orElse(null);
         if (question != null && currentUser.getId().equals(question.getCreatedBy())){
@@ -27,7 +25,6 @@ public class QuestionService {
             questionRepository.save(question);
             return ResponseEntity.ok().body(new ApiResponse(true, "Choice created successfully"));
         }
-
         return ResponseEntity.badRequest().body(new ApiResponse(false, "Failed to create choice"));
     }
 

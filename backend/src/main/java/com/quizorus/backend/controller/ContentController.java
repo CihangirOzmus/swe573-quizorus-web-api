@@ -23,7 +23,6 @@ public class ContentController {
         this.contentService = contentService;
     }
 
-    //private static final Logger logger = LoggerFactory.getLogger(ContentController.class);
     @GetMapping("/{contentId}")
     @PreAuthorize("hasRole('USER')")
     public ResponseEntity<ContentResponse> getContentById(@CurrentUser UserPrincipal currentUser, @PathVariable Long contentId){

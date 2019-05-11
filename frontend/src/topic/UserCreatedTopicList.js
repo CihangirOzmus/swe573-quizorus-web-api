@@ -63,9 +63,9 @@ class UserCreatedTopicList extends Component{
                     <td>{topic.title}</td>
                     <td>{topic.description}</td>
                     <td>
-                        {topic.wikiData.map((wiki, wikiIndex) => {
+                        {topic.wikiData > 0 && (topic.wikiData.map((wiki, wikiIndex) => {
                             return <a key={wikiIndex} href={wiki} target="_blank" rel="noopener noreferrer" className="badge badge-pill badge-info">{wiki.substring(wiki.indexOf("Q"), wiki.length)}</a>
-                        })}
+                        }))}
                     </td>
                     <td>{topic.contentList.length}</td>
                     <td>

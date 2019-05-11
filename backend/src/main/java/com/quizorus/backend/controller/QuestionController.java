@@ -22,8 +22,6 @@ public class QuestionController {
         this.questionService = questionService;
     }
 
-    //private static final Logger logger = LoggerFactory.getLogger(QuestionController.class);
-
     @PostMapping("/{questionId}/choices")
     @PreAuthorize("hasRole('USER')")
     @Transactional

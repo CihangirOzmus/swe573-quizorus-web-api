@@ -51,37 +51,22 @@ public class TopicService {
     public ResponseEntity<TopicResponse> getCreatedTopicById(UserPrincipal currentUser, Long topicId) {
         Topic topicById = topicRepository.findById(topicId).orElseThrow(
                 () -> new ResourceNotFoundException("Topic", "id", topicId));
-
         return ResponseEntity.ok().body(quizorusConversionService.convert(topicById, TopicResponse.class));
     }
 
-    public ResponseEntity<TopicResponse> createTopic(UserPrincipal currentUser, Topic topicRequest) {
-        if (topicRequest.getId() != null){
-            Topic existingTopic = topicRepository.findById(topicRequest.getId()).orElseThrow(() -> new ResourceNotFoundException("Topic", "id", topicRequest.getId()));
-
-            if (currentUser.getId().equals(existingTopic.getCreatedBy())){
-                existingTopic.setTitle(topicRequest.getTitle());
-                existingTopic.setDescription(topicRequest.getDescription());
-                //existingTopic.setWikiData(topicRequest.getWikiData());
-                existingTopic.setImageUrl(topicRequest.getImageUrl());
-                Topic updatedTopic;
-                updatedTopic = topicRepository.save(existingTopic);
-                TopicResponse updatedTopicResponse = quizorusConversionService.convert(updatedTopic, TopicResponse.class);
-                return ResponseEntity.ok().body(updatedTopicResponse);
-            }
+    public ResponseEntity<TopicResponse> createOrUpdateTopic(UserPrincipal currentUser, Topic topicRequest) {
+        if (topicRequest.getId() != null && currentUser.getId().equals(topicRequest.getCreatedBy())){
+            Topic topic = quizorusConversionService.convert(topicRequest, Topic.class);
+            Topic createdTopic = topicRepository.save(topic);
+            return ResponseEntity.ok().body(quizorusConversionService.convert(createdTopic, TopicResponse.class));
         }
 
-        Topic topic = new Topic();
-        topic.setTitle(topicRequest.getTitle());
-        topic.setDescription(topicRequest.getDescription());
-        topic.setWikiData(topicRequest.getWikiData());
-        topic.setImageUrl(topicRequest.getImageUrl());
+        Topic topic = quizorusConversionService.convert(topicRequest, Topic.class);
         Topic createdTopic = topicRepository.save(topic);
-
         return ResponseEntity.ok().body(quizorusConversionService.convert(createdTopic, TopicResponse.class));
     }
 
-    public ResponseEntity<ApiResponse> createContentByTopicId(UserPrincipal currentUser, Long topicId, Content contentRequest){
+    public ResponseEntity<ApiResponse> createOrUpdateContentByTopicId(UserPrincipal currentUser, Long topicId, Content contentRequest){
         Topic topic = topicRepository.findById(topicId).orElseThrow(() -> new ResourceNotFoundException("Topic", "id", topicId));
         if (currentUser.getId().equals(topic.getCreatedBy())){
             contentRequest.setTopic(topic);

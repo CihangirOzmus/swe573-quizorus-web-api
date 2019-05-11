@@ -22,8 +22,6 @@ public class ChoiceController {
         this.choiceService = choiceService;
     }
 
-    //private static final Logger logger = LoggerFactory.getLogger(ChoiceController.class);
-
     @DeleteMapping("/{choiceId}")
     @PreAuthorize("hasRole('USER')")
     @Transactional
