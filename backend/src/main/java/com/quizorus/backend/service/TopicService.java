@@ -89,6 +89,12 @@ public class TopicService {
     public ResponseEntity<ApiResponse> enrollToTopicByUsername(UserPrincipal currentUser, Long topicId, String username){
         Topic topicToEnroll = topicRepository.findById(topicId).orElseThrow(() -> new ResourceNotFoundException("Topic", "topicId", topicId));
         User userToEnroll = userRepository.findByUsername(username).orElseThrow(() -> new ResourceNotFoundException("User", "username", username));
+
+        List<Topic> enrolledTopicList = topicRepository.findTopicEntitiesByEnrolledUserListContains(userToEnroll);
+        if (enrolledTopicList.contains(topicToEnroll)){
+            return ResponseEntity.badRequest().body(new ApiResponse(false, "Already enrolled to topic"));
+        }
+
         topicToEnroll.getEnrolledUserList().add(userToEnroll);
         topicRepository.save(topicToEnroll);
         return ResponseEntity.ok().body(new ApiResponse(true, "Enrolled to topic successfully"));
