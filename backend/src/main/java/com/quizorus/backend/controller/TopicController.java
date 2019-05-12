@@ -66,6 +66,7 @@ public class TopicController {
     }
 
     @GetMapping("/enrolled/{userId}")
+    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<List<TopicResponse>> getEnrolledTopics(@CurrentUser UserPrincipal currentUser , @PathVariable Long userId){
         return topicService.getTopicsByEnrolledUserId(currentUser, userId);
     }
