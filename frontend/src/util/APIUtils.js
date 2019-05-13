@@ -1,4 +1,4 @@
-import {API_BASE_URL, TOPIC_LIST_SIZE, ACCESS_TOKEN} from '../constants';
+import { API_BASE_URL, TOPIC_LIST_SIZE, ACCESS_TOKEN } from '../constants';
 
 const request = (options) => {
     const headers = new Headers({
@@ -9,7 +9,7 @@ const request = (options) => {
         headers.append('Authorization', 'Bearer ' + localStorage.getItem(ACCESS_TOKEN))
     }
 
-    const defaults = {headers: headers};
+    const defaults = { headers: headers };
     options = Object.assign({}, defaults, options);
 
     return fetch(options.url, options)
@@ -28,7 +28,7 @@ export function getAllTopics(page, size) {
     size = size || TOPIC_LIST_SIZE;
 
     return request({
-        url: API_BASE_URL + "/topics?page=" + page + "&size=" + size,
+        url: API_BASE_URL + "/topics",
         method: 'GET'
     });
 }
@@ -41,14 +41,7 @@ export function createTopic(topicData) {
     });
 }
 
-export function createContent(contentData, topicId) {
-    return request({
-        url: API_BASE_URL + `/topics/${topicId}/contents`,
-        method: 'POST',
-        body: JSON.stringify(contentData)
-    });
-}
-
+/* Created by Tallrye */
 export function createQuestion(questionData, contentId) {
     return request({
         url: API_BASE_URL + `/contents/${contentId}/questions`,
@@ -57,11 +50,28 @@ export function createQuestion(questionData, contentId) {
     });
 }
 
+/* Created by Tallrye */
 export function createOption(optionData, questionId) {
     return request({
         url: API_BASE_URL + `/questions/${questionId}/choices`,
         method: 'POST',
         body: JSON.stringify(optionData)
+    });
+}
+
+export function createContent(contentData, topicId) {
+    return request({
+        url: API_BASE_URL + `/topics/${topicId}/contents`,
+        method: 'POST',
+        body: JSON.stringify(contentData)
+    });
+}
+
+export function castVote(voteData) {
+    return request({
+        url: API_BASE_URL + "/polls/" + voteData.pollId + "/votes",
+        method: 'POST',
+        body: JSON.stringify(voteData)
     });
 }
 

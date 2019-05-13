@@ -42,7 +42,7 @@ class Signup extends Component {
         const inputValue = target.value;
 
         this.setState({
-            [inputName] : {
+            [inputName]: {
                 value: inputValue,
                 ...validationFun(inputValue)
             }
@@ -61,11 +61,11 @@ class Signup extends Component {
 
         signup(signupRequest)
             .then(response => {
-                toast.notify("Thank you! You're successfully registered. Please Login to continue!", { position : "bottom-right"});
+                toast.notify("Thank you! You're successfully registered. Please Login to continue!", { position: "top-right" });
                 this.props.history.push("/login");
             }).catch(error => {
-            toast.notify('Sorry! Something went wrong. Please try again!', { position : "bottom-right"});
-        });
+                toast.notify('Sorry! Something went wrong. Please try again!', { position: "top-right" });
+            });
     }
 
     isFormInvalid() {
@@ -78,102 +78,89 @@ class Signup extends Component {
 
     render() {
         return (
-            <div className="container w-50 mt-3">
-                <h2 className="m-5">SignUp</h2>
-                <Form onSubmit={this.handleSubmit}>
-                    <Form.Group className="row" controlId="formPlaintextFullName">
-                        <Form.Label
-                            column sm="4"
-                        >
-                            Full Name
-                        </Form.Label>
-                        <Col sm="8">
-                            <Form.Control
-                                name="name"
-                                autoComplete="off"
-                                placeholder="your full name"
-                                value={this.state.name.value}
-                                type="text"
-                                onChange={(event) => this.handleInputChange(event, this.validateName)}
-                            />
-                            {this.state.name.validateStatus && <p className="text-info">{this.state.name.errorMsg}</p>}
-                        </Col>
-                    </Form.Group>
+            <div className="sectionPadding bg-alt">
+                <div className="container w-25 mt-5">
+                    <h4 className="mt-5 mb-5 text-left">Create new account</h4>
+                    <Form onSubmit={this.handleSubmit}>
+                        <Form.Group className="row" controlId="formPlaintextFullName">
 
-                    <Form.Group className="row" controlId="formPlaintextUsername">
-                        <Form.Label
-                            column sm="4"
-                        >
-                            Username
-                        </Form.Label>
-                        <Col sm="8">
-                            <Form.Control
-                                name="username"
-                                autoComplete="off"
-                                placeholder="username"
-                                value={this.state.username.value}
-                                onBlur={this.validateUsernameAvailability}
-                                onChange={(event) => this.handleInputChange(event, this.validateUsername)}
-                            />
-                            {this.state.username.validateStatus && <p className="text-info">{this.state.username.errorMsg}</p>}
-                        </Col>
-                    </Form.Group>
+                            <Col sm="12">
+                                <Form.Control
+                                    name="name"
+                                    autoComplete="off"
+                                    placeholder="Full name"
+                                    value={this.state.name.value}
+                                    type="text"
+                                    onChange={(event) => this.handleInputChange(event, this.validateName)}
+                                />
+                                {this.state.name.validateStatus && <p className="text-info">{this.state.name.errorMsg}</p>}
+                            </Col>
+                        </Form.Group>
 
-                    <Form.Group className="row" controlId="formPlaintextEmail">
-                        <Form.Label
-                            column sm="4"
-                        >
-                            Email
-                        </Form.Label>
-                        <Col sm="8">
-                            <Form.Control
-                                name="email"
-                                type="email"
-                                autoComplete="off"
-                                placeholder="email@example.com"
-                                value={this.state.email.value}
-                                onBlur={this.validateEmailAvailability}
-                                onChange={(event) => this.handleInputChange(event, this.validateEmail)}
-                            />
-                            {this.state.email.validateStatus && <p className="text-info">{this.state.email.errorMsg}</p>}
-                        </Col>
-                    </Form.Group>
+                        <Form.Group className="row" controlId="formPlaintextUsername">
 
-                    <Form.Group className="row" controlId="formPlaintextPassword">
-                        <Form.Label
-                            column sm="4"
+                            <Col sm="12">
+                                <Form.Control
+                                    name="username"
+                                    autoComplete="off"
+                                    placeholder="Username"
+                                    value={this.state.username.value}
+                                    onBlur={this.validateUsernameAvailability}
+                                    onChange={(event) => this.handleInputChange(event, this.validateUsername)}
+                                />
+                                {this.state.username.validateStatus && <p className="text-info">{this.state.username.errorMsg}</p>}
+                            </Col>
+                        </Form.Group>
+
+                        <Form.Group className="row" controlId="formPlaintextEmail">
+
+                            <Col sm="12">
+                                <Form.Control
+                                    name="email"
+                                    type="email"
+                                    autoComplete="off"
+                                    placeholder="E-mail"
+                                    value={this.state.email.value}
+                                    onBlur={this.validateEmailAvailability}
+                                    onChange={(event) => this.handleInputChange(event, this.validateEmail)}
+                                />
+                                {this.state.email.validateStatus && <p className="text-info">{this.state.email.errorMsg}</p>}
+                            </Col>
+                        </Form.Group>
+
+                        <Form.Group className="row" controlId="formPlaintextPassword">
+
+                            <Col sm="12">
+                                <Form.Control
+                                    name="password"
+                                    type="password"
+                                    autoComplete="off"
+                                    placeholder="Password"
+                                    value={this.state.password.value}
+                                    onChange={(event) => this.handleInputChange(event, this.validatePassword)}
+                                />
+                                {this.state.password.validateStatus && <p className="text-info">{this.state.password.errorMsg}</p>}
+                            </Col>
+                        </Form.Group>
+                        <Button
+                            className="mt-4"
+                            variant="info"
+                            type="submit"
+                            block
+                            disabled={this.isFormInvalid()}
                         >
-                            Password
-                        </Form.Label>
-                        <Col sm="8">
-                            <Form.Control
-                                name="password"
-                                type="password"
-                                autoComplete="off"
-                                placeholder="Password"
-                                value={this.state.password.value}
-                                onChange={(event) => this.handleInputChange(event, this.validatePassword)}
-                            />
-                            {this.state.password.validateStatus && <p className="text-info">{this.state.password.errorMsg}</p>}
-                        </Col>
-                    </Form.Group>
-                    <Button
-                        className="mt-4"
-                        variant="info"
-                        type="submit"
-                        block
-                        disabled={this.isFormInvalid()}
-                    >
-                        Sign up
+                            Sign up
                     </Button>
-                    Already registered? <Link to="/login">Login now!</Link>
-                </Form>
+                        <br />
+                        Already have an account? <Link to="/login">Login now!</Link>
+                    </Form>
+                </div>
             </div>
         );
     }
 
     validateName = (name) => {
-        if(name.length < NAME_MIN_LENGTH) {
+        if (name.length < NAME_MIN_LENGTH) {
             return {
                 validateStatus: 'error',
                 errorMsg: `Minimum ${NAME_MIN_LENGTH} characters needed.`
@@ -192,7 +179,7 @@ class Signup extends Component {
     };
 
     validateEmail = (email) => {
-        if(!email) {
+        if (!email) {
             return {
                 validateStatus: 'error',
                 errorMsg: 'Email may not be empty'
@@ -200,14 +187,14 @@ class Signup extends Component {
         }
 
         const EMAIL_REGEX = RegExp('[^@ ]+@[^@ ]+\\.[^@ ]+');
-        if(!EMAIL_REGEX.test(email)) {
+        if (!EMAIL_REGEX.test(email)) {
             return {
                 validateStatus: 'error',
                 errorMsg: 'Email not valid'
             }
         }
 
-        if(email.length > EMAIL_MAX_LENGTH) {
+        if (email.length > EMAIL_MAX_LENGTH) {
             return {
                 validateStatus: 'error',
                 errorMsg: `Maximum ${EMAIL_MAX_LENGTH} characters allowed.`
@@ -221,7 +208,7 @@ class Signup extends Component {
     };
 
     validateUsername = (username) => {
-        if(username.length < USERNAME_MIN_LENGTH) {
+        if (username.length < USERNAME_MIN_LENGTH) {
             return {
                 validateStatus: 'error',
                 errorMsg: `Minimum ${USERNAME_MIN_LENGTH} characters needed.`
@@ -244,7 +231,7 @@ class Signup extends Component {
         const usernameValue = this.state.username.value;
         const usernameValidation = this.validateUsername(usernameValue);
 
-        if(usernameValidation.validateStatus === 'error') {
+        if (usernameValidation.validateStatus === 'error') {
             this.setState({
                 username: {
                     value: usernameValue,
@@ -264,7 +251,7 @@ class Signup extends Component {
 
         checkUsernameAvailability(usernameValue)
             .then(response => {
-                if(response.available) {
+                if (response.available) {
                     this.setState({
                         username: {
                             value: usernameValue,
@@ -282,15 +269,15 @@ class Signup extends Component {
                     });
                 }
             }).catch(error => {
-            // Marking validateStatus as success, Form will be recchecked at server
-            this.setState({
-                username: {
-                    value: usernameValue,
-                    validateStatus: 'success',
-                    errorMsg: null
-                }
+                // Marking validateStatus as success, Form will be recchecked at server
+                this.setState({
+                    username: {
+                        value: usernameValue,
+                        validateStatus: 'success',
+                        errorMsg: null
+                    }
+                });
             });
-        });
     }
 
     validateEmailAvailability() {
@@ -298,7 +285,7 @@ class Signup extends Component {
         const emailValue = this.state.email.value;
         const emailValidation = this.validateEmail(emailValue);
 
-        if(emailValidation.validateStatus === 'error') {
+        if (emailValidation.validateStatus === 'error') {
             this.setState({
                 email: {
                     value: emailValue,
@@ -318,7 +305,7 @@ class Signup extends Component {
 
         checkEmailAvailability(emailValue)
             .then(response => {
-                if(response.available) {
+                if (response.available) {
                     this.setState({
                         email: {
                             value: emailValue,
@@ -336,19 +323,19 @@ class Signup extends Component {
                     });
                 }
             }).catch(error => {
-            // Marking validateStatus as success, Form will be recchecked at server
-            this.setState({
-                email: {
-                    value: emailValue,
-                    validateStatus: 'success',
-                    errorMsg: null
-                }
+                // Marking validateStatus as success, Form will be recchecked at server
+                this.setState({
+                    email: {
+                        value: emailValue,
+                        validateStatus: 'success',
+                        errorMsg: null
+                    }
+                });
             });
-        });
     }
 
     validatePassword = (password) => {
-        if(password.length < PASSWORD_MIN_LENGTH) {
+        if (password.length < PASSWORD_MIN_LENGTH) {
             return {
                 validateStatus: 'error',
                 errorMsg: `Minimum ${PASSWORD_MIN_LENGTH} characters needed.`

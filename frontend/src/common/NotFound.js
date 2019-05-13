@@ -1,11 +1,8 @@
 import React, { Component } from 'react';
-import './NotFound.css';
 import { Link } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
 
-class NotFound extends Component {
-    render() {
-        return (
+const NotFound = (props) => (
             <div className="page-not-found">
                 <h1 className="title">
                     404
@@ -16,7 +13,5 @@ class NotFound extends Component {
                 <Link to="/"><Button variant="info" size="sm" type="submit" block className="mb-2">Go Back</Button></Link>
             </div>
         );
-    }
-}
 
 export default NotFound;

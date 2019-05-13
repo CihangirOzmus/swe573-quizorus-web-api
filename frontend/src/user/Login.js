@@ -8,12 +8,12 @@ import { ACCESS_TOKEN } from '../constants';
 import toast from "toasted-notes";
 
 class Login extends Component {
-    constructor(props){
+    constructor(props) {
         super(props);
         this.form = React.createRef();
         this.state = {
             usernameOrEmail: '',
-            password:''
+            password: ''
         };
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleUsernameOrEmailChange = this.handleUsernameOrEmailChange.bind(this);
@@ -21,12 +21,12 @@ class Login extends Component {
         this.validate = this.validate.bind(this);
     }
 
-    handleUsernameOrEmailChange(event){
-        this.setState({usernameOrEmail: event.target.value})
+    handleUsernameOrEmailChange(event) {
+        this.setState({ usernameOrEmail: event.target.value })
     }
 
-    handlePasswordChange(event){
-        this.setState({password: event.target.value})
+    handlePasswordChange(event) {
+        this.setState({ password: event.target.value })
     }
 
     validate() {
@@ -44,42 +44,41 @@ class Login extends Component {
                     localStorage.setItem(ACCESS_TOKEN, response.accessToken);
                     this.props.onLogin();
                 }).catch(error => {
-                if(error.status === 401) {
-                    toast.notify('Your Username or Password is incorrect. Please try again!', { position : "bottom-right"});
-                } else {
-                    toast.notify('Sorry! Something went wrong. Please try again!', { position : "bottom-right"});
-                }
-            });
+                    if (error.status === 401) {
+                        toast.notify('Your Username or Password is incorrect. Please try again!', { position: "top-right" });
+                    } else {
+                        toast.notify('Sorry! Something went wrong. Please try again!', { position: "top-right" });
+                    }
+                });
         }
     }
 
     render() {
         return (
-            <div className="container w-50 mt-3">
-                <h2 className="m-5">Login</h2>
-                <Form ref={this.form} onSubmit={this.handleSubmit}>
-                    <Form.Group className="row" controlId="formPlaintextUsernameOrEmail">
-                        <Form.Label column sm="4">
-                            Username/Email
-                        </Form.Label>
-                        <Col sm="8">
-                            <Form.Control type="text" placeholder="username/email" required onChange={this.handleUsernameOrEmailChange}/>
-                        </Col>
-                    </Form.Group>
+            <div className="sectionPadding bg-alt">
+                <div className="container w-25 mt-5">
+                    <h4 className="mt-5 mb-5 text-left">Login to your account</h4>
+                    <Form ref={this.form} onSubmit={this.handleSubmit}>
+                        <Form.Group className="row" controlId="formPlaintextUsernameOrEmail">
+                            <Col sm="12">
+                                <Form.Control type="text" placeholder="Username or e-mail" required onChange={this.handleUsernameOrEmailChange} />
+                            </Col>
+                        </Form.Group>
 
-                    <Form.Group className="row" controlId="formPlaintextPassword" >
-                        <Form.Label column sm="4">
-                            Password
-                        </Form.Label>
-                        <Col sm="8">
-                            <Form.Control type="password" placeholder="Password" required onChange={this.handlePasswordChange}/>
-                        </Col>
-                    </Form.Group>
+                        <Form.Group className="row" controlId="formPlaintextPassword" >
+                            <Col sm="12">
+                                <Form.Control type="password" placeholder="Password" required onChange={this.handlePasswordChange} />
+                            </Col>
+                        </Form.Group>
 
-                    <Button className="mt-4" variant="info" type="submit" block>
-                        Login
-                    </Button> Or <Link to="/signup">register now!</Link>
-                </Form>
+                        <Button className="mt-4" variant="info" type="submit" block>
+                            Login
+                        </Button>
+                        <br />
+
+                        Don't have an account? <Link to="/signup">Signup now!</Link>
+                    </Form>
+                </div>
             </div>
         );
     }

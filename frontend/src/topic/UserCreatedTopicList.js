@@ -1,23 +1,28 @@
 import React, { Component } from 'react';
-import { ACCESS_TOKEN, API_BASE_URL } from "../constants";
+import { API_BASE_URL, REQUEST_HEADERS } from "../constants";
 import axios from "axios";
-import { Button, Table } from "react-bootstrap";
+import { Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faPlus } from '@fortawesome/free-solid-svg-icons'
+import PageHeader from "../components/PageHeader";
+import { WikiLabels } from "../components/Wiki";
 
-class UserCreatedTopicList extends Component{
-    constructor(props){
+class UserCreatedTopicList extends Component {
+    constructor(props) {
         super(props);
         this.state = {
             topics: [],
-            isLoading: false
+            isLoading: false,
+            input: ''
         };
         this.loadUserCreatedTopics = this.loadUserCreatedTopics.bind(this);
         this.handleDeleteTopicById = this.handleDeleteTopicById.bind(this);
     }
 
-    loadUserCreatedTopics(){
+    loadUserCreatedTopics() {
         const username = this.props.currentUser.username;
-        let url = API_BASE_URL + `/users/${username}/topics/`;
+        let url = API_BASE_URL + `/users/${username}/topics`;
 
         axios.get(url).then(res => {
             this.setState({
@@ -25,77 +30,66 @@ class UserCreatedTopicList extends Component{
                 isLoading: false
             })
         }).catch(err => {
-            this.setState({isLoading: false})
+            this.setState({ isLoading: false })
         });
     }
 
-    handleDeleteTopicById(topicIdToDelete){
+    handleDeleteTopicById(topicIdToDelete) {
         let url = API_BASE_URL + `/topics/topic/${topicIdToDelete}`;
 
-        const options = {
-            method: 'DELETE',
-            headers: { 'content-type': 'application/json', 'Authorization' : 'Bearer ' + localStorage.getItem(ACCESS_TOKEN)},
-            url
-        };
-
-        axios(options)
+        axios.delete(url, REQUEST_HEADERS)
             .then(res => {
-                this.loadUserCreatedTopics(this.state.page, this.state.size)
+                this.loadUserCreatedTopics()
             }).catch(err => {
                 console.log(err)
-        });
-
+            });
     }
 
     componentDidMount() {
-        this.loadUserCreatedTopics(this.state.page, this.state.size)
+        this.loadUserCreatedTopics()
     }
 
     render() {
-        if (this.state.isLoading) {
-            return <h1>isLoading!...</h1>
-        }
-        const topics = this.state.topics;
-        const topicsView = topics.map((topic, topicIndex) => {
-            return (
-                <tr key={topicIndex}>
-                    <td>{topicIndex+1}</td>
-                    <td>{topic.title}</td>
-                    <td>{topic.description}</td>
-                    <td>
-                        {topic.wikiData > 0 && (topic.wikiData.map((wiki, wikiIndex) => {
-                            return <a key={wikiIndex} href={wiki} target="_blank" rel="noopener noreferrer" className="badge badge-pill badge-info">{wiki.substring(wiki.indexOf("Q"), wiki.length)}</a>
-                        }))}
-                    </td>
-                    <td>{topic.contentList.length}</td>
-                    <td>
-                        <Link className="btn btn-outline-info" to={`/topic/${topic.id}`}>Details</Link>
-                        <Link className="btn btn-outline-warning ml-2" to={`/topic/${topic.id}/edit`}>Edit</Link>
-                        <Button className="ml-2" variant="outline-danger" onClick={() => this.handleDeleteTopicById(topic.id)}>Delete</Button>
-                    </td>
-                </tr>
-            )
-        });
 
-        return(
-            <div>
-                <h1 className="text-info m-5">Created Topics</h1>
-                <Table striped bordered hover>
-                    <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Title</th>
-                        <th>Short Description</th>
-                        <th>Wikidata</th>
-                        <th>#Learning Path</th>
-                        <th>Action</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {topicsView}
-                    </tbody>
-                </Table>
-            </div>
+        const topics = this.state.topics;
+
+        return (
+            <React.Fragment>
+                <PageHeader title="Created Topic List" />
+
+                <div className="container">
+                    <div className="row mt-5">
+                        <div className="col-md-12">
+                            <Link to="/topic/new" className="btn btn-success">
+                                <FontAwesomeIcon icon={faPlus} /> Create a Topic
+                            </Link>
+                        </div>
+                    </div>
+
+                    <div className="row mt-5 mb-5">
+                        {
+                            topics.map((topic, topicIndex) => {
+                                return (
+                                    <div className="col-md-4" key={topicIndex}>
+                                        <div className="card" style={{ padding: '20px' }}>
+                                            <div className="card-bod">
+                                                <img src={topic.imageUrl} className="img-fluid mb-2" alt={topic.title} />
+                                                <h4>{topic.title}</h4>
+                                                <div className="topicCaption">{topic.description}</div>
+                                                <WikiLabels wikis={topic.wikiData} />
+                                                <hr />
+                                                <Link className="btn btn-sm btn-outline-info" to={`/topic/${topic.id}`}>Details</Link>
+                                                <Button className="ml-2 btn-sm" variant="outline-danger" onClick={() => this.handleDeleteTopicById(topic.id)}>Delete</Button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                )
+                            })
+                        }
+                    </div>
+                </div>
+            </React.Fragment>
+
         )
     }
 }

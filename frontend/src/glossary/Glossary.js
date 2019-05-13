@@ -1,95 +1,93 @@
-import React, {Component} from 'react';
-import { Button, Row, InputGroup } from 'react-bootstrap';
-import { withRouter } from 'react-router-dom';
+import React, { Component } from 'react';
+import { Row, InputGroup } from 'react-bootstrap';
+import { Link, withRouter } from 'react-router-dom';
 import { API_BASE_URL } from '../constants';
-import './Glossary.css';
+import PageHeader from "../components/PageHeader";
+import { WikiLabels } from "../components/Wiki";
 import axios from 'axios';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faHashtag } from '@fortawesome/free-solid-svg-icons'
 
 class Glossary extends Component {
-    constructor(props){
+    constructor(props) {
         super(props);
         this.state = {
             topics: [],
-            isLoading: false,
-            input:''
+            input: ''
         };
         this.loadTopicList = this.loadTopicList.bind(this);
+        this.handleSearch = this.handleSearch.bind(this);
     }
 
-    loadTopicList(){
+    loadTopicList() {
         let url = API_BASE_URL + "/topics";
+
         axios.get(url).then(res => {
             this.setState({
-                topics: res.data,
-                isLoading: false
+                topics: res.data
             })
         }).catch(err => {
-            console.log(err);
-            this.setState({isLoading: false})
+            console.log(err)
         });
     }
 
-    componentDidMount() {
-        this.loadTopicList(this.state.page, this.state.size);
-    }
-
-    onChangeHandler(e) {
+    handleSearch(e) {
         this.setState({
             input: e.target.value,
         })
     }
 
-    render(){
-        if (this.state.isLoading) {
-            return <h1>isLoading!...</h1>
-        }
+    componentDidMount() {
+        this.loadTopicList();
+    }
+
+
+    render() {
         const topics = this.state.topics;
-        const topicsView = topics.filter(topic => this.state.input === '' || topic.title.toLowerCase().indexOf(this.state.input) > -1).map((topic, topicIndex) => {
-            return (
-                <Row className="justify-content-center mb-5" key={topicIndex}>
-                    <div className="card mb-3" style={{minWidth: "100%"}}>
-                        <div className="row no-gutters align-items-center">
-                            <div className="col-md-4">
-                                <img src={topic.imageUrl} className="rounded imageSize" alt={topic.title}/>
-                            </div>
-                            <div className="col-md-8">
-                                <div className="card-body">
-                                    <h5 className="card-title text-info text-justify">{topic.title}</h5>
-                                    <p className="card-text text-justify">{topic.description}</p>
-                                    <p className="card-text text-justify">Tags<FontAwesomeIcon icon={faHashtag} />
-                                        {topic.wikiData > 0 && (topic.wikiData.map((wiki, wikiIndex) => {
-                                            return <a key={wikiIndex} href={wiki} target="_blank" rel="noopener noreferrer" className="badge badge-pill badge-info">{wiki.substring(wiki.indexOf("Q"), wiki.length)}</a>
-                                        }))}
-                                    </p>
-                                    <div className="card-footer text-muted border">
-                                        <p>
-                                            <span className="badge badge-success">{topic.contentList.length}</span> Learning Path {' '}
-                                            <span className="badge badge-warning">??</span> Questions {' '}
-                                        </p>
-                                        <Button variant="info" block>Enroll</Button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </Row>
-            )
-        });
 
         return (
-            <div>
-                <div className="row justify-content-center mt-5 mb-5">
-                    <InputGroup>
-                        <input
-                            value={this.state.input}
-                            placeholder="Search topics"
-                            className="form-control searchInput" type="text" onChange={this.onChangeHandler.bind(this)} />
-                    </InputGroup>
+            <React.Fragment>
+
+                <PageHeader title="Glossary" />
+
+                <div className="container">
+                    <div className="row  mt-5 mb-5">
+                        <div className="col-md-12">
+                            <InputGroup>
+                                <input value={this.state.input} placeholder="Search topics" className="form-control searchInput" type="text" onChange={this.handleSearch} />
+                            </InputGroup>
+                        </div>
+                    </div>
+                    <div className="col-md-12">
+                        {topics.filter(topic => this.state.input === '' || topic.title.toLowerCase().indexOf(this.state.input) > -1).map((topic, topicIndex) => {
+                            return (
+                                <Row className="mb-1" key={topicIndex}>
+                                    <div className="card mb-4" style={{ minWidth: "100%" }}>
+                                        <div className="row no-gutters ">
+                                            <div className="col-md-4">
+                                                <div className="clear p-4">
+                                                    <img src={topic.imageUrl} className="img-fluid fullWidth mb-4" alt={topic.title} />
+                                                    <Link className="btn btn-sm btn-info fullWidth" to={`/topic/preview/${topic.id}`}>Details</Link>
+                                                </div>
+                                            </div>
+                                            <div className="col-md-8">
+                                                <div className="card-body text-left">
+                                                    <h5 className="card-title text-info text-justify mb-1">{topic.title} </h5>
+                                                    <small className="text-left"><strong>by </strong> @{topic.createdBy} {' '}</small>
+                                                    <hr />
+                                                    <p className="card-text text-justify">{topic.description}</p>
+                                                    <WikiLabels
+                                                        wikis={topic.wikiData}
+                                                    />
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </Row>
+                            )
+                        })}
+                    </div>
                 </div>
-                {topicsView}
-            </div>
+            </React.Fragment>
         )
     }
 }

@@ -1,25 +1,39 @@
 import React, { Component } from 'react';
 import { API_BASE_URL, REQUEST_HEADERS } from "../constants";
 import axios from "axios";
-import { Row, Tab } from "react-bootstrap";
+import { Row, Tab, Button } from "react-bootstrap";
 import { Link, withRouter } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPlus, faEdit } from '@fortawesome/free-solid-svg-icons'
+import { faEdit } from '@fortawesome/free-solid-svg-icons'
 import PageHeader from "../components/PageHeader";
-import { PathNavigator, PathTabs } from "../components/LearningPath";
+import toast from "toasted-notes";
+import { PathNavigator } from "../components/LearningPath";
 
-class Topic extends Component {
+class TopicPreview extends Component {
     constructor(props) {
         super(props);
         this.state = {
             topic: {
                 contentList: []
             },
+            enrolled: [],
             activeTab: ''
         };
         this.loadTopicById = this.loadTopicById.bind(this);
+        this.getEnrolledTopicsByUserId = this.getEnrolledTopicsByUserId.bind(this);
+        this.search = this.search.bind(this);
     }
 
+    enrollUserToTopic(topicId) {
+        const url = API_BASE_URL + `/topics/${topicId}/enroll/${this.props.currentUser.username}`;
+        axios.post(url, null, REQUEST_HEADERS)
+            .then(res => {
+                toast.notify("Enrolled successfully.", { position: "top-right" });
+                this.props.history.push(`/topic/view/${topicId}`)
+            }).catch(err => {
+                console.log(err)
+            });
+    }
 
     loadTopicById() {
         const url = API_BASE_URL + `/topics/topic/${this.props.match.params.topicId}`;
@@ -31,14 +45,45 @@ class Topic extends Component {
                     activeTab: res.data.contentList.length > 0 ? res.data.contentList[0].id : ''
                 })
             }).catch(err => {
-                console.log(err);
+                console.log(err)
+            });
+    }
+
+    getEnrolledTopicsByUserId() {
+        const url = API_BASE_URL + `/topics/enrolled/${this.props.currentUser.id}`;
+
+        axios.get(url, REQUEST_HEADERS)
+            .then(res => {
+                this.setState({
+                    enrolled: res.data
+                });
+                this.resolveEnrollment()
+            }).catch(err => {
+                console.log(err)
             });
     }
 
     componentDidMount() {
         this.loadTopicById();
+        this.getEnrolledTopicsByUserId();
     }
 
+    search(topicId, enrolled) {
+        for (let i = 0; i < enrolled.length; i++) {
+            if (enrolled[i].id === topicId) {
+                return true;
+            }
+        }
+    }
+
+    resolveEnrollment() {
+        const { topic, enrolled } = this.state;
+        const result = this.search(topic.id, enrolled);
+        if (result === true) {
+            toast.notify("Welcome back!", { position: "top-right" });
+            this.props.history.push(`/topic/view/${topic.id}`)
+        }
+    }
 
     render() {
 
@@ -48,16 +93,17 @@ class Topic extends Component {
         return (
             <React.Fragment>
                 <PageHeader title="Details">
-                    {editable ? (
-                        <Link to={`/${this.props.currentUser.username}/topics/created`} className="breadcrumbLink">
-                            <span>My Topics</span>
-                        </Link>
-                    ) : (
-                            <Link to={`/explore`} className="breadcrumbLink">
-                                <span>Glossary</span>
-                            </Link>
-                        )}
+                    <Link to={`/explore`} className="breadcrumbLink">
+                        <span>Explore</span>
+                    </Link>
                 </PageHeader>
+
+                <Button
+                    className="btn btn-success fullWidth"
+                    variant="primary"
+                    onClick={() => this.enrollUserToTopic(topic.id)}>
+                    Enroll To This Topic
+                </Button>
 
                 <div className="bg-alt sectionPadding text-left">
                     <div className="container">
@@ -85,11 +131,6 @@ class Topic extends Component {
                     <div className="row col-md-12 text-left">
                         <h4>
                             Learning <strong>Path</strong>
-                            {editable && (
-                                <Link className="btn btn-success btn-sm ml-2 inlineBtn" to={`/topic/${topic.id}/content`}>
-                                    <FontAwesomeIcon icon={faPlus} /> Material
-                                </Link>)}
-
                         </h4>
                     </div>
                 </div>
@@ -99,9 +140,6 @@ class Topic extends Component {
                             <div className="container mt-5 text-left" >
                                 <Row>
                                     <PathNavigator contents={topic.contentList} />
-
-                                    <PathTabs contents={topic.contentList} editable={editable} handleRefresh={() => this.loadTopicById()} />
-
                                 </Row>
                             </div>
                         </Tab.Container>
@@ -113,4 +151,4 @@ class Topic extends Component {
     }
 }
 
-export default withRouter(Topic);
+export default withRouter(TopicPreview);
