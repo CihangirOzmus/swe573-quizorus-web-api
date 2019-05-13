@@ -59,8 +59,8 @@ class UserCreatedTopicList extends Component {
 
                 <div className="container">
                     <div className="row mt-5">
-                        <div className="col-md-12">
-                            <Link to="/topic/new" className="btn btn-success">
+                        <div className="col-md-12 text-center">
+                            <Link to="/topic/new" className="btn btn-outline-info">
                                 <FontAwesomeIcon icon={faPlus} /> Create a Topic
                             </Link>
                         </div>

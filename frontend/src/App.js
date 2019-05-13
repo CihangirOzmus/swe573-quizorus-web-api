@@ -66,11 +66,11 @@ class App extends Component {
             isAuthenticated: false
         });
         this.props.history.push("/");
-        toast.notify("You're successfully logged out.", { position: "top-right" });
+        toast.notify("You're successfully logged out.", { position: "bottom-right" });
     }
 
     handleLogin() {
-        toast.notify("You're successfully logged in.", { position: "top-right" });
+        toast.notify("You're successfully logged in.", { position: "bottom-right" });
         this.loadCurrentUser();
         this.props.history.push("/explore");
     }

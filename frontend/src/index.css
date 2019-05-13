@@ -130,7 +130,7 @@ code {
     font-size: 18px;
 }
 .mainContent{
-    min-height: 550px;
+    min-height: 610px;
 }
 
 .myFooter svg{
@@ -152,7 +152,7 @@ code {
 }
 
 .btn, .form-control{
-    border-radius: 0 !important;
+    border-radius: 30px !important;
 }
 
 .card{
@@ -279,13 +279,13 @@ code {
 }
 
 .Toaster__alert{
-    background: #28a745 !important;
+    background: #ecf0f1 !important;
     color: white !important;
     border-radius: 0 !important;
 }
 
 .Toaster__alert_text{
-    color: white !important;
+    color: black !important;
 }
 
 .Toaster__manager-top-right{

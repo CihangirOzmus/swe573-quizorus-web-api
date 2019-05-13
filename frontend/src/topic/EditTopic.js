@@ -37,10 +37,10 @@ class EditTopic extends Component {
                 axios.get(url)
                     .then(response => {
                         if (response.data.search.length > 0) {
-                            this.setState({ wikiDataSearch: response.data.search })
-                            toast.notify("Found in WikiData!", { position: "top-right" })
+                            this.setState({ wikiDataSearch: response.data.search });
+                            toast.notify("Found in WikiData!", { position: "bottom-right" })
                         } else {
-                            toast.notify("Keyword can not found!", { position: "top-right" });
+                            toast.notify("Keyword can not found!", { position: "bottom-right" });
                         }
                     })
             }, 1000)

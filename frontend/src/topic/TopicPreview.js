@@ -28,7 +28,7 @@ class TopicPreview extends Component {
         const url = API_BASE_URL + `/topics/${topicId}/enroll/${this.props.currentUser.username}`;
         axios.post(url, null, REQUEST_HEADERS)
             .then(res => {
-                toast.notify("Enrolled successfully.", { position: "top-right" });
+                toast.notify("Enrolled successfully.", { position: "bottom-right" });
                 this.props.history.push(`/topic/view/${topicId}`)
             }).catch(err => {
                 console.log(err)
@@ -80,7 +80,7 @@ class TopicPreview extends Component {
         const { topic, enrolled } = this.state;
         const result = this.search(topic.id, enrolled);
         if (result === true) {
-            toast.notify("Welcome back!", { position: "top-right" });
+            toast.notify("Welcome back!", { position: "bottom-right" });
             this.props.history.push(`/topic/view/${topic.id}`)
         }
     }
@@ -98,14 +98,21 @@ class TopicPreview extends Component {
                     </Link>
                 </PageHeader>
 
-                <Button
-                    className="btn btn-success fullWidth"
-                    variant="primary"
-                    onClick={() => this.enrollUserToTopic(topic.id)}>
-                    Enroll To This Topic
-                </Button>
+                <div className="container">
+                    <div className="row">
+                        <div className="col-12 text-center mt-5">
+                            <Button
+                                variant="outline-info"
+                                onClick={() => this.enrollUserToTopic(topic.id)}>
+                                Enroll To This Topic
+                            </Button>
+                        </div>
+                    </div>
+                </div>
 
-                <div className="bg-alt sectionPadding text-left">
+
+
+                <div className="bg-alt sectionPadding text-left mt-5">
                     <div className="container">
                         <div className="row">
                             <div className="col-md-8">

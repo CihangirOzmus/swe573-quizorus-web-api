@@ -40,13 +40,13 @@ class CreateTopic extends Component {
 
         createTopic(newTopic)
             .then(response => {
-                toast.notify("Topic created successfully.", { position: "top-right" });
+                toast.notify("Topic created successfully.", { position: "bottom-right" });
                 this.props.history.push(`/${this.props.currentUser.username}/topics/created`);
             }).catch(error => {
                 if (error.status === 401) {
                     this.props.handleLogout();
                 } else {
-                    toast.notify('Sorry! Something went wrong. Please try again!', { position: "top-right" });
+                    toast.notify('Sorry! Something went wrong. Please try again!', { position: "bottom-right" });
                 }
             });
 
@@ -78,9 +78,9 @@ class CreateTopic extends Component {
                     .then(response => {
                         if (response.data.search.length > 0) {
                             this.setState({ wikiDataSearch: response.data.search })
-                            toast.notify("Found in WikiData!", { position: "top-right" })
+                            toast.notify("Found in WikiData!", { position: "bottom-right" })
                         } else {
-                            toast.notify("Keyword can not found!", { position: "top-right" });
+                            toast.notify("Keyword can not found!", { position: "bottom-right" });
                         }
                     })
             }, 1000)
@@ -95,7 +95,7 @@ class CreateTopic extends Component {
             description: wiki.description,
             id: wiki.id,
             label: wiki.label
-        }
+        };
 
         const { selectedWikis } = this.state;
 
@@ -109,12 +109,11 @@ class CreateTopic extends Component {
 
         let filteredWikis = selectedWikis.filter(
             obj => obj.id !== wikiId
-        )
+        );
 
         this.setState({
             selectedWikis: filteredWikis
         });
-
     }
 
     render() {
@@ -129,15 +128,9 @@ class CreateTopic extends Component {
                 </PageHeader>
 
                 <div className="sectionPadding">
-                    <div className="container w-90">
+                    <div className="container w-50">
                         <div className="row">
-                            <div className="col-md-3">
-                                <h4 style={{ fontSize: '20px' }}>Things to <strong>Consider</strong></h4>
-                                <hr />
-                                <p style={{ fontSize: '14px', textAlign: 'justify' }}>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Neque ipsam ut consectetur vel excepturi alias laboriosam totam
-                                    fuga reprehenderit officiis, sed aliquam accusamus repellat laborum! Fuga cupiditate porro exercitationem quod.</p>
-                            </div>
-                            <div className="col-md-8 offset-md-1">
+                            <div className="col-md-12">
                                 <Form onSubmit={this.handleSubmit}>
                                     <Form.Group className="row" >
                                         <Form.Label column sm="12">
@@ -195,7 +188,6 @@ class CreateTopic extends Component {
                                         </div>
                                     )}
 
-
                                     <Form.Group className="row"  >
                                         <Form.Label column sm="12">
                                             Keyword
@@ -234,7 +226,7 @@ class CreateTopic extends Component {
                                         })
                                     )}
 
-                                    <Button className="mt-4" variant="success" type="submit" block>
+                                    <Button className="mt-4" variant="info" type="submit" block>
                                         Create Topic
                                     </Button>
                                 </Form>
