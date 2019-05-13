@@ -1,5 +1,6 @@
 package com.quizorus.backend.controller;
 
+import com.quizorus.backend.controller.dto.TopicRequest;
 import com.quizorus.backend.controller.dto.TopicResponse;
 import com.quizorus.backend.model.Content;
 import com.quizorus.backend.model.Topic;
@@ -43,7 +44,7 @@ public class TopicController {
 
     @PostMapping
     @PreAuthorize("hasRole('USER')")
-    public ResponseEntity<TopicResponse> createTopic(@CurrentUser UserPrincipal currentUser, @Valid @RequestBody Topic topicRequest){
+    public ResponseEntity<TopicResponse> createTopic(@CurrentUser UserPrincipal currentUser, @Valid @RequestBody TopicRequest topicRequest){
         return topicService.createOrUpdateTopic(currentUser, topicRequest);
     }
 

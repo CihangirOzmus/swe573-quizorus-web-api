@@ -1,5 +1,6 @@
 package com.quizorus.backend.service;
 
+import com.quizorus.backend.controller.dto.TopicRequest;
 import com.quizorus.backend.controller.dto.TopicResponse;
 import com.quizorus.backend.exception.ResourceNotFoundException;
 import com.quizorus.backend.model.Content;
@@ -29,7 +30,7 @@ public class TopicService {
         this.quizorusConversionService = quizorusConversionService;
     }
 
-    public ResponseEntity<List<TopicResponse>> getAllTopics(UserPrincipal currentUser){
+    public ResponseEntity<List<TopicResponse>> getAllTopics(UserPrincipal currentUser) {
         List<TopicResponse> topicResponseList = topicRepository.findAll()
                 .stream()
                 .map(topic -> quizorusConversionService.convert(topic, TopicResponse.class))
@@ -54,21 +55,20 @@ public class TopicService {
         return ResponseEntity.ok().body(quizorusConversionService.convert(topicById, TopicResponse.class));
     }
 
-    public ResponseEntity<TopicResponse> createOrUpdateTopic(UserPrincipal currentUser, Topic topicRequest) {
-        if (topicRequest.getId() != null && currentUser.getId().equals(topicRequest.getCreatedBy())){
-            Topic topic = quizorusConversionService.convert(topicRequest, Topic.class);
-            Topic createdTopic = topicRepository.save(topic);
-            return ResponseEntity.ok().body(quizorusConversionService.convert(createdTopic, TopicResponse.class));
-        }
+    public ResponseEntity<TopicResponse> createOrUpdateTopic(UserPrincipal currentUser, TopicRequest topicRequest) {
+        topicRepository.findById(topicRequest.getId())
+                .ifPresent(topic -> {
+                    topicRequest.setWikiData(topic.getWikiData());
+                    topicRequest.setEnrolledUserList(topic.getEnrolledUserList());
+                });
 
-        Topic topic = quizorusConversionService.convert(topicRequest, Topic.class);
-        Topic createdTopic = topicRepository.save(topic);
-        return ResponseEntity.ok().body(quizorusConversionService.convert(createdTopic, TopicResponse.class));
+        Topic topic = topicRepository.save(quizorusConversionService.convert(topicRequest, Topic.class));
+        return ResponseEntity.ok().body(quizorusConversionService.convert(topic, TopicResponse.class));
     }
 
-    public ResponseEntity<ApiResponse> createOrUpdateContentByTopicId(UserPrincipal currentUser, Long topicId, Content contentRequest){
+    public ResponseEntity<ApiResponse> createOrUpdateContentByTopicId(UserPrincipal currentUser, Long topicId, Content contentRequest) {
         Topic topic = topicRepository.findById(topicId).orElseThrow(() -> new ResourceNotFoundException("Topic", "id", topicId));
-        if (currentUser.getId().equals(topic.getCreatedBy())){
+        if (currentUser.getId().equals(topic.getCreatedBy())) {
             contentRequest.setTopic(topic);
             topic.getContentList().add(contentRequest);
             topicRepository.save(topic);
@@ -77,21 +77,21 @@ public class TopicService {
         return ResponseEntity.badRequest().body(new ApiResponse(false, "Failed to create content"));
     }
 
-    public ResponseEntity<ApiResponse> deleteTopicById(Long topicId, UserPrincipal currentUser){
+    public ResponseEntity<ApiResponse> deleteTopicById(Long topicId, UserPrincipal currentUser) {
         Topic topic = topicRepository.findById(topicId).orElseThrow(() -> new ResourceNotFoundException("Topic", "id", topicId));
-        if (currentUser.getId().equals(topic.getCreatedBy())){
+        if (currentUser.getId().equals(topic.getCreatedBy())) {
             topicRepository.deleteById(topicId);
             return ResponseEntity.ok().body(new ApiResponse(true, "Topic deleted"));
         }
         return ResponseEntity.badRequest().body(new ApiResponse(false, "Failed to delete topic"));
     }
 
-    public ResponseEntity<ApiResponse> enrollToTopicByUsername(UserPrincipal currentUser, Long topicId, String username){
+    public ResponseEntity<ApiResponse> enrollToTopicByUsername(UserPrincipal currentUser, Long topicId, String username) {
         Topic topicToEnroll = topicRepository.findById(topicId).orElseThrow(() -> new ResourceNotFoundException("Topic", "topicId", topicId));
         User userToEnroll = userRepository.findByUsername(username).orElseThrow(() -> new ResourceNotFoundException("User", "username", username));
 
         List<Topic> enrolledTopicList = topicRepository.findTopicEntitiesByEnrolledUserListContains(userToEnroll);
-        if (enrolledTopicList.contains(topicToEnroll)){
+        if (enrolledTopicList.contains(topicToEnroll)) {
             return ResponseEntity.badRequest().body(new ApiResponse(false, "Already enrolled to topic"));
         }
 
@@ -100,7 +100,7 @@ public class TopicService {
         return ResponseEntity.ok().body(new ApiResponse(true, "Enrolled to topic successfully"));
     }
 
-    public ResponseEntity<List<TopicResponse>> getTopicsByEnrolledUserId(UserPrincipal currentUser, Long userId){
+    public ResponseEntity<List<TopicResponse>> getTopicsByEnrolledUserId(UserPrincipal currentUser, Long userId) {
         User userById = userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("User", "id", userId));
         List<Topic> enrolledTopicList = topicRepository.findTopicEntitiesByEnrolledUserListContains(userById);
         List<TopicResponse> enrolledTopicDTOList = enrolledTopicList.stream()

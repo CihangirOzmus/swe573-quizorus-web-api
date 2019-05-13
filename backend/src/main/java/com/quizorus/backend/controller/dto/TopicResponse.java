@@ -1,6 +1,7 @@
 package com.quizorus.backend.controller.dto;
 
 import com.quizorus.backend.model.Content;
+import com.quizorus.backend.model.User;
 import lombok.*;
 
 import java.util.ArrayList;
@@ -20,5 +21,6 @@ public class TopicResponse {
     private Long createdBy;
     private ArrayList<String> wikiData;
     private List<Content> contentList;
+    private List<User> enrolledUserList;
 
 }

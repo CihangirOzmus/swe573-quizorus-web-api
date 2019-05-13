@@ -27,7 +27,7 @@ public class Content extends UserDatabaseDateAudit {
     private String title;
 
     @NotBlank
-    @Size(max = 1000)
+    @Size(max = 8000)
     private String text;
 
     @JsonIgnore

@@ -1,11 +1,11 @@
 package com.quizorus.backend.controller.dto;
 
+import com.quizorus.backend.model.Content;
+import com.quizorus.backend.model.User;
 import lombok.*;
-import org.springframework.lang.Nullable;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
 import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -13,19 +13,11 @@ import java.util.ArrayList;
 @NoArgsConstructor
 @AllArgsConstructor
 public class TopicRequest {
-
-    @NotBlank
-    @Size(max = 150)
+    private Long id = 0L;
     private String title;
-
-    @NotBlank
-    @Size(max = 255)
     private String description;
-
-    @Nullable
     private String imageUrl;
-
-    @Nullable
     private ArrayList<String> wikiData;
-
+    private List<Content> contentList;
+    private List<User> enrolledUserList;
 }
