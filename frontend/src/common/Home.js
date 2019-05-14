@@ -4,8 +4,8 @@ import { Link } from "react-router-dom";
 
 const Home = (props) => (
             <React.Fragment>
-                <div className="mt-5 mb-5 text-left sectionPadding">
-                    <div className="container">
+                <div className="text-left sectionPadding">
+                    <div className="container p-5">
                         <div className="row align-items-center">
                             <div className="col-md-6">
                                 <h4 className="mt-5 mb-5">Welcome to <strong className="strong">Quizorus</strong></h4>
