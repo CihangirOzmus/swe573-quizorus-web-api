@@ -60,7 +60,7 @@ export class PathElement extends Component {
         const url = API_BASE_URL + `/contents/${contentId}`;
         axios.delete(url, REQUEST_HEADERS)
             .then(res => {
-                toast.notify("Material deleted successfully.", { position: "top-right" });
+                toast.notify("Content deleted successfully.", { position: "bottom-right" });
                 this.props.handleRefresh()
             }).catch(err => {
                 console.log(err)
@@ -68,7 +68,7 @@ export class PathElement extends Component {
     }
 
     render() {
-        const { content, questions, editable, handleRefresh } = this.props
+        const { content, questions, editable, handleRefresh } = this.props;
         return (
             <div className=" bg-alt materialBody">
                 <h4 className="mb-4 fontMedium">
@@ -127,7 +127,7 @@ export class Question extends Component {
 
         axios.delete(url, REQUEST_HEADERS)
             .then(res => {
-                toast.notify("Question deleted successfully.", { position: "top-right" });
+                toast.notify("Question deleted successfully.", { position: "bottom-right" });
                 this.props.handleRefresh()
             }).catch(err => {
                 console.log(err)
@@ -135,7 +135,7 @@ export class Question extends Component {
     }
 
     render() {
-        const { question, order, editable, handleRefresh } = this.props
+        const { question, order, editable, handleRefresh } = this.props;
         const { disabled } = this.state;
         return (
             <div id={`questionDiv${question.id}`}>

@@ -20,7 +20,6 @@ class Topic extends Component {
         this.loadTopicById = this.loadTopicById.bind(this);
     }
 
-
     loadTopicById() {
         const url = API_BASE_URL + `/topics/topic/${this.props.match.params.topicId}`;
 
@@ -38,7 +37,6 @@ class Topic extends Component {
     componentDidMount() {
         this.loadTopicById();
     }
-
 
     render() {
 
@@ -92,7 +90,7 @@ class Topic extends Component {
                         <h4>
                             Learning <strong>Path</strong>
                             {editable && (
-                                <Link className="btn btn-success btn-sm ml-2 inlineBtn" to={`/topic/${topic.id}/content`}>
+                                <Link className="btn btn-info btn-sm ml-2 inlineBtn" to={`/topic/${topic.id}/content`}>
                                     <FontAwesomeIcon icon={faPlus} /> Content
                                 </Link>)}
 
@@ -111,7 +109,6 @@ class Topic extends Component {
                         </Tab.Container>
                     )
                 }
-
             </React.Fragment>
         )
     }

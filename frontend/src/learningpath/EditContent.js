@@ -62,13 +62,7 @@ class EditContent extends Component {
                     <div className="sectionPadding">
                         <div className="container text-left ">
                             <div className="row">
-                                <div className="col-md-3">
-                                    <h4 style={{ fontSize: '20px' }}>Things to <strong>Consider</strong></h4>
-                                    <hr />
-                                    <p style={{ fontSize: '14px', textAlign: 'justify' }}>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Neque ipsam ut consectetur vel excepturi alias laboriosam totam
-                    fuga reprehenderit officiis, sed aliquam accusamus repellat laborum! Fuga cupiditate porro exercitationem quod.</p>
-                                </div>
-                                <div className="col-md-8 offset-md-1">
+                                <div className="col-md-12">
                                     <Formik
                                         initialValues={{ title: vm.content.title, text: vm.content.text }}
                                         validate={values => {
@@ -96,10 +90,10 @@ class EditContent extends Component {
 
                                                 createContent(newContent, topicId)
                                                     .then(res => {
-                                                        toast.notify("Content updated successfully.", { position: "top-right" });
+                                                        toast.notify("Content updated successfully.", { position: "bottom-right" });
                                                         props.history.push(`/topic/${topicId}`);
                                                     }).catch(err => {
-                                                        toast.notify("Topic does not exist!", { position: "top-right" });
+                                                        toast.notify("Topic does not exist!", { position: "bottom-right" });
                                                     });
 
                                                 setSubmitting(false);
@@ -124,7 +118,7 @@ class EditContent extends Component {
                                                     </div>
                                                 </div>
 
-                                                <Button variant="success" type="submit" block disabled={isSubmitting}>Save</Button>
+                                                <Button variant="info" type="submit" block disabled={isSubmitting}>Save</Button>
                                             </Form>
                                         )}
                                     </Formik>

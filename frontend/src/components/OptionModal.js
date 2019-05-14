@@ -7,16 +7,16 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
 
 function OptionModal(FieldProps) {
-    const [modalState, setModalState] = useState(false)
-    const [refreshState, setRefreshState] = useState(false)
+    const [modalState, setModalState] = useState(false);
+    const [refreshState, setRefreshState] = useState(false);
 
     useEffect(() => {
         FieldProps.handleRefresh()
-    }, [modalState, refreshState])
+    }, [modalState, refreshState]);
 
     return (
         <React.Fragment>
-            <Button className="btn-sm ml-2 inlineBtn" variant="success" onClick={() => { setModalState(true) }}>
+            <Button className="btn-sm ml-2 inlineBtn" variant="info" onClick={() => { setModalState(true) }}>
                 <FontAwesomeIcon icon={faPlus} /> Option
             </Button>
             <Modal show={modalState} onHide={() => { setModalState(false) }}>
@@ -41,11 +41,11 @@ function OptionModal(FieldProps) {
                                 };
                                 createOption(newOption, FieldProps.questionId)
                                     .then(res => {
-                                        toast.notify("Option created successfully.", { position: "top-right" });
-                                        setModalState(false)
-                                        setRefreshState(true)
+                                        toast.notify("Option created successfully.", { position: "bottom-right" });
+                                        setModalState(false);
+                                        setRefreshState(true);
                                     }).catch(err => {
-                                        toast.notify("Something went wrong!", { position: "top-right" });
+                                        toast.notify("Something went wrong!", { position: "bottom-right" });
                                     });
                                 setSubmitting(false);
                             }, 400);
@@ -66,7 +66,7 @@ function OptionModal(FieldProps) {
                                     </div>
                                 </div>
 
-                                <Button variant="success" type="submit" block disabled={isSubmitting}>Save</Button>
+                                <Button variant="info" type="submit" block disabled={isSubmitting}>Save</Button>
                             </Form>
                         )}
                     </Formik>
