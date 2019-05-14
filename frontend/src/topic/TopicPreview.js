@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEdit } from '@fortawesome/free-solid-svg-icons'
 import PageHeader from "../components/PageHeader";
 import toast from "toasted-notes";
-import {PathNavigator, PathTabs} from "../components/LearningPath";
+import {PathElement, PathNavigator, PathTabs} from "../components/LearningPath";
 
 class TopicPreview extends Component {
     constructor(props) {
@@ -151,6 +151,21 @@ class TopicPreview extends Component {
                             <div className="container mt-5 mb-5 text-left" >
                                 <Row>
                                     <PathNavigator contents={topic.contentList} />
+                                    <Tab.Content>
+                                        {topic.contentList.map((content, contentId) => {
+                                            return (
+                                                <Tab.Pane key={contentId} eventKey={content.id}>
+                                                    <div>
+                                                        <Button
+                                                            variant="info"
+                                                            onClick={() => this.enrollUserToTopic(topic.id)}>
+                                                            Enroll To See Details
+                                                        </Button>
+                                                    </div>
+                                                </Tab.Pane>
+                                            )
+                                        })}
+                                    </Tab.Content>
                                 </Row>
                             </div>
                         </Tab.Container>
