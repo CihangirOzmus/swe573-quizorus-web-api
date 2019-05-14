@@ -28,7 +28,7 @@ class Signup extends Component {
             password: {
                 value: ''
             }
-        }
+        };
         this.handleInputChange = this.handleInputChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.validateUsernameAvailability = this.validateUsernameAvailability.bind(this);
@@ -78,12 +78,11 @@ class Signup extends Component {
 
     render() {
         return (
-            <div className="sectionPadding bg-alt">
+            <div className="sectionPadding">
                 <div className="container w-25 mt-5">
                     <h4 className="mt-5 mb-5 text-left">Create new account</h4>
                     <Form onSubmit={this.handleSubmit}>
                         <Form.Group className="row" controlId="formPlaintextFullName">
-
                             <Col sm="12">
                                 <Form.Control
                                     name="name"
@@ -93,12 +92,11 @@ class Signup extends Component {
                                     type="text"
                                     onChange={(event) => this.handleInputChange(event, this.validateName)}
                                 />
-                                {this.state.name.validateStatus && <p className="text-info">{this.state.name.errorMsg}</p>}
+                                {this.state.name.validateStatus && <p className="pl-5 text-info font-weight-light">{this.state.name.errorMsg}</p>}
                             </Col>
                         </Form.Group>
 
                         <Form.Group className="row" controlId="formPlaintextUsername">
-
                             <Col sm="12">
                                 <Form.Control
                                     name="username"
@@ -108,7 +106,7 @@ class Signup extends Component {
                                     onBlur={this.validateUsernameAvailability}
                                     onChange={(event) => this.handleInputChange(event, this.validateUsername)}
                                 />
-                                {this.state.username.validateStatus && <p className="text-info">{this.state.username.errorMsg}</p>}
+                                {this.state.username.validateStatus && <p className="pl-5 text-info font-weight-light">{this.state.username.errorMsg}</p>}
                             </Col>
                         </Form.Group>
 
@@ -124,12 +122,11 @@ class Signup extends Component {
                                     onBlur={this.validateEmailAvailability}
                                     onChange={(event) => this.handleInputChange(event, this.validateEmail)}
                                 />
-                                {this.state.email.validateStatus && <p className="text-info">{this.state.email.errorMsg}</p>}
+                                {this.state.email.validateStatus && <p className="pl-5 text-info font-weight-light">{this.state.email.errorMsg}</p>}
                             </Col>
                         </Form.Group>
 
                         <Form.Group className="row" controlId="formPlaintextPassword">
-
                             <Col sm="12">
                                 <Form.Control
                                     name="password"
@@ -139,7 +136,7 @@ class Signup extends Component {
                                     value={this.state.password.value}
                                     onChange={(event) => this.handleInputChange(event, this.validatePassword)}
                                 />
-                                {this.state.password.validateStatus && <p className="text-info">{this.state.password.errorMsg}</p>}
+                                {this.state.password.validateStatus && <p className="pl-5 text-info font-weight-light">{this.state.password.errorMsg}</p>}
                             </Col>
                         </Form.Group>
                         <Button

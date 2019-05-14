@@ -9,7 +9,6 @@ import com.quizorus.backend.model.User;
 import com.quizorus.backend.controller.dto.ApiResponse;
 import com.quizorus.backend.repository.TopicRepository;
 import com.quizorus.backend.repository.UserRepository;
-import com.quizorus.backend.repository.WikiDataRepository;
 import com.quizorus.backend.security.UserPrincipal;
 import org.springframework.core.convert.support.ConfigurableConversionService;
 import org.springframework.http.ResponseEntity;

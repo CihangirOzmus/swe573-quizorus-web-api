@@ -94,7 +94,7 @@ class TopicPreview extends Component {
             <React.Fragment>
                 <PageHeader title="Details">
                     <Link to={`/explore`} className="breadcrumbLink">
-                        <span>Explore</span>
+                        <span>Glossary</span>
                     </Link>
                 </PageHeader>
 
@@ -109,8 +109,6 @@ class TopicPreview extends Component {
                         </div>
                     </div>
                 </div>
-
-
 
                 <div className="bg-alt sectionPadding text-left mt-5">
                     <div className="container">
@@ -144,7 +142,7 @@ class TopicPreview extends Component {
                 {
                     activeTab && (
                         <Tab.Container id="list-group-tabs-example" defaultActiveKey={activeTab}>
-                            <div className="container mt-5 text-left" >
+                            <div className="container mt-5 mb-5 text-left" >
                                 <Row>
                                     <PathNavigator contents={topic.contentList} />
                                 </Row>

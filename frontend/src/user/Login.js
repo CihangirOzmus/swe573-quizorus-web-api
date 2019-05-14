@@ -55,7 +55,7 @@ class Login extends Component {
 
     render() {
         return (
-            <div className="sectionPadding bg-alt">
+            <div className="sectionPadding">
                 <div className="container w-25 mt-5">
                     <h4 className="mt-5 mb-5 text-left">Login to your account</h4>
                     <Form ref={this.form} onSubmit={this.handleSubmit}>

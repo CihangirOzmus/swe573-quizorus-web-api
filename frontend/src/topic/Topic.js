@@ -59,14 +59,20 @@ class Topic extends Component {
                         )}
                 </PageHeader>
 
-                <div className="bg-alt sectionPadding text-left">
+                <div className="bg-alt sectionPadding text-center">
                     <div className="container">
                         <div className="row">
-                            <div className="col-md-8">
-                                <h4 className="mb-4">Explore <strong>{topic.title}</strong>
+                            <div className="col-md-2">
+
+                            </div>
+                            <div className="col-md-4">
+                                <img src={topic.imageUrl} className="img-fluid rounded" alt={topic.title} />
+                            </div>
+                            <div className="col-md-4">
+                                <h4 className="mb-4"><strong>{topic.title}</strong>
                                     {editable && (
                                         <Link className="btn btn-outline-primary btn-sm ml-2 inlineBtn" to={`/topic/${topic.id}/edit`}>
-                                            <FontAwesomeIcon icon={faEdit} />
+                                            <FontAwesomeIcon icon={faEdit} /> Update
                                         </Link>
                                     )}
                                 </h4>
@@ -74,8 +80,8 @@ class Topic extends Component {
                                     {topic.description}
                                 </p>
                             </div>
-                            <div className="col-md-4">
-                                <img src={topic.imageUrl} className="img-fluid" alt={topic.title} />
+                            <div className="col-md-2">
+
                             </div>
                         </div>
                     </div>
@@ -87,7 +93,7 @@ class Topic extends Component {
                             Learning <strong>Path</strong>
                             {editable && (
                                 <Link className="btn btn-success btn-sm ml-2 inlineBtn" to={`/topic/${topic.id}/content`}>
-                                    <FontAwesomeIcon icon={faPlus} /> Material
+                                    <FontAwesomeIcon icon={faPlus} /> Content
                                 </Link>)}
 
                         </h4>
