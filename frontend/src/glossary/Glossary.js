@@ -45,8 +45,7 @@ class Glossary extends Component {
 
         return (
             <React.Fragment>
-
-                <PageHeader title="Glossary" />
+                {/*<PageHeader title="Glossary" />*/}
 
                 <div className="container">
                     <div className="row  mt-5 mb-5">

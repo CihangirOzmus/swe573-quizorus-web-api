@@ -73,7 +73,7 @@ class UserCreatedTopicList extends Component {
 
         return (
             <React.Fragment>
-                <PageHeader title="Created Topic List" />
+                {/*<PageHeader title="Created Topic List" />*/}
 
                 <div className="container">
                     <div className="row mt-5">

@@ -4,7 +4,9 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import PageHeader from "../components/PageHeader";
 import { WikiLabels } from "../components/Wiki";
-import {Button, Table} from "react-bootstrap";
+import { Table} from "react-bootstrap";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faBookmark, faPlus} from "@fortawesome/free-solid-svg-icons";
 
 class UserEnrolledTopicList extends Component {
     constructor(props) {
@@ -61,7 +63,15 @@ class UserEnrolledTopicList extends Component {
 
         return (
             <React.Fragment>
-                <PageHeader title="Enrolled Topic List" />
+                {/*<PageHeader title="Enrolled Topic List" />*/}
+
+                <div className="row mt-5">
+                    <div className="col-md-12 text-center">
+                        <Link to="/explore" className="btn btn-outline-info">
+                            <FontAwesomeIcon icon={faBookmark} /> Check New Courses
+                        </Link>
+                    </div>
+                </div>
 
                 <div className="container">
                     <div className="mt-5 mb-5">
