@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { API_BASE_URL, REQUEST_HEADERS } from "../constants";
 import axios from "axios";
-import { Button } from "react-bootstrap";
+import {Button, Table} from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
@@ -53,6 +53,24 @@ class UserCreatedTopicList extends Component {
 
         const topics = this.state.topics;
 
+        const topicsView = topics.map((topic, topicIndex) => {
+            return (
+                <tr key={topicIndex}>
+                    <td>{topicIndex+1}</td>
+                    <td>{topic.title}</td>
+                    <td>{topic.description}</td>
+                    <td>
+                        <WikiLabels wikis={topic.wikiData} />
+                    </td>
+                    <td>{topic.contentList.length}</td>
+                    <td>
+                        <Link className="btn btn-outline-info" to={`/topic/${topic.id}`}>Details</Link>
+                        <Button className="ml-2" variant="outline-danger" onClick={() => this.handleDeleteTopicById(topic.id)}>Delete</Button>
+                    </td>
+                </tr>
+            )
+        });
+
         return (
             <React.Fragment>
                 <PageHeader title="Created Topic List" />
@@ -66,30 +84,25 @@ class UserCreatedTopicList extends Component {
                         </div>
                     </div>
 
-                    <div className="row mt-5 mb-5">
-                        {
-                            topics.map((topic, topicIndex) => {
-                                return (
-                                    <div className="col-md-4" key={topicIndex}>
-                                        <div className="card" style={{ padding: '20px' }}>
-                                            <div className="card-bod">
-                                                <img src={topic.imageUrl} className="img-fluid mb-2" alt={topic.title} />
-                                                <h4>{topic.title}</h4>
-                                                <div className="topicCaption">{topic.description}</div>
-                                                <WikiLabels wikis={topic.wikiData} />
-                                                <hr />
-                                                <Link className="btn btn-sm btn-outline-info" to={`/topic/${topic.id}`}>Details</Link>
-                                                <Button className="ml-2 btn-sm" variant="outline-danger" onClick={() => this.handleDeleteTopicById(topic.id)}>Delete</Button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                )
-                            })
-                        }
+                    <div className="mt-5 mb-5">
+                        <Table striped bordered hover>
+                            <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Title</th>
+                                <th>Short Description</th>
+                                <th>Wikidata</th>
+                                <th>#Learning Path</th>
+                                <th>Action</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                {topicsView}
+                            </tbody>
+                        </Table>
                     </div>
                 </div>
             </React.Fragment>
-
         )
     }
 }

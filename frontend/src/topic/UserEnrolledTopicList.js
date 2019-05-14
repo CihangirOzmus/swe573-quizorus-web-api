@@ -4,6 +4,7 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import PageHeader from "../components/PageHeader";
 import { WikiLabels } from "../components/Wiki";
+import {Button, Table} from "react-bootstrap";
 
 class UserEnrolledTopicList extends Component {
     constructor(props) {
@@ -40,30 +41,46 @@ class UserEnrolledTopicList extends Component {
 
         const topics = this.state.topics;
 
+        const topicsView = topics.map((topic, topicIndex) => {
+            return (
+                <tr key={topicIndex}>
+                    <td>{topicIndex+1}</td>
+                    <td>
+                        <img src={topic.imageUrl} alt="" style={{ width: '150px' }}/>
+                    </td>
+                    <td>{topic.title}</td>
+                    <td>{topic.description}</td>
+                    <td>
+                        <WikiLabels wikis={topic.wikiData} />
+                    </td>
+                    <td>{topic.contentList.length}</td>
+                    <td><Link className="btn btn-sm btn-outline-info" to={`/topic/view/${topic.id}`}>Details</Link></td>
+                </tr>
+            )
+        });
+
         return (
             <React.Fragment>
                 <PageHeader title="Enrolled Topic List" />
 
                 <div className="container">
-                    <div className="row mt-5 mb-5">
-                        {
-                            topics.map((topic, topicIndex) => {
-                                return (
-                                    <div className="col-md-4" key={topicIndex}>
-                                        <div className="card" style={{ padding: '20px' }}>
-                                            <div className="card-bod">
-                                                <img src={topic.imageUrl} className="img-fluid mb-2" alt={topic.title} />
-                                                <h4>{topic.title}</h4>
-                                                <div className="topicCaption">{topic.description}</div>
-                                                <WikiLabels wikis={topic.wikiData} />
-                                                <hr />
-                                                <Link className="btn btn-sm btn-outline-info" to={`/topic/view/${topic.id}`}>Details</Link>
-                                            </div>
-                                        </div>
-                                    </div>
-                                )
-                            })
-                        }
+                    <div className="mt-5 mb-5">
+                        <Table striped bordered hover>
+                            <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Image</th>
+                                <th>Title</th>
+                                <th>Short Description</th>
+                                <th>Wikidata</th>
+                                <th>#Learning Path</th>
+                                <th>Action</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                {topicsView}
+                            </tbody>
+                        </Table>
                     </div>
                 </div>
             </React.Fragment>

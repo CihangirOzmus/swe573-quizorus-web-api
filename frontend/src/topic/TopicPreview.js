@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { API_BASE_URL, REQUEST_HEADERS } from "../constants";
 import axios from "axios";
-import { Row, Tab, Button } from "react-bootstrap";
+import {Row, Tab, Button, Col} from "react-bootstrap";
 import { Link, withRouter } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEdit } from '@fortawesome/free-solid-svg-icons'
 import PageHeader from "../components/PageHeader";
 import toast from "toasted-notes";
-import { PathNavigator } from "../components/LearningPath";
+import {PathNavigator, PathTabs} from "../components/LearningPath";
 
 class TopicPreview extends Component {
     constructor(props) {
@@ -113,8 +113,14 @@ class TopicPreview extends Component {
                 <div className="bg-alt sectionPadding text-left mt-5">
                     <div className="container">
                         <div className="row">
-                            <div className="col-md-8">
-                                <h4 className="mb-4">Explore <strong>{topic.title}</strong>
+                            <div className="col-md-2">
+
+                            </div>
+                            <div className="col-md-4">
+                                <img src={topic.imageUrl} className="img-fluid rounded" alt={topic.title} />
+                            </div>
+                            <div className="col-md-4">
+                                <h4 className="mb-4"><strong>{topic.title}</strong>
                                     {editable && (
                                         <Link className="btn btn-outline-primary btn-sm ml-2 inlineBtn" to={`/topic/${topic.id}/edit`}>
                                             <FontAwesomeIcon icon={faEdit} />
@@ -125,8 +131,8 @@ class TopicPreview extends Component {
                                     {topic.description}
                                 </p>
                             </div>
-                            <div className="col-md-4">
-                                <img src={topic.imageUrl} className="img-fluid" alt={topic.title} />
+                            <div className="col-md-2">
+
                             </div>
                         </div>
                     </div>
@@ -150,7 +156,6 @@ class TopicPreview extends Component {
                         </Tab.Container>
                     )
                 }
-
             </React.Fragment>
         )
     }

@@ -71,7 +71,7 @@ class Glossary extends Component {
                                             <div className="col-md-8">
                                                 <div className="card-body text-left">
                                                     <h5 className="card-title text-info text-justify mb-1">{topic.title} </h5>
-                                                    <small className="text-left"><strong>by </strong> @{topic.createdBy} {' '}</small>
+                                                    <small className="text-left">Includes <strong>{topic.contentList.length}</strong> learning path</small>
                                                     <hr />
                                                     <p className="card-text text-justify">{topic.description}</p>
                                                     <WikiLabels

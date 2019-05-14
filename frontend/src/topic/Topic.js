@@ -105,9 +105,7 @@ class Topic extends Component {
                             <div className="container mt-5 text-left" >
                                 <Row>
                                     <PathNavigator contents={topic.contentList} />
-
                                     <PathTabs contents={topic.contentList} editable={editable} handleRefresh={() => this.loadTopicById()} />
-
                                 </Row>
                             </div>
                         </Tab.Container>
