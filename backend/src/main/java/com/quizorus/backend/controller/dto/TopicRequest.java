@@ -2,9 +2,9 @@ package com.quizorus.backend.controller.dto;
 
 import com.quizorus.backend.model.Content;
 import com.quizorus.backend.model.User;
+import com.quizorus.backend.model.WikiData;
 import lombok.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -17,7 +17,7 @@ public class TopicRequest {
     private String title;
     private String description;
     private String imageUrl;
-    private ArrayList<String> wikiData;
+    private List<WikiData> wikiDataList;
     private List<Content> contentList;
     private List<User> enrolledUserList;
 }

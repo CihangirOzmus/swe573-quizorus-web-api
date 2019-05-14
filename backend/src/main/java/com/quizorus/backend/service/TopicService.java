@@ -9,6 +9,7 @@ import com.quizorus.backend.model.User;
 import com.quizorus.backend.controller.dto.ApiResponse;
 import com.quizorus.backend.repository.TopicRepository;
 import com.quizorus.backend.repository.UserRepository;
+import com.quizorus.backend.repository.WikiDataRepository;
 import com.quizorus.backend.security.UserPrincipal;
 import org.springframework.core.convert.support.ConfigurableConversionService;
 import org.springframework.http.ResponseEntity;
@@ -22,11 +23,13 @@ public class TopicService {
 
     private TopicRepository topicRepository;
     private UserRepository userRepository;
+    private WikiDataRepository wikiDataRepository;
     private ConfigurableConversionService quizorusConversionService;
 
-    public TopicService(TopicRepository topicRepository, UserRepository userRepository, ConfigurableConversionService quizorusConversionService) {
+    public TopicService(TopicRepository topicRepository, UserRepository userRepository, WikiDataRepository wikiDataRepository, ConfigurableConversionService quizorusConversionService) {
         this.topicRepository = topicRepository;
         this.userRepository = userRepository;
+        this.wikiDataRepository = wikiDataRepository;
         this.quizorusConversionService = quizorusConversionService;
     }
 
@@ -58,11 +61,17 @@ public class TopicService {
     public ResponseEntity<TopicResponse> createOrUpdateTopic(UserPrincipal currentUser, TopicRequest topicRequest) {
         topicRepository.findById(topicRequest.getId())
                 .ifPresent(topic -> {
-                    topicRequest.setWikiData(topic.getWikiData());
+                    topicRequest.setWikiDataList(topic.getWikiDataList());
                     topicRequest.setEnrolledUserList(topic.getEnrolledUserList());
                 });
 
         Topic topic = topicRepository.save(quizorusConversionService.convert(topicRequest, Topic.class));
+
+        topicRequest.getWikiDataList().forEach(wikiData -> {
+            wikiData.getWikiDataTopicList().add(topic);
+            wikiDataRepository.save(wikiData);
+        });
+
         return ResponseEntity.ok().body(quizorusConversionService.convert(topic, TopicResponse.class));
     }
 

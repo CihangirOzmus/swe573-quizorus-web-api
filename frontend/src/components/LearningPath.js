@@ -15,7 +15,6 @@ export class PathNavigator extends Component {
     render() {
         const contentList = this.props.contents;
         return (
-
             <Col sm={3}>
                 <ListGroup>
                     {contentList.map((content, contentId) => {
@@ -28,7 +27,6 @@ export class PathNavigator extends Component {
                 </ListGroup>
             </Col>
         )
-
     }
 }
 

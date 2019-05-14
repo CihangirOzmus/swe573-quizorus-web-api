@@ -38,6 +38,8 @@ class CreateTopic extends Component {
             imageUrl: this.state.imageUrl
         };
 
+        console.log(newTopic.wikiData)
+
         createTopic(newTopic)
             .then(response => {
                 toast.notify("Topic created successfully.", { position: "bottom-right" });
@@ -203,6 +205,7 @@ class CreateTopic extends Component {
 
                                     {wikiDataSearch.length > 0 && (
                                         wikiDataSearch.map((wiki, wikiIndex) => {
+                                            if (wiki.description) {
                                             return (
                                                 <Row key={wikiIndex} className="border-bottom border-info p-1 m-1">
                                                     {wiki.description && (
@@ -223,6 +226,8 @@ class CreateTopic extends Component {
                                                     )}
                                                 </Row>
                                             )
+                                        }
+                                        return null;
                                         })
                                     )}
 

@@ -14,7 +14,7 @@ public class TopicToTopicResponse implements Converter<Topic, TopicResponse> {
                 .description(source.getDescription())
                 .imageUrl(source.getImageUrl())
                 .createdBy(source.getCreatedBy())
-                .wikiData(source.getWikiData())
+                .wikiDataList(source.getWikiDataList())
                 .contentList(source.getContentList())
                 .enrolledUserList(source.getEnrolledUserList())
                 .build();
