@@ -46,7 +46,7 @@ public class Topic extends UserDatabaseDateAudit {
     private List<User> enrolledUserList;
 
     @Nullable
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany
     @JoinTable(
             name = "topic_wikiData",
             joinColumns = @JoinColumn(name = "topic_id"),
