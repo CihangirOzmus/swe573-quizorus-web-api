@@ -48,8 +48,8 @@ class AppHeader extends Component {
                         <Link to="/" style={{ textDecoration: 'none', color: 'black', fontWeight: '400' }}>
                             <img
                                 src={logo}
-                                width="30"
-                                height="30"
+                                width="40"
+                                height="40"
                                 className="d-inline-block align-top"
                                 alt="quizorus logo"
                             />

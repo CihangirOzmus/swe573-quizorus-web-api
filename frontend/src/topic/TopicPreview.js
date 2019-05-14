@@ -110,7 +110,7 @@ class TopicPreview extends Component {
                     </div>
                 </div>
 
-                <div className="bg-alt sectionPadding text-left mt-5">
+                <div className="sectionPadding text-left">
                     <div className="container">
                         <div className="row">
                             <div className="col-md-2">
@@ -138,7 +138,7 @@ class TopicPreview extends Component {
                     </div>
                 </div>
 
-                <div className="container mt-5">
+                <div className="container">
                     <div className="row col-md-12 text-left">
                         <h4>
                             Learning <strong>Path</strong>
