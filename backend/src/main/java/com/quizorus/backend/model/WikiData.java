@@ -17,7 +17,7 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class WikiData extends UserDatabaseDateAudit{
+public class WikiData {
 
     @Id
     @NotBlank

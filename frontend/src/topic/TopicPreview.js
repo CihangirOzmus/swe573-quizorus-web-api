@@ -38,8 +38,7 @@ class TopicPreview extends Component {
     loadTopicById() {
         const url = API_BASE_URL + `/topics/topic/${this.props.match.params.topicId}`;
 
-        axios.get(url, REQUEST_HEADERS)
-            .then(res => {
+        axios.get(url, REQUEST_HEADERS).then(res => {
                 this.setState({
                     topic: res.data,
                     activeTab: res.data.contentList.length > 0 ? res.data.contentList[0].id : ''

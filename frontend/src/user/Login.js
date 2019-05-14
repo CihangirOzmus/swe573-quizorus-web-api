@@ -12,8 +12,8 @@ class Login extends Component {
         super(props);
         this.form = React.createRef();
         this.state = {
-            usernameOrEmail: '',
-            password: ''
+            usernameOrEmail:'',
+            password:''
         };
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleUsernameOrEmailChange = this.handleUsernameOrEmailChange.bind(this);
