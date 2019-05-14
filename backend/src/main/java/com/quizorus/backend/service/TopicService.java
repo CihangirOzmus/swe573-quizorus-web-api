@@ -23,13 +23,11 @@ public class TopicService {
 
     private TopicRepository topicRepository;
     private UserRepository userRepository;
-    private WikiDataRepository wikiDataRepository;
     private ConfigurableConversionService quizorusConversionService;
 
-    public TopicService(TopicRepository topicRepository, UserRepository userRepository, WikiDataRepository wikiDataRepository, ConfigurableConversionService quizorusConversionService) {
+    public TopicService(TopicRepository topicRepository, UserRepository userRepository, ConfigurableConversionService quizorusConversionService) {
         this.topicRepository = topicRepository;
         this.userRepository = userRepository;
-        this.wikiDataRepository = wikiDataRepository;
         this.quizorusConversionService = quizorusConversionService;
     }
 
@@ -61,16 +59,10 @@ public class TopicService {
     public ResponseEntity<TopicResponse> createOrUpdateTopic(UserPrincipal currentUser, TopicRequest topicRequest) {
         topicRepository.findById(topicRequest.getId())
                 .ifPresent(topic -> {
-                    topicRequest.setWikiDataList(topic.getWikiDataList());
-                    topicRequest.setEnrolledUserList(topic.getEnrolledUserList());
+                    topicRequest.setWikiData(topic.getWikiData());
                 });
 
         Topic topic = topicRepository.save(quizorusConversionService.convert(topicRequest, Topic.class));
-
-        topicRequest.getWikiDataList().forEach(wikiData -> {
-            wikiData.getWikiDataTopicList().add(topic);
-            wikiDataRepository.save(wikiData);
-        });
 
         return ResponseEntity.ok().body(quizorusConversionService.convert(topic, TopicResponse.class));
     }

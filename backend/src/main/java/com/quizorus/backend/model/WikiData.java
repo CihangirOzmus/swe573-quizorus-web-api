@@ -32,8 +32,4 @@ public class WikiData extends UserDatabaseDateAudit{
     @NotBlank
     private String conceptUri;
 
-    @JsonIgnore
-    @ManyToMany(mappedBy = "wikiDataList")
-    private List<Topic> wikiDataTopicList;
-
 }

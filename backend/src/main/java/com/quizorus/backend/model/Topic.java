@@ -33,9 +33,6 @@ public class Topic extends UserDatabaseDateAudit {
     @Nullable
     private String imageUrl;
 
-//    @Nullable
-//    private ArrayList<String> wikiData;
-
     @Nullable
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "topic")
     private List<Content> contentList;
@@ -49,11 +46,11 @@ public class Topic extends UserDatabaseDateAudit {
     private List<User> enrolledUserList;
 
     @Nullable
-    @ManyToMany
-    @JoinTable(name = "wikiData_topic_list",
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "topic_wikiData",
             joinColumns = @JoinColumn(name = "topic_id"),
-            inverseJoinColumns = @JoinColumn(name = "wikiData_id")
-    )
-    private List<WikiData> wikiDataList;
+            inverseJoinColumns = @JoinColumn(name = "wikiData_id"))
+    private List<WikiData> wikiData;
 
 }

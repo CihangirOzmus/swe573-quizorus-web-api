@@ -77,7 +77,6 @@ class Glossary extends Component {
                                                     <WikiLabels
                                                         wikis={topic.wikiData}
                                                     />
-
                                                 </div>
                                             </div>
                                         </div>

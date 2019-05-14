@@ -19,7 +19,7 @@ public class TopicResponse {
     private String description;
     private String imageUrl;
     private Long createdBy;
-    private List<WikiData> wikiDataList;
+    private List<WikiData> wikiData;
     private List<Content> contentList;
     private List<User> enrolledUserList;
 
