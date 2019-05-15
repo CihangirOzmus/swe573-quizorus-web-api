@@ -58,14 +58,22 @@ public class TopicService {
         return ResponseEntity.ok().body(quizorusConversionService.convert(topicById, TopicResponse.class));
     }
 
-    public ResponseEntity<TopicResponse> createOrUpdateTopic(UserPrincipal currentUser, TopicRequest topicRequest) {
-        topicRepository.findById(topicRequest.getId())
-                .ifPresent(topic -> {
-                    topicRequest.setWikiData(topic.getWikiData());
-                });
+    public ResponseEntity<TopicResponse> createTopic(UserPrincipal currentUser, TopicRequest topicRequest) {
         topicRequest.getWikiData().forEach(wikiData -> wikiDataRepository.save(wikiData));
         Topic topic = topicRepository.save(quizorusConversionService.convert(topicRequest, Topic.class));
         return ResponseEntity.ok().body(quizorusConversionService.convert(topic, TopicResponse.class));
+    }
+
+    public ResponseEntity<ApiResponse> updateTopic(UserPrincipal currentUser, TopicRequest topicRequest) {
+        Topic topic = topicRepository.findById(topicRequest.getId()).orElseThrow(() -> new ResourceNotFoundException("Topic", "id", topicRequest.getId()));
+
+        if (currentUser.getId().equals(topic.getCreatedBy())){
+            topicRequest.setWikiData(topic.getWikiData());
+            topicRepository.save(quizorusConversionService.convert(topicRequest, Topic.class));
+            return ResponseEntity.ok().body(new ApiResponse(true,"Topic updated successfully"));
+        }
+
+        return ResponseEntity.badRequest().body(new ApiResponse(false, "Failed to update topic"));
     }
 
     public ResponseEntity<ApiResponse> createOrUpdateContentByTopicId(UserPrincipal currentUser, Long topicId, Content contentRequest) {

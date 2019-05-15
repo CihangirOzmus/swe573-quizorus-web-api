@@ -45,7 +45,13 @@ public class TopicController {
     @PostMapping
     @PreAuthorize("hasRole('USER')")
     public ResponseEntity<TopicResponse> createTopic(@CurrentUser UserPrincipal currentUser, @Valid @RequestBody TopicRequest topicRequest){
-        return topicService.createOrUpdateTopic(currentUser, topicRequest);
+        return topicService.createTopic(currentUser, topicRequest);
+    }
+
+    @PutMapping("/edit")
+    @PreAuthorize("hasRole('USER')")
+    public ResponseEntity<ApiResponse> updateTopic(@CurrentUser UserPrincipal currentUser, @Valid @RequestBody TopicRequest topicRequest){
+        return  topicService.updateTopic(currentUser, topicRequest);
     }
 
     @PostMapping("/{topicId}/contents")

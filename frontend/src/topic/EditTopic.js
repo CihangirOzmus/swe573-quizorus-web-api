@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { API_BASE_URL, REQUEST_HEADERS } from "../constants";
 import { Formik, Form, Field, ErrorMessage } from 'formik';
-import { createTopic } from '../util/APIUtils';
+import {updateTopic} from '../util/APIUtils';
 import { withRouter } from 'react-router-dom';
 import toast from "toasted-notes";
 import wdk from "wikidata-sdk";
@@ -78,7 +78,6 @@ class EditTopic extends Component {
         const wikidatas = this.state.wikiDataSearch;
         wikidatas.map((wiki, wikiIndex) => {
             return (
-                // if the description is empty, empty row seen, try domates
                 <Row key={wikiIndex} className="border-bottom border-info p-1 m-1 text-left">
                     {wiki.description && (
                         <React.Fragment>
@@ -135,9 +134,9 @@ class EditTopic extends Component {
                                                     description: values.description,
                                                 };
 
-                                                createTopic(newTopic)
+                                                updateTopic(newTopic)
                                                     .then(res => {
-                                                        toast.notify("Content updated successfully.", { position: "bottom-right" });
+                                                        toast.notify("Topic updated successfully.", { position: "bottom-right" });
                                                         props.history.push(`/topic/${topicId}`);
                                                     }).catch(err => {
                                                         toast.notify("Topic does not exist!", { position: "bottom-right" });

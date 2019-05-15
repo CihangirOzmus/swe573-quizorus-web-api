@@ -23,10 +23,7 @@ const request = (options) => {
         );
 };
 
-export function getAllTopics(page, size) {
-    page = page || 0;
-    size = size || TOPIC_LIST_SIZE;
-
+export function getAllTopics() {
     return request({
         url: API_BASE_URL + "/topics",
         method: 'GET'
@@ -41,7 +38,15 @@ export function createTopic(topicData) {
     });
 }
 
-/* Created by Tallrye */
+/* Created by Cozmus */
+export function updateTopic(topicData) {
+    return request({
+        url: API_BASE_URL + "/topics/edit",
+        method: 'PUT',
+        body: JSON.stringify(topicData)
+    });
+}
+
 export function createQuestion(questionData, contentId) {
     return request({
         url: API_BASE_URL + `/contents/${contentId}/questions`,
@@ -50,7 +55,6 @@ export function createQuestion(questionData, contentId) {
     });
 }
 
-/* Created by Tallrye */
 export function createOption(optionData, questionId) {
     return request({
         url: API_BASE_URL + `/questions/${questionId}/choices`,
@@ -64,14 +68,6 @@ export function createContent(contentData, topicId) {
         url: API_BASE_URL + `/topics/${topicId}/contents`,
         method: 'POST',
         body: JSON.stringify(contentData)
-    });
-}
-
-export function castVote(voteData) {
-    return request({
-        url: API_BASE_URL + "/polls/" + voteData.pollId + "/votes",
-        method: 'POST',
-        body: JSON.stringify(voteData)
     });
 }
 
@@ -105,7 +101,6 @@ export function checkEmailAvailability(email) {
     });
 }
 
-
 export function getCurrentUser() {
     if (!localStorage.getItem(ACCESS_TOKEN)) {
         return Promise.reject("No access token set.");
@@ -116,6 +111,7 @@ export function getCurrentUser() {
         method: 'GET'
     });
 }
+
 
 export function getUserProfile(username) {
     return request({
@@ -141,5 +137,13 @@ export function getUserVotedPolls(username, page, size) {
     return request({
         url: API_BASE_URL + "/users/" + username + "/votes?page=" + page + "&size=" + size,
         method: 'GET'
+    });
+}
+
+export function castVote(voteData) {
+    return request({
+        url: API_BASE_URL + "/polls/" + voteData.pollId + "/votes",
+        method: 'POST',
+        body: JSON.stringify(voteData)
     });
 }

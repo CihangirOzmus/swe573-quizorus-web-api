@@ -20,9 +20,7 @@ class UserEnrolledTopicList extends Component {
     }
 
     loadUserEnrolledTopics() {
-
         const url = API_BASE_URL + `/topics/enrolled/${this.props.currentUser.id}`;
-
         axios.get(url, REQUEST_HEADERS).then(res => {
 
             this.setState({

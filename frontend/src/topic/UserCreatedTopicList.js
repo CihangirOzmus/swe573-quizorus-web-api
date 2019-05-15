@@ -90,7 +90,7 @@ class UserCreatedTopicList extends Component {
                                 <th>#</th>
                                 <th>Title</th>
                                 <th>Short Description</th>
-                                <th>Wikidata</th>
+                                <th>WikiData</th>
                                 <th>#Learning Path</th>
                                 <th>Action</th>
                             </tr>
