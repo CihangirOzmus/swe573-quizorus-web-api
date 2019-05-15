@@ -1,13 +1,15 @@
 package com.quizorus.backend.service;
 
+import com.quizorus.backend.controller.dto.ApiResponse;
 import com.quizorus.backend.exception.ResourceNotFoundException;
 import com.quizorus.backend.model.Choice;
 import com.quizorus.backend.model.Question;
-import com.quizorus.backend.controller.dto.ApiResponse;
 import com.quizorus.backend.repository.QuestionRepository;
 import com.quizorus.backend.security.UserPrincipal;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class QuestionService {
@@ -38,4 +40,8 @@ public class QuestionService {
         return ResponseEntity.badRequest().body(new ApiResponse(false, "Failed to delete question"));
     }
 
+    public ResponseEntity<List<Question>> getQuestionsByContentId(UserPrincipal currentUser, Long contentId) {
+        List<Question> questions = questionRepository.findAllByContentId(contentId);
+        return ResponseEntity.ok().body(questions);
+    }
 }

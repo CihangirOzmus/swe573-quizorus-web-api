@@ -2,6 +2,7 @@ package com.quizorus.backend.controller;
 
 import com.quizorus.backend.model.Choice;
 import com.quizorus.backend.controller.dto.ApiResponse;
+import com.quizorus.backend.model.Question;
 import com.quizorus.backend.security.CurrentUser;
 import com.quizorus.backend.security.UserPrincipal;
 import com.quizorus.backend.service.QuestionService;
@@ -11,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping("api/questions")
@@ -20,6 +22,12 @@ public class QuestionController {
 
     public QuestionController(QuestionService questionService) {
         this.questionService = questionService;
+    }
+
+    @GetMapping("/{contentId}")
+    @PreAuthorize("hasRole('USER')")
+    public ResponseEntity<List<Question>> getQuestionsByContentId(@CurrentUser UserPrincipal currentUser, @PathVariable Long contentId){
+        return questionService.getQuestionsByContentId(currentUser, contentId);
     }
 
     @PostMapping("/{questionId}/choices")
