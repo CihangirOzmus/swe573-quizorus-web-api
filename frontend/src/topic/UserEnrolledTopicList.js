@@ -45,7 +45,7 @@ class UserEnrolledTopicList extends Component {
                 <tr key={topicIndex}>
                     <td>{topicIndex+1}</td>
                     <td>
-                        <img src={topic.imageUrl} alt="" style={{ width: '150px' }}/>
+                        <img src={topic.imageUrl} alt="" style={{ width: '100px' }}/>
                     </td>
                     <td>{topic.title}</td>
                     <td>{topic.description}</td>
@@ -70,7 +70,7 @@ class UserEnrolledTopicList extends Component {
                     </div>
                 </div>
 
-                <div className="container">
+                <div className="container-fluid">
                     <div className="mt-5 mb-5">
                         <Table striped bordered hover>
                             <thead>

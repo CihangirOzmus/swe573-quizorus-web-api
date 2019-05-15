@@ -100,7 +100,7 @@ class Topic extends Component {
                 {
                     activeTab && (
                         <Tab.Container id="list-group-tabs-example" defaultActiveKey={activeTab}>
-                            <div className="container mt-5 text-left" >
+                            <div className="container-fluid mt-5 text-left" >
                                 <Row>
                                     <PathNavigator contents={topic.contentList} />
                                     <PathTabs contents={topic.contentList} editable={editable} handleRefresh={() => this.loadTopicById()} />

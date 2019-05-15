@@ -56,6 +56,9 @@ class UserCreatedTopicList extends Component {
             return (
                 <tr key={topicIndex}>
                     <td>{topicIndex+1}</td>
+                    <td>
+                        <img src={topic.imageUrl} alt="" style={{ width: '100px' }}/>
+                    </td>
                     <td>{topic.title}</td>
                     <td>{topic.description}</td>
                     <td>
@@ -64,6 +67,7 @@ class UserCreatedTopicList extends Component {
                     <td>{topic.contentList.length}</td>
                     <td>
                         <Link className="btn btn-outline-info" to={`/topic/${topic.id}`}>Details</Link>
+                        <Link className="disabled btn btn-outline-warning ml-2" to={`/topic/${topic.id}`}>Statistics</Link>
                         <Button className="ml-2" variant="outline-danger" onClick={() => this.handleDeleteTopicById(topic.id)}>Delete</Button>
                     </td>
                 </tr>
@@ -74,7 +78,7 @@ class UserCreatedTopicList extends Component {
             <React.Fragment>
                 {/*<PageHeader title="Created Topic List" />*/}
 
-                <div className="container">
+                <div className="container-fluid">
                     <div className="row mt-5">
                         <div className="col-md-12 text-center">
                             <Link to="/topic/new" className="btn btn-outline-info">
@@ -88,6 +92,7 @@ class UserCreatedTopicList extends Component {
                             <thead>
                             <tr>
                                 <th>#</th>
+                                <th>Image</th>
                                 <th>Title</th>
                                 <th>Short Description</th>
                                 <th>WikiData</th>

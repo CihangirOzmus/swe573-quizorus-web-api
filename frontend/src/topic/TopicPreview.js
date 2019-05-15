@@ -91,15 +91,11 @@ class TopicPreview extends Component {
 
         return (
             <React.Fragment>
-                <PageHeader title="Details">
-                    <Link to={`/explore`} className="breadcrumbLink">
-                        <span>Glossary</span>
-                    </Link>
-                </PageHeader>
+                <PageHeader title="Preview"></PageHeader>
 
                 <div className="container">
                     <div className="row">
-                        <div className="col-12 text-center mt-5">
+                        <div className="col-12 text-center mt-5 mb-5">
                             <Button
                                 variant="outline-info"
                                 onClick={() => this.enrollUserToTopic(topic.id)}>
@@ -109,7 +105,7 @@ class TopicPreview extends Component {
                     </div>
                 </div>
 
-                <div className="sectionPadding text-left">
+                <div className="bg-alt sectionPadding text-left">
                     <div className="container">
                         <div className="row">
                             <div className="col-md-2">
@@ -149,7 +145,7 @@ class TopicPreview extends Component {
                 {
                     activeTab && (
                         <Tab.Container id="list-group-tabs-example" defaultActiveKey={activeTab}>
-                            <div className="container mt-5 mb-5 text-left" >
+                            <div className="container-fluid mt-5 mb-5 text-left" >
                                 <Row>
                                     <PathNavigator contents={topic.contentList} />
                                     <Tab.Content>
@@ -157,10 +153,11 @@ class TopicPreview extends Component {
                                             return (
                                                 <Tab.Pane key={contentId} eventKey={content.id}>
                                                     <div>
+                                                        {content.text && (<div className="text-left" dangerouslySetInnerHTML={{ __html: content.text.substring(0,120) + "..."}}></div>)}
                                                         <Button
                                                             variant="info"
                                                             onClick={() => this.enrollUserToTopic(topic.id)}>
-                                                            Enroll To See Details
+                                                            Enroll To Continue
                                                         </Button>
                                                     </div>
                                                 </Tab.Pane>

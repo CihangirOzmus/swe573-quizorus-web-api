@@ -48,13 +48,13 @@ class Glossary extends Component {
 
                 <div className="container">
                     <div className="row  mt-5 mb-5">
-                        <div className="col-md-12">
+                        <div className="col-md-10 offset-1">
                             <InputGroup>
                                 <input value={this.state.input} placeholder="Search topics" className="form-control searchInput" type="text" onChange={this.handleSearch} />
                             </InputGroup>
                         </div>
                     </div>
-                    <div className="col-md-12">
+                    <div className="col-md-10 offset-1">
                         {topics.filter(topic => this.state.input === '' || topic.title.toLowerCase().indexOf(this.state.input) > -1).map((topic, topicIndex) => {
                             return (
                                 <Row className="mb-1" key={topicIndex}>
