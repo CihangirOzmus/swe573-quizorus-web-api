@@ -31,7 +31,12 @@ public class UserService {
         return quizorusConversionService.convert(currentUser, UserResponse.class);
     }
 
-    public UserIdentityAvailability checkUsernameAvailability(String email){
+    public UserIdentityAvailability checkUsernameAvailability(String username){
+        Boolean isAvailable = !userRepository.existsByUsername(username);
+        return new UserIdentityAvailability(isAvailable);
+    }
+
+    public UserIdentityAvailability checkEmailAvailability(String email){
         Boolean isAvailable = !userRepository.existsByEmail(email);
         return new UserIdentityAvailability(isAvailable);
     }

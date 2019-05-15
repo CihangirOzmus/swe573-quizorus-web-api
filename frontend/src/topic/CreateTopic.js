@@ -44,11 +44,7 @@ class CreateTopic extends Component {
                     toast.notify("Topic created successfully.", { position: "bottom-right" });
                     this.props.history.push(`/${this.props.currentUser.username}/topics/created`);
                 }).catch(error => {
-                if (error.status === 401) {
-                    this.props.handleLogout();
-                } else {
                     toast.notify('Sorry! Something went wrong. Please try again!', { position: "bottom-right" });
-                }
             });
         }
     }
@@ -88,8 +84,7 @@ class CreateTopic extends Component {
         if (value !== '') {
             this.timer = setTimeout(() => {
                 const url = wdk.searchEntities(value, 'en', 15, 'json');
-                axios.get(url)
-                    .then(response => {
+                axios.get(url).then(response => {
                         if (response.data.search.length > 0) {
                             this.setState({ wikiDataSearch: response.data.search });
                             toast.notify("Found in WikiData!", { position: "bottom-right" })

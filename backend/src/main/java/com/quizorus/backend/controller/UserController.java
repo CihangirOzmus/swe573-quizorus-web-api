@@ -34,8 +34,13 @@ public class UserController {
     }
 
     @GetMapping("/user/checkUsernameAvailability")
-    public UserIdentityAvailability checkUsernameAvailability(@RequestParam String email){
-        return userService.checkUsernameAvailability(email);
+    public UserIdentityAvailability checkUsernameAvailability(@RequestParam String username){
+        return userService.checkUsernameAvailability(username);
+    }
+
+    @GetMapping("/user/checkEmailAvailability")
+    public UserIdentityAvailability checkEmailAvailability(@RequestParam String email){
+        return userService.checkEmailAvailability(email);
     }
 
     @GetMapping("/users/{username}")

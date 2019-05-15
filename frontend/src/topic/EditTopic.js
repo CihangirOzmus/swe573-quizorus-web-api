@@ -59,8 +59,7 @@ class EditTopic extends Component {
     loadTopicById() {
         let url = API_BASE_URL + `/topics/topic/${this.props.match.params.topicId}`;
 
-        axios.get(url, REQUEST_HEADERS)
-            .then(res => {
+        axios.get(url, REQUEST_HEADERS).then(res => {
                 this.setState({ topic: res.data })
 
             }).catch(err => {

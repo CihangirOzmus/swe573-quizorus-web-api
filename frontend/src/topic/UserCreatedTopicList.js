@@ -23,7 +23,7 @@ class UserCreatedTopicList extends Component {
         const username = this.props.currentUser.username;
         let url = API_BASE_URL + `/users/${username}/topics`;
 
-        axios.get(url).then(res => {
+        axios.get(url, REQUEST_HEADERS).then(res => {
             this.setState({
                 topics: res.data,
                 isLoading: false
@@ -88,16 +88,16 @@ class UserCreatedTopicList extends Component {
                     </div>
 
                     <div className="mt-5 mb-5">
-                        <Table striped bordered hover>
+                        <Table striped bordered hover responsive>
                             <thead>
                             <tr>
                                 <th>#</th>
                                 <th>Image</th>
                                 <th>Title</th>
-                                <th>Short Description</th>
+                                <th style={{ width: '30%' }}>Short Description</th>
                                 <th>WikiData</th>
                                 <th>#Learning Path</th>
-                                <th>Action</th>
+                                <th style={{ width: '30%' }}>Action</th>
                             </tr>
                             </thead>
                             <tbody>

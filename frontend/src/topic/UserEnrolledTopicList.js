@@ -53,7 +53,10 @@ class UserEnrolledTopicList extends Component {
                         <WikiLabels wikis={topic.wikiData} />
                     </td>
                     <td>{topic.contentList.length}</td>
-                    <td><Link className="btn btn-sm btn-outline-info" to={`/topic/view/${topic.id}`}>Details</Link></td>
+                    <td>
+                        <Link className="btn btn btn-outline-info" to={`/topic/view/${topic.id}`}>Details</Link>
+                        <Link className="disabled btn btn-outline-warning ml-2" to={`/topic/${topic.id}`}>Statistics</Link>
+                    </td>
                 </tr>
             )
         });
@@ -78,10 +81,10 @@ class UserEnrolledTopicList extends Component {
                                 <th>#</th>
                                 <th>Image</th>
                                 <th>Title</th>
-                                <th>Short Description</th>
+                                <th style={{ width: '30%' }}>Short Description</th>
                                 <th>Wikidata</th>
                                 <th>#Learning Path</th>
-                                <th>Action</th>
+                                <th style={{ width: '30%' }}>Action</th>
                             </tr>
                             </thead>
                             <tbody>

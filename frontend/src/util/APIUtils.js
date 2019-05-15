@@ -1,4 +1,4 @@
-import { API_BASE_URL, TOPIC_LIST_SIZE, ACCESS_TOKEN } from '../constants';
+import { API_BASE_URL, ACCESS_TOKEN } from '../constants';
 
 const request = (options) => {
     const headers = new Headers({
@@ -22,13 +22,6 @@ const request = (options) => {
             })
         );
 };
-
-export function getAllTopics() {
-    return request({
-        url: API_BASE_URL + "/topics",
-        method: 'GET'
-    });
-}
 
 export function createTopic(topicData) {
     return request({
@@ -117,33 +110,5 @@ export function getUserProfile(username) {
     return request({
         url: API_BASE_URL + "/users/" + username,
         method: 'GET'
-    });
-}
-
-export function getUserCreatedTopics(username, page, size) {
-    page = page || 0;
-    size = size || TOPIC_LIST_SIZE;
-
-    return request({
-        url: API_BASE_URL + "/users/" + username + "/topics?page=" + page + "&size=" + size,
-        method: 'GET'
-    });
-}
-
-export function getUserVotedPolls(username, page, size) {
-    page = page || 0;
-    size = size || TOPIC_LIST_SIZE;
-
-    return request({
-        url: API_BASE_URL + "/users/" + username + "/votes?page=" + page + "&size=" + size,
-        method: 'GET'
-    });
-}
-
-export function castVote(voteData) {
-    return request({
-        url: API_BASE_URL + "/polls/" + voteData.pollId + "/votes",
-        method: 'POST',
-        body: JSON.stringify(voteData)
     });
 }

@@ -24,7 +24,7 @@ public class Choice extends UserDatabaseDateAudit {
     private Long id;
 
     @NotBlank
-    @Size(max = 255)
+    @Column(columnDefinition = "TEXT")
     private String text;
 
     @NotNull

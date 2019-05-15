@@ -74,7 +74,7 @@ class Topic extends Component {
                                         </Link>
                                     )}
                                 </h4>
-                                <p>
+                                <p className="text-left">
                                     {topic.description}
                                 </p>
                             </div>

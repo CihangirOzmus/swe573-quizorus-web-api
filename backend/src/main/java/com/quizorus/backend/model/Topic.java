@@ -24,10 +24,11 @@ public class Topic extends UserDatabaseDateAudit {
 
     @NotBlank
     @Size(max = 150)
+    @Column(unique = true)
     private String title;
 
     @NotBlank
-    @Size(max = 255)
+    @Column(columnDefinition = "TEXT")
     private String description;
 
     @Nullable

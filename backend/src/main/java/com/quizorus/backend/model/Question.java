@@ -5,7 +5,6 @@ import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
 import java.util.List;
 
 @Entity
@@ -22,7 +21,7 @@ public class Question extends UserDatabaseDateAudit {
     private Long id;
 
     @NotBlank
-    @Size(max = 255)
+    @Column(columnDefinition = "TEXT")
     private String text;
 
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
