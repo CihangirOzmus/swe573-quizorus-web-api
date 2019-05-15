@@ -41,8 +41,8 @@ public class Topic extends UserDatabaseDateAudit {
     @Nullable
     @ManyToMany
     @JoinTable(name = "enrolled_topic_list",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "topic_id")
+            joinColumns = @JoinColumn(name = "topic_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id")
     )
     private List<User> enrolledUserList;
 
