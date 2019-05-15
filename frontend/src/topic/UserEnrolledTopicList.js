@@ -2,11 +2,10 @@ import React, { Component } from 'react';
 import { API_BASE_URL, REQUEST_HEADERS } from "../constants";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import PageHeader from "../components/PageHeader";
 import { WikiLabels } from "../components/Wiki";
 import { Table} from "react-bootstrap";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faBookmark, faPlus} from "@fortawesome/free-solid-svg-icons";
+import {faBookmark} from "@fortawesome/free-solid-svg-icons";
 
 class UserEnrolledTopicList extends Component {
     constructor(props) {

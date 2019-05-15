@@ -1,5 +1,6 @@
 package com.quizorus.backend.service;
 
+import com.quizorus.backend.exception.ResourceNotFoundException;
 import com.quizorus.backend.model.Choice;
 import com.quizorus.backend.model.Question;
 import com.quizorus.backend.controller.dto.ApiResponse;
@@ -18,8 +19,8 @@ public class QuestionService {
     }
 
     public ResponseEntity<ApiResponse> createChoiceByQuestionId(UserPrincipal currentUser, Long questionId, Choice choiceRequest){
-        Question question = questionRepository.findById(questionId).orElse(null);
-        if (question != null && currentUser.getId().equals(question.getCreatedBy())){
+        Question question = questionRepository.findById(questionId).orElseThrow(() -> new ResourceNotFoundException("Question", "id", questionId));
+        if (currentUser.getId().equals(question.getCreatedBy()) && question.getChoiceList().size() < 5){
             choiceRequest.setQuestion(question);
             question.getChoiceList().add(choiceRequest);
             questionRepository.save(question);

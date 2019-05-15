@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Col, ListGroup, Tab, Button } from "react-bootstrap";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Formik, Form, Field, ErrorMessage } from 'formik';
-import { createOption } from "../util/APIUtils";
 import { Link } from "react-router-dom";
 import { faChevronRight, faTrash, faEdit } from '@fortawesome/free-solid-svg-icons'
 import QuestionModal from "./QuestionModal";

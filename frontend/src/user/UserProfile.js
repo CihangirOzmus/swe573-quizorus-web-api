@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import PageHeader from "../components/PageHeader";
 
 class UserProfile extends Component{
     render() {

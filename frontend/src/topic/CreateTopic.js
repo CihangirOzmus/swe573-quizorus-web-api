@@ -38,20 +38,33 @@ class CreateTopic extends Component {
             imageUrl: this.state.imageUrl
         };
 
-        console.log(newTopic.wikiData)
-
-        createTopic(newTopic)
-            .then(response => {
-                toast.notify("Topic created successfully.", { position: "bottom-right" });
-                this.props.history.push(`/${this.props.currentUser.username}/topics/created`);
-            }).catch(error => {
+        if (CreateTopic.validateTopicCreation(newTopic)) {
+            createTopic(newTopic)
+                .then(response => {
+                    toast.notify("Topic created successfully.", { position: "bottom-right" });
+                    this.props.history.push(`/${this.props.currentUser.username}/topics/created`);
+                }).catch(error => {
                 if (error.status === 401) {
                     this.props.handleLogout();
                 } else {
                     toast.notify('Sorry! Something went wrong. Please try again!', { position: "bottom-right" });
                 }
             });
+        }
+    }
 
+    static validateTopicCreation(newTopic){
+        if(!newTopic.title){
+            toast.notify("Topic title is required!");
+            return false;
+        } else if(!newTopic.description){
+            toast.notify("Topic Description is required!");
+            return false;
+        } else if (newTopic.wikiData.length === 0){
+            toast.notify("Please add at least one wikiData");
+            return false;
+        }
+        return true;
     }
 
     handleTitleChange(event) {
@@ -71,7 +84,6 @@ class CreateTopic extends Component {
 
     handleKeywordChange(event) {
         clearTimeout(this.timer);
-
         const value = event.target.value;
         if (value !== '') {
             this.timer = setTimeout(() => {
@@ -79,7 +91,7 @@ class CreateTopic extends Component {
                 axios.get(url)
                     .then(response => {
                         if (response.data.search.length > 0) {
-                            this.setState({ wikiDataSearch: response.data.search })
+                            this.setState({ wikiDataSearch: response.data.search });
                             toast.notify("Found in WikiData!", { position: "bottom-right" })
                         } else {
                             toast.notify("Keyword can not found!", { position: "bottom-right" });

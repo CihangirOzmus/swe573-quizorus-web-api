@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Row, InputGroup } from 'react-bootstrap';
 import { Link, withRouter } from 'react-router-dom';
 import { API_BASE_URL } from '../constants';
-import PageHeader from "../components/PageHeader";
 import { WikiLabels } from "../components/Wiki";
 import axios from 'axios';
 

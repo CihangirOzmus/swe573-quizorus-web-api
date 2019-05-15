@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { API_BASE_URL, REQUEST_HEADERS } from "../constants";
 import axios from "axios";
-import {Row, Tab, Button, Col} from "react-bootstrap";
+import {Row, Tab, Button} from "react-bootstrap";
 import { Link, withRouter } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEdit } from '@fortawesome/free-solid-svg-icons'
 import PageHeader from "../components/PageHeader";
 import toast from "toasted-notes";
-import {PathElement, PathNavigator, PathTabs} from "../components/LearningPath";
+import {PathNavigator} from "../components/LearningPath";
 
 class TopicPreview extends Component {
     constructor(props) {
@@ -136,6 +136,8 @@ class TopicPreview extends Component {
                         </div>
                     </div>
                 </div>
+
+                <hr/>
 
                 <div className="container">
                     <div className="row col-md-12 text-left">

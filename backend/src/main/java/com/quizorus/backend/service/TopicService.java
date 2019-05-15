@@ -63,11 +63,8 @@ public class TopicService {
                 .ifPresent(topic -> {
                     topicRequest.setWikiData(topic.getWikiData());
                 });
-
         topicRequest.getWikiData().forEach(wikiData -> wikiDataRepository.save(wikiData));
-
         Topic topic = topicRepository.save(quizorusConversionService.convert(topicRequest, Topic.class));
-
         return ResponseEntity.ok().body(quizorusConversionService.convert(topic, TopicResponse.class));
     }
 
