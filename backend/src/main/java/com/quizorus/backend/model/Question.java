@@ -31,15 +31,4 @@ public class Question extends UserDatabaseDateAudit {
     @ManyToOne
     private Content content;
 
-    @JsonIgnore
-    @OneToOne(mappedBy = "question")
-    private Answer answer;
-
-//    @OneToMany
-//    @JoinTable(name = "answers",
-//            joinColumns = @JoinColumn(name = "choice_id"),
-//            inverseJoinColumns = @JoinColumn(name = "user_id"))
-//    @MapKeyJoinColumn(name = "question_id")
-//    private Map<Question, User> answers = new HashMap<>();
-
 }
