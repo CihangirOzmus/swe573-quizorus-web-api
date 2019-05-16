@@ -60,13 +60,13 @@ class Topic extends Component {
                 <div className="bg-alt sectionPadding text-center">
                     <div className="container">
                         <div className="row">
-                            <div className="col-md-2">
+                            <div className="col-md-1">
 
                             </div>
                             <div className="col-md-4">
                                 <img src={topic.imageUrl} className="img-fluid rounded" alt={topic.title} />
                             </div>
-                            <div className="col-md-4">
+                            <div className="col-md-6">
                                 <h4 className="mb-4"><strong>{topic.title}</strong>
                                     {editable && (
                                         <Link className="btn btn-outline-primary btn-sm ml-2 inlineBtn" to={`/topic/${topic.id}/edit`}>
@@ -78,7 +78,7 @@ class Topic extends Component {
                                     {topic.description}
                                 </p>
                             </div>
-                            <div className="col-md-2">
+                            <div className="col-md-1">
 
                             </div>
                         </div>

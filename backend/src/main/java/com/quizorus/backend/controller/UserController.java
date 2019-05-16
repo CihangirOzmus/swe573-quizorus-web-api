@@ -49,10 +49,10 @@ public class UserController {
         return userService.getUserProfileByUsername(username);
     }
 
-    @GetMapping("/users/{username}/topics")
-    //@PreAuthorize("hasRole('USER')")
-    public ResponseEntity<List<TopicResponse>> getTopicsCreatedByUsername(@PathVariable String username, @CurrentUser UserPrincipal currentUser) {
-        return topicService.getTopicsCreatedByUsername(currentUser, username);
-    }
+//    @GetMapping("/users/{username}/topics")
+//    @PreAuthorize("hasRole('USER')")
+//    public ResponseEntity<List<TopicResponse>> getTopicsCreatedByUsername(@PathVariable String username, @CurrentUser UserPrincipal currentUser) {
+//        return topicService.getTopicsCreatedByUsername(currentUser, username);
+//    }
 
 }

@@ -50,16 +50,12 @@ public class User extends DatabaseDateAudit {
     @JoinTable(name = "user_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
+    @Builder.Default
     private Set<Role> roles = new HashSet<>();
 
     @JsonIgnore
     @Nullable
     @ManyToMany(mappedBy = "enrolledUserList")
     private List<Topic> enrolledTopicList;
-
-    @JsonIgnore
-    @Nullable
-    @ManyToMany(mappedBy = "answeredByUserList")
-    private List<Choice> answerList;
 
 }

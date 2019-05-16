@@ -166,18 +166,19 @@ export class Question extends Component {
                             }}
                             onSubmit={(values, { setSubmitting }) => {
                                 setTimeout(() => {
-                                    const newOption = {
+                                    const selectedOption = {
                                         choice: values.choice,
                                         question: question.id
                                     };
-                                    this.setState({ disabled: true })
-                                    console.log(newOption)
-                                    /* createOption(newOption)
+                                    this.setState({ disabled: true });
+                                    console.log(selectedOption);
+                                    // to give answer post the newOption
+                                    /* createOption(selectedOption)
                                         .then(res => {
-                                            toast.notify("Answer given.", { position: "top-right" });
+                                            toast.notify("Question answered.", { position: "bottom-right" });
 
                                         }).catch(err => {
-                                            toast.notify("Something went wrong!", { position: "top-right" });
+                                            toast.notify("Something went wrong!", { position: "bottom-right" });
                                         }); */
                                     setSubmitting(false);
                                 }, 400);
@@ -189,7 +190,7 @@ export class Question extends Component {
                                         {
                                             question.choiceList.map((choice, choiceId) => {
                                                 return (
-                                                    <li key={choiceId}>
+                                                    <li key={choiceId} className="m-2">
                                                         {!editable &&
                                                             <Field
                                                                 type="radio"
@@ -204,8 +205,6 @@ export class Question extends Component {
                                                                 {choice.isCorrect && " (correct)"}
                                                             </span>
                                                         )}
-
-
                                                     </li>
                                                 )
                                             })
@@ -213,10 +212,10 @@ export class Question extends Component {
                                         <ErrorMessage name="choice" className="errorMessage" component="span" />
 
                                         {!editable && (
-                                            <div className="mt-3 text-right">
+                                            <div className="mt-3 text-left">
                                                 <Button
-                                                    className="ml-2 btn-sm inlineBtn"
-                                                    variant="outline-success"
+                                                    className="ml-2 btn inlineBtn"
+                                                    variant="info"
                                                     type="submit"
                                                     disabled={disabled}
                                                     id={`question${question.id}`} >

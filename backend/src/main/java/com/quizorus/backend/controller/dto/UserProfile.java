@@ -1,8 +1,9 @@
 package com.quizorus.backend.controller.dto;
 
+import com.quizorus.backend.model.Topic;
 import lombok.*;
 
-import java.time.Instant;
+import java.util.List;
 
 @Getter
 @Setter
@@ -14,8 +15,9 @@ public class UserProfile {
     private Long id;
     private String username;
     private String name;
-    private Instant joinedAt;
-    private Long createdTopicCount;
-    private Long enrolledTopicCount;
+    private String email;
+    private List<Topic> createdTopics;
+    private List<Topic> enrolledTopics;
+    //private List<?> answeredQuestions;
 
 }

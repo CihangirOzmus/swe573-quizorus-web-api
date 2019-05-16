@@ -21,7 +21,7 @@ class UserCreatedTopicList extends Component {
 
     loadUserCreatedTopics() {
         const username = this.props.currentUser.username;
-        let url = API_BASE_URL + `/users/${username}/topics`;
+        let url = API_BASE_URL + `/topics/${username}`;
 
         axios.get(url, REQUEST_HEADERS).then(res => {
             this.setState({

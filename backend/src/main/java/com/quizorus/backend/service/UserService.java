@@ -1,5 +1,6 @@
 package com.quizorus.backend.service;
 
+import com.quizorus.backend.controller.dto.TopicResponse;
 import com.quizorus.backend.controller.dto.UserIdentityAvailability;
 import com.quizorus.backend.controller.dto.UserProfile;
 import com.quizorus.backend.controller.dto.UserResponse;
@@ -44,11 +45,10 @@ public class UserService {
     public UserProfile getUserProfileByUsername(String username){
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new ResourceNotFoundException("User", "username", username));
+        List<Topic> createdTopics = topicRepository.findByCreatedBy(user.getId());
+        List<Topic> enrolledTopics = topicRepository.findTopicEntitiesByEnrolledUserListContains(user);
 
-        Long createdTopicCount = topicRepository.countByCreatedBy(user.getId());
-        List<Topic> enrolledTopicList = topicRepository.findTopicEntitiesByEnrolledUserListContains(user);
-        Long enrolledTopicCount = (long) enrolledTopicList.size();
-        return new UserProfile(user.getId(), user.getUsername(), user.getName(), user.getCreatedAt(), createdTopicCount, enrolledTopicCount);
+        return new UserProfile(user.getId(), user.getUsername(), user.getName(), user.getEmail(), createdTopics, enrolledTopics );
     }
 
 }
