@@ -27,8 +27,13 @@ public class Question extends UserDatabaseDateAudit {
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
     private List<Choice> choiceList;
 
+    @OneToOne
+    private Choice correctChoice;
+
     @JsonIgnore
     @ManyToOne
     private Content content;
+
+
 
 }

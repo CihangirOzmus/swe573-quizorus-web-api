@@ -30,6 +30,7 @@ public class User extends DatabaseDateAudit {
     @Size(max = 40)
     private String name;
 
+    @NaturalId
     @NotBlank
     @Size(max = 15)
     @Column(unique = true)

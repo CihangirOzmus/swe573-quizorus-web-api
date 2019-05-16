@@ -5,7 +5,6 @@ export const REQUEST_HEADERS = {
     headers: { 'content-type': 'application/json', 'Authorization': 'Bearer ' + localStorage.getItem(ACCESS_TOKEN) }
 };
 
-export const TOPIC_LIST_SIZE = 30;
 export const NAME_MIN_LENGTH = 4;
 export const NAME_MAX_LENGTH = 40;
 export const USERNAME_MIN_LENGTH = 3;

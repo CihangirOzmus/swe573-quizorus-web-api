@@ -23,11 +23,12 @@ class UserCreatedTopicList extends Component {
         const username = this.props.currentUser.username;
         let url = API_BASE_URL + `/topics/${username}`;
 
-        axios.get(url, REQUEST_HEADERS).then(res => {
-            this.setState({
-                topics: res.data,
-                isLoading: false
-            })
+        axios.get(url, REQUEST_HEADERS)
+            .then(res => {
+                this.setState({
+                    topics: res.data,
+                    isLoading: false
+                })
         }).catch(err => {
             this.setState({ isLoading: false })
         });
