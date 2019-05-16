@@ -1,7 +1,6 @@
 package com.quizorus.backend.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.quizorus.backend.model.DatabaseDateAudit;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

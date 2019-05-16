@@ -1,10 +1,9 @@
 package com.quizorus.backend.controller;
 
+import com.quizorus.backend.controller.dto.ApiResponse;
 import com.quizorus.backend.controller.dto.TopicRequest;
 import com.quizorus.backend.controller.dto.TopicResponse;
 import com.quizorus.backend.model.Content;
-import com.quizorus.backend.model.Topic;
-import com.quizorus.backend.controller.dto.ApiResponse;
 import com.quizorus.backend.security.CurrentUser;
 import com.quizorus.backend.security.UserPrincipal;
 import com.quizorus.backend.service.TopicService;

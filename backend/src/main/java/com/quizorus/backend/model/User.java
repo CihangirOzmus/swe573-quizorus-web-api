@@ -58,4 +58,10 @@ public class User extends DatabaseDateAudit {
     @ManyToMany(mappedBy = "enrolledUserList")
     private List<Topic> enrolledTopicList;
 
+    @ManyToMany
+    @JoinTable(name = "user_answer_list",
+                joinColumns = @JoinColumn(name = "user_id"),
+                inverseJoinColumns = @JoinColumn(name = "answer_id"))
+    private List<Answer> userAnswerList;
+
 }
