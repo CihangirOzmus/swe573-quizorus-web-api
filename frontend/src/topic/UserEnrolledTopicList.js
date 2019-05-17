@@ -26,15 +26,15 @@ class UserEnrolledTopicList extends Component {
             headers: { 'content-type': 'application/json', 'Authorization': 'Bearer ' + localStorage.getItem(ACCESS_TOKEN) }
         };
 
-        axios.get(url, REQUEST_HEADERS).then(res => {
-
-            this.setState({
-                topics: res.data,
-                isLoading: false
-            })
-        }).catch(err => {
-            this.setState({ isLoading: false })
-        });
+        axios.get(url, REQUEST_HEADERS)
+            .then(res => {
+                this.setState({
+                    topics: res.data,
+                    isLoading: false
+                })
+            }).catch(err => {
+                this.setState({ isLoading: false })
+            });
     }
 
     componentDidMount() {

@@ -1,7 +1,7 @@
 export const API_BASE_URL = 'http://localhost:8080/api';
 export const ACCESS_TOKEN = 'accessToken';
 
-export const REQUEST_HEADERS = {
+export let REQUEST_HEADERS = {
     headers: { 'content-type': 'application/json', 'Authorization': 'Bearer ' + localStorage.getItem(ACCESS_TOKEN) }
 };
 

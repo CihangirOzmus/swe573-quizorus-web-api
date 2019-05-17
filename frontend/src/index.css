@@ -270,13 +270,13 @@ code {
 }
 
 .Toaster__alert{
-    background: #ecf0f1 !important;
+    background: #5bc0de !important;
     color: white !important;
     border-radius: 0 !important;
 }
 
 .Toaster__alert_text{
-    color: black !important;
+    color: white !important;
 }
 
 .Toaster__manager-top-right{

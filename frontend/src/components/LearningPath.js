@@ -81,15 +81,18 @@ export class PathElement extends Component {
                     )}
                 </h4>
                 <div className="text-left" dangerouslySetInnerHTML={{ __html: content.text }} ></div>
-                <hr/>
+
                 {
                     questions.length > 0 && !editable && (
-                        <Link className="btn btn-outline-info btn-lg ml-2 inlineBtn" to={`/quiz/${content.id}`}><FontAwesomeIcon icon={faPlayCircle} /> Start Quiz</Link>
+                        <React.Fragment>
+                            <hr/>
+                            <Link className="btn btn-outline-info btn-lg ml-2 inlineBtn" to={`/quiz/${content.id}`}><FontAwesomeIcon icon={faPlayCircle} /> Start Quiz</Link>
+                        </React.Fragment>
                     )
                 }
-                <hr/>
+
                 {
-                    questions.length > 0 && (
+                    questions.length > 0 && editable && (
                         <React.Fragment>
                             <hr />
                             {

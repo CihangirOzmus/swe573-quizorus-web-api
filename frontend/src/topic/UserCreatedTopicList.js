@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {ACCESS_TOKEN, API_BASE_URL, REQUEST_HEADERS} from "../constants";
+import {ACCESS_TOKEN, API_BASE_URL} from "../constants";
 import axios from "axios";
 import {Button, Table} from "react-bootstrap";
 import { Link } from "react-router-dom";
@@ -40,6 +40,10 @@ class UserCreatedTopicList extends Component {
 
     handleDeleteTopicById(topicIdToDelete) {
         let url = API_BASE_URL + `/topics/topic/${topicIdToDelete}`;
+
+        const REQUEST_HEADERS = {
+            headers: { 'content-type': 'application/json', 'Authorization': 'Bearer ' + localStorage.getItem(ACCESS_TOKEN) }
+        };
 
         axios.delete(url, REQUEST_HEADERS)
             .then(res => {
