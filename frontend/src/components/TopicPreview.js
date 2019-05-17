@@ -165,13 +165,17 @@ class TopicPreview extends Component {
                                         {topic.contentList.map((content, contentId) => {
                                             return (
                                                 <Tab.Pane key={contentId} eventKey={content.id}>
-                                                    <div>
-                                                        {content.text && (<div className="text-left" dangerouslySetInnerHTML={{ __html: content.text.substring(0,120) + "..."}}></div>)}
-                                                        <Button
-                                                            variant="info"
-                                                            onClick={() => this.enrollUserToTopic(topic.id)}>
-                                                            Enroll To Continue
-                                                        </Button>
+                                                    <div className="row">
+                                                        <div className="col-8">
+                                                            {content.text && (<div className="text-left" dangerouslySetInnerHTML={{ __html: content.text.substring(0,150) + "..."}}></div>)}
+                                                        </div>
+                                                        <div className="col-4">
+                                                            <Button
+                                                                variant="info"
+                                                                onClick={() => this.enrollUserToTopic(topic.id)}>
+                                                                Enroll To Continue
+                                                            </Button>
+                                                        </div>
                                                     </div>
                                                 </Tab.Pane>
                                             )
