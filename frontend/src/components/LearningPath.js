@@ -101,6 +101,15 @@ export class PathElement extends Component {
                     )
                 }
 
+                {editable && (
+                    <React.Fragment>
+                        <hr/>
+                        <div className="text-center text-white border bg-info rounded-pill">
+                            <h1>Quiz Creation</h1>
+                        </div>
+                    </React.Fragment>
+                )}
+
                 {
                     questions.length > 0 && editable && (
                         <React.Fragment>
@@ -162,11 +171,6 @@ export class Question extends Component {
         const { disabled } = this.state;
         return (
             <React.Fragment>
-                {editable && (
-                    <div className="text-center text-white border bg-info rounded-pill">
-                        <h1>Quiz Creation</h1>
-                    </div>
-                )}
                 <div className="mt-5" id={`questionDiv${question.id}`}>
                     <p>
                         <strong>Q{order}:</strong> {question.text}
@@ -253,9 +257,7 @@ export class Question extends Component {
                                                     </Button>
                                                 </div>
                                             )}
-
                                         </ul>
-
                                     </Form>
                                 )}
                             </Formik>
