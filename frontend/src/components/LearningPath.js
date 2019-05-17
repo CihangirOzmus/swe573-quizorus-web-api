@@ -3,7 +3,7 @@ import { Col, ListGroup, Tab, Button } from "react-bootstrap";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { Link } from "react-router-dom";
-import {faChevronRight, faTrash, faEdit, faPlayCircle} from '@fortawesome/free-solid-svg-icons'
+import {faChevronRight, faTrash, faEdit, faPlayCircle, faCheck} from '@fortawesome/free-solid-svg-icons'
 import QuestionModal from "./QuestionModal";
 import OptionModal from "./OptionModal";
 import {ACCESS_TOKEN, API_BASE_URL} from "../util";
@@ -75,7 +75,12 @@ export class PathElement extends Component {
         const { content, questions, editable, handleRefresh } = this.props;
         return (
             <div className=" bg-alt materialBody">
-                <h4 className="mb-4 fontMedium">
+                {editable && (
+                    <div className="text-center text-white border bg-info rounded-pill">
+                        <h1>Content Creation</h1>
+                    </div>
+                )}
+                <h1 className="mt-4 mb-4 fontMedium">
                     {content.title}
                     {editable && (
                         <React.Fragment>
@@ -84,7 +89,7 @@ export class PathElement extends Component {
                             <Link className="btn  btn-outline-primary btn-sm ml-2 inlineBtn" to={`/content/${content.id}`}><FontAwesomeIcon icon={faEdit} /></Link>
                         </React.Fragment>
                     )}
-                </h4>
+                </h1>
                 <div className="text-left" dangerouslySetInnerHTML={{ __html: content.text }} ></div>
 
                 {
@@ -156,102 +161,109 @@ export class Question extends Component {
         const { question, order, editable, handleRefresh } = this.props;
         const { disabled } = this.state;
         return (
-            <div id={`questionDiv${question.id}`}>
-                <p>
-                    <strong>Q{order}:</strong> {question.text}
-                    {editable && (
-                        <React.Fragment>
-                            <OptionModal handleRefresh={() => handleRefresh()} questionId={question.id} />
-                            <Button
-                                className="ml-2 btn-sm inlineBtn"
-                                variant="outline-danger"
-                                onClick={() => this.handleDeleteQuestionById(question.id)}>
-                                <FontAwesomeIcon icon={faTrash} />
-                            </Button>
-                        </React.Fragment>
-                    )}
-                </p>
-                {
-                    question.choiceList.length > 0 && (
+            <React.Fragment>
+                {editable && (
+                    <div className="text-center text-white border bg-info rounded-pill">
+                        <h1>Quiz Creation</h1>
+                    </div>
+                )}
+                <div className="mt-5" id={`questionDiv${question.id}`}>
+                    <p>
+                        <strong>Q{order}:</strong> {question.text}
+                        {editable && (
+                            <React.Fragment>
+                                <OptionModal handleRefresh={() => handleRefresh()} questionId={question.id} />
+                                <Button
+                                    className="ml-2 btn-sm inlineBtn"
+                                    variant="outline-danger"
+                                    onClick={() => this.handleDeleteQuestionById(question.id)}>
+                                    <FontAwesomeIcon icon={faTrash} />
+                                </Button>
+                            </React.Fragment>
+                        )}
+                    </p>
+                    {
+                        question.choiceList.length > 0 && (
 
-                        <Formik
-                            initialValues={{ choice: '' }}
-                            validate={values => {
-                                let errors = {};
-                                if (!values.choice) {
-                                    errors.choice = 'You must select a choice';
-                                }
-                                return errors;
-                            }}
-                            onSubmit={(values, { setSubmitting }) => {
-                                setTimeout(() => {
-                                    const selectedOption = {
-                                        choice: values.choice,
-                                        question: question.id
-                                    };
-                                    this.setState({ disabled: true });
-                                    console.log(selectedOption);
-                                    // to give answer post the newOption
-                                    /* createOption(selectedOption)
-                                        .then(res => {
-                                            toast.notify("Question answered.", { position: "bottom-right" });
+                            <Formik
+                                initialValues={{ choice: '' }}
+                                validate={values => {
+                                    let errors = {};
+                                    if (!values.choice) {
+                                        errors.choice = 'You must select a choice';
+                                    }
+                                    return errors;
+                                }}
+                                onSubmit={(values, { setSubmitting }) => {
+                                    setTimeout(() => {
+                                        const selectedOption = {
+                                            choice: values.choice,
+                                            question: question.id
+                                        };
+                                        this.setState({ disabled: true });
+                                        console.log(selectedOption);
+                                        // to give answer post the newOption
+                                        /* createOption(selectedOption)
+                                            .then(res => {
+                                                toast.notify("Question answered.", { position: "bottom-right" });
 
-                                        }).catch(err => {
-                                            toast.notify("Something went wrong!", { position: "bottom-right" });
-                                        }); */
-                                    setSubmitting(false);
-                                }, 400);
-                            }}
-                        >
-                            {() => (
-                                <Form>
-                                    <ul className={!editable ? 'questionUl' : ''}>
-                                        {
-                                            question.choiceList.map((choice, choiceId) => {
-                                                return (
-                                                    <li key={choiceId} className="m-2">
-                                                        {!editable &&
-                                                            <Field
-                                                                type="radio"
-                                                                name="choice"
-                                                                className="choices"
-                                                                disabled={disabled}
-                                                                value={choice.id}
-                                                            />
-                                                        } {choice.text}
-                                                        {editable && (
-                                                            <span>
-                                                                {choice.isCorrect && " (correct)"}
-                                                            </span>
-                                                        )}
-                                                    </li>
-                                                )
-                                            })
-                                        }
-                                        <ErrorMessage name="choice" className="errorMessage" component="span" />
+                                            }).catch(err => {
+                                                toast.notify("Something went wrong!", { position: "bottom-right" });
+                                            }); */
+                                        setSubmitting(false);
+                                    }, 400);
+                                }}
+                            >
+                                {() => (
+                                    <Form>
+                                        <ul className={!editable ? 'questionUl' : ''}>
+                                            {
+                                                question.choiceList.map((choice, choiceId) => {
+                                                    return (
+                                                        <li key={choiceId} className="m-2">
+                                                            {!editable &&
+                                                                <Field
+                                                                    type="radio"
+                                                                    name="choice"
+                                                                    className="choices"
+                                                                    disabled={disabled}
+                                                                    value={choice.id}
+                                                                />
+                                                            } {choice.text}
+                                                            {editable && (
+                                                                <span>
+                                                                    {choice.isCorrect && <FontAwesomeIcon className="text-success" icon={faCheck} />}
+                                                                </span>
+                                                            )}
+                                                        </li>
+                                                    )
+                                                })
+                                            }
+                                            <ErrorMessage name="choice" className="errorMessage" component="span" />
 
-                                        {!editable && (
-                                            <div className="mt-3 text-left">
-                                                <Button
-                                                    className="ml-2 btn inlineBtn"
-                                                    variant="info"
-                                                    type="submit"
-                                                    disabled={disabled}
-                                                    id={`question${question.id}`} >
-                                                    {disabled ? 'Answered' : 'Give Answer'}
-                                                </Button>
-                                            </div>
-                                        )}
+                                            {!editable && (
+                                                <div className="mt-3 text-left">
+                                                    <Button
+                                                        className="ml-2 btn inlineBtn"
+                                                        variant="info"
+                                                        type="submit"
+                                                        disabled={disabled}
+                                                        id={`question${question.id}`} >
+                                                        {disabled ? 'Answered' : 'Give Answer'}
+                                                    </Button>
+                                                </div>
+                                            )}
 
-                                    </ul>
+                                        </ul>
 
-                                </Form>
-                            )}
-                        </Formik>
-                    )
-                }
-                <hr />
-            </div>
+                                    </Form>
+                                )}
+                            </Formik>
+                        )
+                    }
+                    <hr />
+                </div>
+            </React.Fragment>
 
         )
     }
