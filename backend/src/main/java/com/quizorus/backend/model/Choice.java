@@ -31,6 +31,7 @@ public class Choice extends UserDatabaseDateAudit {
     @ManyToOne
     private Question question;
 
+    @JsonIgnore
     @OneToOne(mappedBy = "correctChoice")
     private Question answeredQuestion;
 

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { API_BASE_URL, REQUEST_HEADERS } from "../constants";
+import {ACCESS_TOKEN, API_BASE_URL, REQUEST_HEADERS} from "../constants";
 import axios from "axios";
 import {Button, Table} from "react-bootstrap";
 import { Link } from "react-router-dom";
@@ -22,6 +22,10 @@ class UserCreatedTopicList extends Component {
     loadUserCreatedTopics() {
         const username = this.props.currentUser.username;
         let url = API_BASE_URL + `/topics/${username}`;
+
+        const REQUEST_HEADERS = {
+            headers: { 'content-type': 'application/json', 'Authorization': 'Bearer ' + localStorage.getItem(ACCESS_TOKEN) }
+        };
 
         axios.get(url, REQUEST_HEADERS)
             .then(res => {

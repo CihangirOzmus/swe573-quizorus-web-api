@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { API_BASE_URL, REQUEST_HEADERS } from "../constants";
+import {ACCESS_TOKEN, API_BASE_URL, REQUEST_HEADERS} from "../constants";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { WikiLabels } from "../components/Wiki";
@@ -21,6 +21,11 @@ class UserEnrolledTopicList extends Component {
 
     loadUserEnrolledTopics() {
         const url = API_BASE_URL + `/topics/enrolled/${this.props.currentUser.id}`;
+
+        const REQUEST_HEADERS = {
+            headers: { 'content-type': 'application/json', 'Authorization': 'Bearer ' + localStorage.getItem(ACCESS_TOKEN) }
+        };
+
         axios.get(url, REQUEST_HEADERS).then(res => {
 
             this.setState({
