@@ -3,7 +3,7 @@ import { Col, ListGroup, Tab, Button } from "react-bootstrap";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { Link } from "react-router-dom";
-import { faChevronRight, faTrash, faEdit } from '@fortawesome/free-solid-svg-icons'
+import {faChevronRight, faTrash, faEdit, faPlayCircle} from '@fortawesome/free-solid-svg-icons'
 import QuestionModal from "./QuestionModal";
 import OptionModal from "./OptionModal";
 import { API_BASE_URL, REQUEST_HEADERS } from "../constants";
@@ -81,6 +81,13 @@ export class PathElement extends Component {
                     )}
                 </h4>
                 <div className="text-left" dangerouslySetInnerHTML={{ __html: content.text }} ></div>
+                <hr/>
+                {
+                    questions.length > 0 && !editable && (
+                        <Link className="btn btn-outline-info btn-lg ml-2 inlineBtn" to={`/quiz/${content.id}`}><FontAwesomeIcon icon={faPlayCircle} /> Start Quiz</Link>
+                    )
+                }
+                <hr/>
                 {
                     questions.length > 0 && (
                         <React.Fragment>

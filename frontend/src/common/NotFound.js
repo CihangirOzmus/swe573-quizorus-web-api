@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
 
 const NotFound = (props) => (
@@ -10,8 +10,8 @@ const NotFound = (props) => (
                 <div className="desc">
                     The Page you're looking for was not found.
                 </div>
-                <Link to="/"><Button variant="info" size="sm" type="submit" block className="mb-2">Go Back</Button></Link>
+                <Button variant="info" size="sm" type="submit" block className="mb-2" onClick={props.history.goBack}>Go Back</Button>
             </div>
         );
 
-export default NotFound;
+export default withRouter(NotFound);

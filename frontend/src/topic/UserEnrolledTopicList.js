@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {ACCESS_TOKEN, API_BASE_URL, REQUEST_HEADERS} from "../constants";
+import {ACCESS_TOKEN, API_BASE_URL} from "../constants";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { WikiLabels } from "../components/Wiki";

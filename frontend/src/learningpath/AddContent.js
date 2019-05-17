@@ -11,7 +11,7 @@ const AddContent = (props) => (
             <div className="container">
                 <div className="row">
                     <div className="col-md-12">
-                        Add Material
+                        Add Content
                     </div>
                 </div>
             </div>
