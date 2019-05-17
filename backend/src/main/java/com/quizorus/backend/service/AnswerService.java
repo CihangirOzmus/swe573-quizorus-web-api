@@ -1,5 +1,6 @@
 package com.quizorus.backend.service;
 
+import com.quizorus.backend.controller.dto.AnswerRequest;
 import com.quizorus.backend.controller.dto.ApiResponse;
 import com.quizorus.backend.exception.ResourceNotFoundException;
 import com.quizorus.backend.model.Answer;
@@ -35,25 +36,26 @@ public class AnswerService {
         this.userRepository = userRepository;
     }
 
-    public ResponseEntity<ApiResponse> giveAnswer(UserPrincipal currentUser, Long questionId, Choice selectedChoice) {
+    public ApiResponse giveAnswer(UserPrincipal currentUser, AnswerRequest answerRequest) {
         User user = userRepository.findByUsername(currentUser.getUsername()).orElseThrow(() -> new ResourceNotFoundException("User", "username", currentUser.getUsername()));
-        Question question = questionRepository.findById(questionId).orElseThrow(() -> new ResourceNotFoundException("Question", "questionId", questionId));
+        Question question = questionRepository.findById(answerRequest.getQuestionId()).orElseThrow(() -> new ResourceNotFoundException("Question", "questionId", answerRequest.getQuestionId()));
+        Choice choice = choiceRepository.findById(answerRequest.getChoiceId()).orElseThrow(() -> new ResourceNotFoundException("Choice", "choiceId", answerRequest.getChoiceId()));
 
-        if (question.getChoiceList().indexOf(selectedChoice) != -1){
+        if (answerRepository.findByQuestionIdAndUserId(answerRequest.getQuestionId(), currentUser.getId()) == null){
             Answer answer = Answer.builder()
                     .question(question)
-                    .choice(selectedChoice)
+                    .choice(choice)
                     .user(user)
                     .build();
             answerRepository.save(answer);
         } else {
             logger.info("<<== implement already answered question ==>>");
-            // do something, question is already answered here
-            // check answer owner and current user
-            // then delete answer
-            // save new answer
+
+            Answer existingAnswer = answerRepository.findByQuestionIdAndUserId(answerRequest.getQuestionId(), currentUser.getId());
+            existingAnswer.setChoice(choice);
+            answerRepository.save(existingAnswer);
         }
 
-        return ResponseEntity.ok().body(new ApiResponse(true, "Question answered"));
+        return new ApiResponse(true, "Question answered");
     }
 }

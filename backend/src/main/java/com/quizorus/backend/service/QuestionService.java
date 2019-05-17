@@ -2,8 +2,10 @@ package com.quizorus.backend.service;
 
 import com.quizorus.backend.controller.dto.ApiResponse;
 import com.quizorus.backend.exception.ResourceNotFoundException;
+import com.quizorus.backend.model.Answer;
 import com.quizorus.backend.model.Choice;
 import com.quizorus.backend.model.Question;
+import com.quizorus.backend.repository.AnswerRepository;
 import com.quizorus.backend.repository.QuestionRepository;
 import com.quizorus.backend.security.UserPrincipal;
 import org.springframework.http.ResponseEntity;
@@ -15,9 +17,11 @@ import java.util.List;
 public class QuestionService {
 
     private QuestionRepository questionRepository;
+    private AnswerRepository answerRepository;
 
-    public QuestionService(QuestionRepository questionRepository) {
+    public QuestionService(QuestionRepository questionRepository, AnswerRepository answerRepository) {
         this.questionRepository = questionRepository;
+        this.answerRepository = answerRepository;
     }
 
     public ResponseEntity<ApiResponse> createChoiceByQuestionId(UserPrincipal currentUser, Long questionId, Choice choiceRequest){
@@ -32,6 +36,7 @@ public class QuestionService {
     }
 
     public ResponseEntity<ApiResponse> deleteQuestionById(Long questionId, UserPrincipal currentUser){
+        answerRepository.findByQuestionId(questionId).ifPresent(answer1 -> answerRepository.delete(answer1));
         Question question = questionRepository.findById(questionId).orElse(null);
         if (question != null && currentUser.getId().equals(question.getCreatedBy())){
             questionRepository.deleteQuestionById(questionId);
