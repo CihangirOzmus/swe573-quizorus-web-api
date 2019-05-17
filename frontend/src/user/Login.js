@@ -4,7 +4,7 @@ import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 import { login } from '../util/APIUtils';
 import { Link } from 'react-router-dom';
-import { ACCESS_TOKEN } from '../constants';
+import { ACCESS_TOKEN } from '../util';
 import toast from "toasted-notes";
 
 class Login extends Component {

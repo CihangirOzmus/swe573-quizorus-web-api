@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { Row, InputGroup } from 'react-bootstrap';
 import { Link, withRouter } from 'react-router-dom';
-import { API_BASE_URL } from '../constants';
-import { WikiLabels } from "../components/Wiki";
-import axios from 'axios';
+import { API_BASE_URL } from '../util';
+import { WikiLabels } from "./Wiki";
+import axios from 'axios/index';
 
 class Glossary extends Component {
     constructor(props) {

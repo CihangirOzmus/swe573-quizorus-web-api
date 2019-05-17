@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
-import { API_BASE_URL, REQUEST_HEADERS } from "../constants";
-import axios from "axios";
+import {ACCESS_TOKEN, API_BASE_URL} from "../util";
+import axios from "axios/index";
 import {Row, Tab, Button} from "react-bootstrap";
 import { Link, withRouter } from "react-router-dom";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faEdit } from '@fortawesome/free-solid-svg-icons'
-import PageHeader from "../components/PageHeader";
-import toast from "toasted-notes";
-import {PathNavigator} from "../components/LearningPath";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome/index'
+import { faEdit } from '@fortawesome/free-solid-svg-icons/index'
+import PageHeader from "./PageHeader";
+import toast from "toasted-notes/lib/index";
+import {PathNavigator} from "./LearningPath";
 
 class TopicPreview extends Component {
     constructor(props) {
@@ -26,6 +26,11 @@ class TopicPreview extends Component {
 
     enrollUserToTopic(topicId) {
         const url = API_BASE_URL + `/topics/${topicId}/enroll/${this.props.currentUser.username}`;
+
+        const REQUEST_HEADERS = {
+            headers: { 'content-type': 'application/json', 'Authorization': 'Bearer ' + localStorage.getItem(ACCESS_TOKEN) }
+        };
+
         axios.post(url, null, REQUEST_HEADERS)
             .then(res => {
                 toast.notify("Enrolled successfully.", { position: "bottom-right" });
@@ -37,6 +42,10 @@ class TopicPreview extends Component {
 
     loadTopicById() {
         const url = API_BASE_URL + `/topics/topic/${this.props.match.params.topicId}`;
+
+        const REQUEST_HEADERS = {
+            headers: { 'content-type': 'application/json', 'Authorization': 'Bearer ' + localStorage.getItem(ACCESS_TOKEN) }
+        };
 
         axios.get(url, REQUEST_HEADERS).then(res => {
                 this.setState({
@@ -50,6 +59,10 @@ class TopicPreview extends Component {
 
     getEnrolledTopicsByUserId() {
         const url = API_BASE_URL + `/topics/enrolled/${this.props.currentUser.id}`;
+
+        const REQUEST_HEADERS = {
+            headers: { 'content-type': 'application/json', 'Authorization': 'Bearer ' + localStorage.getItem(ACCESS_TOKEN) }
+        };
 
         axios.get(url, REQUEST_HEADERS)
             .then(res => {

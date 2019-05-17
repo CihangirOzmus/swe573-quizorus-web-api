@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import { API_BASE_URL, REQUEST_HEADERS } from "../constants";
-import axios from "axios";
+import {ACCESS_TOKEN, API_BASE_URL} from "../util";
+import axios from "axios/index";
 import { Row, Tab } from "react-bootstrap";
 import { Link, withRouter } from "react-router-dom";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPlus, faEdit } from '@fortawesome/free-solid-svg-icons'
-import PageHeader from "../components/PageHeader";
-import { PathNavigator, PathTabs } from "../components/LearningPath";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome/index'
+import { faPlus, faEdit } from '@fortawesome/free-solid-svg-icons/index'
+import PageHeader from "./PageHeader";
+import { PathNavigator, PathTabs } from "./LearningPath";
 
 class Topic extends Component {
     constructor(props) {
@@ -22,6 +22,10 @@ class Topic extends Component {
 
     loadTopicById() {
         const url = API_BASE_URL + `/topics/topic/${this.props.match.params.topicId}`;
+
+        const REQUEST_HEADERS = {
+            headers: { 'content-type': 'application/json', 'Authorization': 'Bearer ' + localStorage.getItem(ACCESS_TOKEN) }
+        };
 
         axios.get(url, REQUEST_HEADERS)
             .then(res => {

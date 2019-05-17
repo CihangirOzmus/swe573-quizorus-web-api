@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import {faChevronRight, faTrash, faEdit, faPlayCircle} from '@fortawesome/free-solid-svg-icons'
 import QuestionModal from "./QuestionModal";
 import OptionModal from "./OptionModal";
-import { API_BASE_URL, REQUEST_HEADERS } from "../constants";
+import {ACCESS_TOKEN, API_BASE_URL} from "../util";
 import axios from "axios";
 import toast from "toasted-notes";
 
@@ -57,6 +57,11 @@ export class PathElement extends Component {
 
     handleDeleteContentById(contentId) {
         const url = API_BASE_URL + `/contents/${contentId}`;
+
+        const REQUEST_HEADERS = {
+            headers: { 'content-type': 'application/json', 'Authorization': 'Bearer ' + localStorage.getItem(ACCESS_TOKEN) }
+        };
+
         axios.delete(url, REQUEST_HEADERS)
             .then(res => {
                 toast.notify("Content deleted successfully.", { position: "bottom-right" });
@@ -133,6 +138,10 @@ export class Question extends Component {
 
     handleDeleteQuestionById(questionIdToDelete) {
         const url = API_BASE_URL + `/questions/${questionIdToDelete}`;
+
+        const REQUEST_HEADERS = {
+            headers: { 'content-type': 'application/json', 'Authorization': 'Bearer ' + localStorage.getItem(ACCESS_TOKEN) }
+        };
 
         axios.delete(url, REQUEST_HEADERS)
             .then(res => {

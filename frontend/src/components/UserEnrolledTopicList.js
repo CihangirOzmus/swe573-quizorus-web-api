@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import {ACCESS_TOKEN, API_BASE_URL} from "../constants";
-import axios from "axios";
+import {ACCESS_TOKEN, API_BASE_URL} from "../util";
+import axios from "axios/index";
 import { Link } from "react-router-dom";
-import { WikiLabels } from "../components/Wiki";
+import { WikiLabels } from "./Wiki";
 import { Table} from "react-bootstrap";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faBookmark} from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome/index";
+import {faBookmark} from "@fortawesome/free-solid-svg-icons/index";
 
 class UserEnrolledTopicList extends Component {
     constructor(props) {

@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { Route, withRouter, Switch } from 'react-router-dom';
 import { getCurrentUser } from './util/APIUtils';
-import { ACCESS_TOKEN } from './constants';
+import { ACCESS_TOKEN } from './util';
 
-import Glossary from './glossary/Glossary';
-import CreateTopic from './topic/CreateTopic';
+import Glossary from './components/Glossary';
+import CreateTopic from './components/CreateTopic';
 import Login from './user/Login';
 import Signup from './user/Signup';
 import Home from './common/Home';
@@ -14,14 +14,14 @@ import NotFound from './common/NotFound';
 import PrivateRoute from './common/PrivateRoute';
 import toast from 'toasted-notes'
 import 'toasted-notes/src/styles.css';
-import UserCreatedTopicList from "./topic/UserCreatedTopicList";
-import UserEnrolledTopicList from "./topic/UserEnrolledTopicList";
+import UserCreatedTopicList from "./components/UserCreatedTopicList";
+import UserEnrolledTopicList from "./components/UserEnrolledTopicList";
 import UserProfile from "./user/UserProfile";
-import Topic from "./topic/Topic";
-import TopicPreview from "./topic/TopicPreview"
-import EditTopic from "./topic/EditTopic";
-import AddContent from "./learningpath/AddContent";
-import EditContent from "./learningpath/EditContent";
+import Topic from "./components/Topic";
+import TopicPreview from "./components/TopicPreview"
+import EditTopic from "./components/EditTopic";
+import AddContent from "./components/AddContent";
+import EditContent from "./components/EditContent";
 import Quiz from "./components/Quiz";
 
 class App extends Component {

@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
-import { API_BASE_URL, REQUEST_HEADERS } from "../constants";
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import {ACCESS_TOKEN, API_BASE_URL} from "../util";
+import { Formik, Form, Field, ErrorMessage } from 'formik/dist/index';
 import {updateTopic} from '../util/APIUtils';
 import { withRouter } from 'react-router-dom';
-import toast from "toasted-notes";
+import toast from "toasted-notes/lib/index";
 import wdk from "wikidata-sdk";
-import axios from "axios";
+import axios from "axios/index";
 import { Col, Button, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import PageHeader from "../components/PageHeader";
+import PageHeader from "./PageHeader";
 
 class EditTopic extends Component {
     constructor(props) {
@@ -58,6 +58,10 @@ class EditTopic extends Component {
 
     loadTopicById() {
         let url = API_BASE_URL + `/topics/topic/${this.props.match.params.topicId}`;
+
+        const REQUEST_HEADERS = {
+            headers: { 'content-type': 'application/json', 'Authorization': 'Bearer ' + localStorage.getItem(ACCESS_TOKEN) }
+        };
 
         axios.get(url, REQUEST_HEADERS).then(res => {
                 this.setState({ topic: res.data })

@@ -1,9 +1,9 @@
 import React from 'react';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { Formik, Form, Field, ErrorMessage } from 'formik/dist/index';
 import { Button } from "react-bootstrap";
 import { createContent } from "../util/APIUtils";
-import toast from "toasted-notes";
-import EditorField from '../components/EditorField'
+import toast from "toasted-notes/lib/index";
+import EditorField from './EditorField'
 
 const AddContent = (props) => (
     <div>

@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import { ACCESS_TOKEN, API_BASE_URL } from "../constants";
-import axios from "axios";
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { ACCESS_TOKEN, API_BASE_URL } from "../util";
+import axios from "axios/index";
+import { Formik, Form, Field, ErrorMessage } from 'formik/dist/index';
 import { Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { createContent } from "../util/APIUtils";
-import toast from "toasted-notes";
-import EditorField from '../components/EditorField'
+import toast from "toasted-notes/lib/index";
+import EditorField from './EditorField'
 
 class EditContent extends Component {
     constructor(props) {

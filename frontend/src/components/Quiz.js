@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import {Question} from "./LearningPath";
-import {ACCESS_TOKEN, API_BASE_URL} from "../constants";
+import {ACCESS_TOKEN, API_BASE_URL} from "../util";
 import axios from "axios";
 import {Link} from "react-router-dom";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
