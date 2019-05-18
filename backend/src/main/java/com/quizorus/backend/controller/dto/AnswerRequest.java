@@ -16,4 +16,8 @@ public class AnswerRequest {
 
     @NotBlank
     private Long choiceId;
+
+    @NotBlank
+    private Long contentId;
+
 }

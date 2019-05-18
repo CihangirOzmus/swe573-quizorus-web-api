@@ -7,10 +7,8 @@ import com.quizorus.backend.security.UserPrincipal;
 import com.quizorus.backend.service.AnswerService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/quiz")
@@ -27,4 +25,12 @@ public class AnswerController {
     public ResponseEntity<ApiResponse> answerQuestionBy(@CurrentUser UserPrincipal currentUser, @RequestBody AnswerRequest answerRequest){
         return ResponseEntity.ok().body(answerService.giveAnswer(currentUser, answerRequest));
     }
+
+    @DeleteMapping("/{contentId}")
+    @PreAuthorize("hasRole('USER')")
+    @Transactional
+    public ResponseEntity<ApiResponse> restartQuiz(@CurrentUser UserPrincipal currentUser, @PathVariable Long contentId){
+        return ResponseEntity.ok().body(answerService.restartQuiz(currentUser, contentId));
+    }
+    
 }

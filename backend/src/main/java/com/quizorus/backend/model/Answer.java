@@ -1,7 +1,6 @@
 package com.quizorus.backend.model;
 
 import lombok.*;
-import org.hibernate.annotations.OnDelete;
 
 import javax.persistence.*;
 
@@ -23,6 +22,9 @@ public class Answer extends UserDatabaseDateAudit {
 
     @OneToOne
     private Choice choice;
+
+    @OneToOne
+    private Content content;
 
     @ManyToOne
     private User user;
