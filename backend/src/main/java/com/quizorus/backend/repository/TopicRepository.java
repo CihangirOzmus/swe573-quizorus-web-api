@@ -15,6 +15,6 @@ public interface TopicRepository extends JpaRepository<Topic, Long> {
     List<Topic> findByCreatedBy(Long userId);
     long countByCreatedBy(Long userId);
     void deleteById(Long topicId);
-    List<Topic> findTopicEntitiesByEnrolledUserListContains(User user);
+    List<Topic> findTopicEntitiesByEnrolledUsersContains(User user);
 
 }

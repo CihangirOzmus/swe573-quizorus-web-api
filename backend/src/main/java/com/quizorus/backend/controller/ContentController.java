@@ -24,20 +24,17 @@ public class ContentController {
     }
 
     @GetMapping("/{contentId}")
-    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<ContentResponse> getContentById(@CurrentUser UserPrincipal currentUser, @PathVariable Long contentId){
         return contentService.getContentById(currentUser, contentId);
     }
 
     @PostMapping("/{contentId}/questions")
-    @PreAuthorize("hasRole('USER')")
     @Transactional
     public ResponseEntity<?> createQuestionByContentId(@CurrentUser UserPrincipal currentUser, @PathVariable Long contentId, @Valid @RequestBody Question questionRequest){
         return contentService.createQuestionByContentId(currentUser, contentId, questionRequest);
     }
 
     @DeleteMapping("/{contentId}")
-    @PreAuthorize("hasRole('USER')")
     @Transactional
     public ResponseEntity<ApiResponse> deleteContentById(@CurrentUser UserPrincipal currentUser, @PathVariable Long contentId){
         return contentService.deleteContentById(currentUser, contentId);

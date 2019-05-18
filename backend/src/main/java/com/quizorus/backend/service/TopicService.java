@@ -68,7 +68,7 @@ public class TopicService {
         Topic topic = topicRepository.findById(topicRequest.getId()).orElseThrow(() -> new ResourceNotFoundException("Topic", "id", topicRequest.getId()));
 
         if (currentUser.getId().equals(topic.getCreatedBy())){
-            topicRequest.setWikiData(topic.getWikiData());
+            topicRequest.setWikiData(topic.getWikiDataList());
             topicRepository.save(quizorusConversionService.convert(topicRequest, Topic.class));
             return ResponseEntity.ok().body(new ApiResponse(true,"Topic updated successfully"));
         }
@@ -100,19 +100,19 @@ public class TopicService {
         Topic topicToEnroll = topicRepository.findById(topicId).orElseThrow(() -> new ResourceNotFoundException("Topic", "topicId", topicId));
         User userToEnroll = userRepository.findByUsername(username).orElseThrow(() -> new ResourceNotFoundException("User", "username", username));
 
-        List<Topic> enrolledTopicList = topicRepository.findTopicEntitiesByEnrolledUserListContains(userToEnroll);
+        List<Topic> enrolledTopicList = topicRepository.findTopicEntitiesByEnrolledUsersContains(userToEnroll);
         if (enrolledTopicList.contains(topicToEnroll)) {
             return ResponseEntity.badRequest().body(new ApiResponse(false, "Already enrolled to topic"));
         }
 
-        topicToEnroll.getEnrolledUserList().add(userToEnroll);
+        topicToEnroll.getEnrolledUsers().add(userToEnroll);
         topicRepository.save(topicToEnroll);
         return ResponseEntity.ok().body(new ApiResponse(true, "Enrolled to topic successfully"));
     }
 
     public ResponseEntity<List<TopicResponse>> getTopicsByEnrolledUserId(UserPrincipal currentUser, Long userId) {
         User userById = userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("User", "id", userId));
-        List<Topic> enrolledTopicList = topicRepository.findTopicEntitiesByEnrolledUserListContains(userById);
+        List<Topic> enrolledTopicList = topicRepository.findTopicEntitiesByEnrolledUsersContains(userById);
         List<TopicResponse> enrolledTopicDTOList = enrolledTopicList.stream()
                 .map(topic -> quizorusConversionService.convert(topic, TopicResponse.class))
                 .collect(Collectors.toList());

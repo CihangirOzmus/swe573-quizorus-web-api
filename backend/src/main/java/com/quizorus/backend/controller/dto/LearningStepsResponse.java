@@ -2,19 +2,25 @@ package com.quizorus.backend.controller.dto;
 
 import lombok.*;
 
+import java.util.List;
+
 @Getter
 @Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ContentResponse {
+public class LearningStepsResponse {
 
-    private Long id;
+    private List<QuestionResponse> questions;
+
+    private String contentTitle;
+
+    private Long contentId;
+
     private Long nextContentId;
-    private Long questionCount;
-    private String title;
+
     private String topicTitle;
-    private String text;
+
     private Long topicId;
 
 }

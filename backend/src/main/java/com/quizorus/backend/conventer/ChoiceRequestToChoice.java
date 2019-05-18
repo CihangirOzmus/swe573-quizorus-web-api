@@ -10,7 +10,7 @@ public class ChoiceRequestToChoice implements Converter<ChoiceRequest, Choice> {
     public Choice convert(ChoiceRequest source) {
         return Choice.builder()
                 .text(source.getText())
-                .isCorrect(source.getCorrect())
+                .correct(source.getCorrect())
                 .build();
     }
 

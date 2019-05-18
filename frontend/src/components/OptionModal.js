@@ -37,7 +37,7 @@ function OptionModal(FieldProps) {
                             setTimeout(() => {
                                 const newOption = {
                                     text: values.text,
-                                    isCorrect: values.isCorrect
+                                    correct: values.isCorrect
                                 };
                                 createOption(newOption, FieldProps.questionId)
                                     .then(res => {

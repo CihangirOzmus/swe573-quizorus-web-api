@@ -3,24 +3,22 @@ package com.quizorus.backend.controller.dto;
 import lombok.*;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
 
 @Getter
 @Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ContentRequest {
+public class WikiDataRequest {
 
     @NotBlank
-    private Long topicId;
+    private String id;
 
     @NotBlank
-    private String title;
+    private String label;
 
-    @NotBlank
-    @Size(max = 8000)
-    private String text;
+    private String description;
 
+    private String conceptUri;
 
 }

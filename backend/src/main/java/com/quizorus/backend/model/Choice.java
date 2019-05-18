@@ -25,7 +25,7 @@ public class Choice extends UserDatabaseDateAudit {
     private String text;
 
     @NotNull
-    private Boolean isCorrect;
+    private Boolean correct;
 
     @JsonIgnore
     @ManyToOne

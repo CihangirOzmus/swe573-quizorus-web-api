@@ -47,16 +47,9 @@ public class User extends DatabaseDateAudit {
     @Size(max = 100)
     private String password;
 
-    @ManyToMany
-    @JoinTable(name = "user_roles",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id"))
-    @Builder.Default
-    private Set<Role> roles = new HashSet<>();
-
     @JsonIgnore
     @Nullable
-    @ManyToMany(mappedBy = "enrolledUserList")
-    private List<Topic> enrolledTopicList;
+    @ManyToMany(mappedBy = "enrolledUsers")
+    private List<Topic> enrolledTopics;
 
 }

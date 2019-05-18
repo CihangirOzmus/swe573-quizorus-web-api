@@ -2,9 +2,9 @@ package com.quizorus.backend.controller.dto;
 
 import lombok.*;
 
+import javax.persistence.Column;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 @Getter
 @Setter
@@ -17,7 +17,7 @@ public class ChoiceRequest {
     private Long questionId;
 
     @NotBlank
-    @Size(max = 255)
+    @Column(columnDefinition = "TEXT")
     private String text;
 
     @NotNull

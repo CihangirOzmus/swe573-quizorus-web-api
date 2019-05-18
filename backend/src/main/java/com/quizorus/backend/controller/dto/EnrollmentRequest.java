@@ -9,15 +9,12 @@ import javax.validation.constraints.NotBlank;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class AnswerRequest {
+public class EnrollmentRequest {
+
+    @NonNull
+    private Long topicId;
 
     @NotBlank
-    private Long questionId;
-
-    @NotBlank
-    private Long choiceId;
-
-    @NotBlank
-    private Long contentId;
+    private String username;
 
 }

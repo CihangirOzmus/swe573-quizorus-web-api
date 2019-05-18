@@ -25,20 +25,17 @@ public class QuestionController {
     }
 
     @GetMapping("/{contentId}")
-    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<List<Question>> getQuestionsByContentId(@CurrentUser UserPrincipal currentUser, @PathVariable Long contentId){
         return questionService.getQuestionsByContentId(currentUser, contentId);
     }
 
     @PostMapping("/{questionId}/choices")
-    @PreAuthorize("hasRole('USER')")
     @Transactional
     public ResponseEntity<ApiResponse> createChoiceByQuestionId(@CurrentUser UserPrincipal currentUser, @PathVariable Long questionId, @Valid @RequestBody Choice choiceRequest){
         return questionService.createChoiceByQuestionId(currentUser, questionId, choiceRequest);
     }
 
     @DeleteMapping("/{questionId}")
-    @PreAuthorize("hasRole('USER')")
     @Transactional
     public ResponseEntity<ApiResponse> deleteQuestionById(@CurrentUser UserPrincipal currentUser, @PathVariable Long questionId){
         return questionService.deleteQuestionById(questionId, currentUser);

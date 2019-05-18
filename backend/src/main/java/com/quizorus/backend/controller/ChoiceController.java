@@ -23,7 +23,6 @@ public class ChoiceController {
     }
 
     @DeleteMapping("/{choiceId}")
-    @PreAuthorize("hasRole('USER')")
     @Transactional
     public ResponseEntity<ApiResponse> deleteChoiceById(@CurrentUser UserPrincipal currentUser, @PathVariable Long choiceId){
         return choiceService.deleteChoiceById(currentUser, choiceId);

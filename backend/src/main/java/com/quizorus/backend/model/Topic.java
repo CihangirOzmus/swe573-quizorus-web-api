@@ -22,8 +22,7 @@ public class Topic extends UserDatabaseDateAudit {
     private Long id;
 
     @NotBlank
-    @Size(max = 150)
-    @Column(unique = true)
+    @Column(columnDefinition = "TEXT", unique = true)
     private String title;
 
     @NotBlank
@@ -31,6 +30,7 @@ public class Topic extends UserDatabaseDateAudit {
     private String description;
 
     @Nullable
+    @Column(columnDefinition = "TEXT")
     private String imageUrl;
 
     @Nullable
@@ -38,19 +38,20 @@ public class Topic extends UserDatabaseDateAudit {
     private List<Content> contentList;
 
     @Nullable
-    @ManyToMany
-    @JoinTable(name = "enrolled_topic_list",
+    @ManyToMany(cascade = CascadeType.MERGE)
+    @JoinTable(
+            name = "topic_wikidata",
+            joinColumns = @JoinColumn(name = "topic_id"),
+            inverseJoinColumns = @JoinColumn(name = "wikidata_id"))
+    private List<WikiData> wikiDataList;
+
+    @Nullable
+    @ManyToMany(cascade = CascadeType.MERGE)
+    @JoinTable(name = "enrolled_users",
             joinColumns = @JoinColumn(name = "topic_id"),
             inverseJoinColumns = @JoinColumn(name = "user_id")
     )
-    private List<User> enrolledUserList;
+    private List<User> enrolledUsers;
 
-    @Nullable
-    @ManyToMany
-    @JoinTable(
-            name = "topic_wikiData",
-            joinColumns = @JoinColumn(name = "topic_id"),
-            inverseJoinColumns = @JoinColumn(name = "wikiData_id"))
-    private List<WikiData> wikiData;
 
 }

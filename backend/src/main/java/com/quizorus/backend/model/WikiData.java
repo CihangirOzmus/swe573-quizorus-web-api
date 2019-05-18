@@ -3,10 +3,7 @@ package com.quizorus.backend.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.util.List;
 
@@ -24,16 +21,15 @@ public class WikiData {
     private String id;
 
     @NotBlank
+    @Column(columnDefinition = "TEXT")
     private String label;
 
     @NotBlank
+    @Column(columnDefinition = "TEXT")
     private String description;
 
     @NotBlank
+    @Column(columnDefinition = "TEXT")
     private String conceptUri;
-
-    @JsonIgnore
-    @ManyToMany(mappedBy = "wikiData")
-    private List<Topic> topicList;
 
 }

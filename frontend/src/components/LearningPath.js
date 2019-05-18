@@ -236,7 +236,7 @@ export class Question extends Component {
                                                             } {choice.text}
                                                             {editable && (
                                                                 <span>
-                                                                    {choice.isCorrect && <FontAwesomeIcon className="text-success" icon={faCheck} />}
+                                                                    {choice.correct && <FontAwesomeIcon className="text-success" icon={faCheck} />}
                                                                 </span>
                                                             )}
                                                         </li>

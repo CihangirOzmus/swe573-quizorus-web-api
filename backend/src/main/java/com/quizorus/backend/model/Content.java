@@ -23,7 +23,7 @@ public class Content extends UserDatabaseDateAudit {
     private Long id;
 
     @NotBlank
-    @Size(max = 150)
+    @Column(columnDefinition = "TEXT")
     private String title;
 
     @NotBlank
