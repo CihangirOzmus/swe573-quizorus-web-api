@@ -24,7 +24,7 @@ public class TopicRequest {
     @NotBlank
     private String description;
 
-    @Nullable
+    @NotBlank
     private String imageUrl;
 
     @Nullable

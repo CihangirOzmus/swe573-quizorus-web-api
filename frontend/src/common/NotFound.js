@@ -1,8 +1,10 @@
-import React from 'react';
-import { withRouter } from 'react-router-dom';
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
 
-const NotFound = (props) => (
+class NotFound extends Component {
+    render() {
+        return (
             <div className="page-not-found">
                 <h1 className="title">
                     404
@@ -10,8 +12,10 @@ const NotFound = (props) => (
                 <div className="desc">
                     The Page you're looking for was not found.
                 </div>
-                <Button variant="info" size="sm" type="submit" block className="mb-2" onClick={props.history.goBack}>Go Back</Button>
+                <Link to="/"><Button variant="info" size="sm" type="submit" block className="mb-2">Go Back</Button></Link>
             </div>
         );
+    }
+}
 
-export default withRouter(NotFound);
+export default NotFound;

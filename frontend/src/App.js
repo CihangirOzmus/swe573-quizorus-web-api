@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { Route, withRouter, Switch } from 'react-router-dom';
 import { getCurrentUser } from './util/APIUtils';
-import { ACCESS_TOKEN } from './util';
+import { ACCESS_TOKEN } from './constants';
 
-import Glossary from './components/Glossary';
-import CreateTopic from './components/CreateTopic';
+import Glossary from './glossary/Glossary';
+import CreateTopic from './topic/CreateTopic';
 import Login from './user/Login';
 import Signup from './user/Signup';
 import Home from './common/Home';
@@ -12,17 +12,18 @@ import AppHeader from './common/AppHeader';
 import Footer from './common/Footer';
 import NotFound from './common/NotFound';
 import PrivateRoute from './common/PrivateRoute';
-import toast from 'toasted-notes'
+import toast from 'toasted-notes';
 import 'toasted-notes/src/styles.css';
-import UserCreatedTopicList from "./components/UserCreatedTopicList";
-import UserEnrolledTopicList from "./components/UserEnrolledTopicList";
+import UserCreatedTopicList from "./topic/UserCreatedTopicList";
+import UserEnrolledTopicList from "./topic/UserEnrolledTopicList";
 import UserProfile from "./user/UserProfile";
-import Topic from "./components/Topic";
-import TopicPreview from "./components/TopicPreview"
-import EditTopic from "./components/EditTopic";
-import AddContent from "./components/AddContent";
-import EditContent from "./components/EditContent";
-import Quiz from "./components/Quiz";
+import Topic from "./topic/Topic";
+import TopicPreview from "./topic/TopicPreview"
+import EditTopic from "./topic/EditTopic";
+import AddContent from "./learningpath/AddContent";
+import EditContent from "./learningpath/EditContent";
+import ContentQuiz from "./learningpath/ContentQuiz";
+import ViewContent from "./learningpath/ViewContent";
 
 class App extends Component {
     constructor(props) {
@@ -62,16 +63,19 @@ class App extends Component {
 
     handleLogout() {
         localStorage.removeItem(ACCESS_TOKEN);
+
         this.setState({
             currentUser: null,
             isAuthenticated: false
         });
+
         this.props.history.push("/");
-        toast.notify("You're successfully logged out.", { position: "bottom-right" });
+
+        toast.notify("You are successfully logged out.", { position: "bottom-right" });
     }
 
     handleLogin() {
-        toast.notify("You're successfully logged in.", { position: "bottom-right" });
+        toast.notify("You are successfully logged in.", { position: "bottom-right" });
         this.loadCurrentUser();
         this.props.history.push("/explore");
     }
@@ -91,8 +95,24 @@ class App extends Component {
                         <Switch>
 
                             <Route exact path="/" component={Home}></Route>
+                            {
+                                this.state.isAuthenticated ? (
+                                    <PrivateRoute
+                                        path="/explore"
+                                        component={Glossary}
+                                        authenticated={this.state.isAuthenticated}
+                                        currentUser={this.state.currentUser ? this.state.currentUser : null}>
+                                    </PrivateRoute>
+                                ) : (
 
-                            <Route path="/explore" component={Glossary}></Route>
+                                        <Route
+                                            path="/explore"
+                                            component={Glossary}
+                                        >
+                                        </Route>
+                                    )
+                            }
+
 
                             <Route path="/login"
                                 render={(props) => <Login
@@ -103,7 +123,8 @@ class App extends Component {
                             <Route path="/signup" component={Signup}></Route>
 
                             <PrivateRoute
-                                exact path="/:username"
+                                exact={true}
+                                path="/:username"
                                 authenticated={this.state.isAuthenticated}
                                 currentUser={this.state.currentUser}
                                 component={UserProfile}
@@ -158,6 +179,22 @@ class App extends Component {
 
                             <PrivateRoute
                                 authenticated={this.state.isAuthenticated}
+                                path="/content/view/:contentId"
+                                exact={true}
+                                component={ViewContent}
+                            ></PrivateRoute>
+
+                            <PrivateRoute
+                                authenticated={this.state.isAuthenticated}
+                                path="/content/:contentId/quiz"
+                                exact={true}
+                                component={ContentQuiz}
+                                currentUser={this.state.currentUser}
+                                editable={false}
+                            ></PrivateRoute>
+
+                            <PrivateRoute
+                                authenticated={this.state.isAuthenticated}
                                 currentUser={this.state.currentUser}
                                 path="/topic/:topicId"
                                 exact={true}
@@ -183,15 +220,6 @@ class App extends Component {
                             >
                             </PrivateRoute>
 
-                            <PrivateRoute
-                                path="/quiz/:contentId"
-                                exact={true}
-                                authenticated={this.state.isAuthenticated}
-                                currentUser={this.state.currentUser}
-                                component={Quiz}
-                            >
-                            </PrivateRoute>
-
                             <Route component={NotFound}></Route>
 
                         </Switch>
@@ -200,6 +228,10 @@ class App extends Component {
                 </div>
             );
         }
+
+
+
+
     }
 }
 

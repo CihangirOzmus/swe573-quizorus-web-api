@@ -3,33 +3,48 @@ import { Col, ListGroup, Tab, Button } from "react-bootstrap";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { Link } from "react-router-dom";
-import {faChevronRight, faTrash, faEdit, faPlayCircle, faCheck} from '@fortawesome/free-solid-svg-icons'
+import { faChevronRight, faTrash, faEdit, faCheck, faTimes } from '@fortawesome/free-solid-svg-icons'
 import QuestionModal from "./QuestionModal";
 import OptionModal from "./OptionModal";
-import {ACCESS_TOKEN, API_BASE_URL} from "../util";
+import { REQUEST_HEADERS } from "../constants";
 import axios from "axios";
 import toast from "toasted-notes";
+import { resolveEndpoint } from "../util/Helpers";
+import { giveAnswer } from '../util/APIUtils';
 
 export class PathNavigator extends Component {
+
     render() {
-        const contentList = this.props.contents;
+        const { contents, linkable, preview } = this.props;
         return (
-            <Col sm={3}>
+
+            <Col sm={(linkable || preview) ? 12 : 3}>
                 <ListGroup>
-                    {contentList.map((content, contentId) => {
+                    {contents.map((content, contentId) => {
                         return (
                             <ListGroup.Item key={contentId} action eventKey={content.id}>
-                                {contentId + 1} - {content.title} <FontAwesomeIcon icon={faChevronRight} />
+                                {linkable ? (
+                                    <Link className="font-white" to={`/content/view/${content.id}`}>
+                                        {contentId + 1} - {content.title} <FontAwesomeIcon icon={faChevronRight} />
+                                    </Link>
+                                ) : (
+                                        <span>
+                                            {contentId + 1} - {content.title} <FontAwesomeIcon icon={faChevronRight} />
+                                        </span>
+                                    )}
+
                             </ListGroup.Item>
                         )
                     })}
                 </ListGroup>
             </Col>
         )
+
     }
 }
 
 export class PathTabs extends Component {
+
     render() {
         const { contents, editable, handleRefresh } = this.props;
         return (
@@ -56,31 +71,22 @@ export class PathTabs extends Component {
 export class PathElement extends Component {
 
     handleDeleteContentById(contentId) {
-        const url = API_BASE_URL + `/contents/${contentId}`;
-
-        const REQUEST_HEADERS = {
-            headers: { 'content-type': 'application/json', 'Authorization': 'Bearer ' + localStorage.getItem(ACCESS_TOKEN) }
-        };
-
+        let url = resolveEndpoint('deleteContentById', [{ "slug1": contentId }]);
         axios.delete(url, REQUEST_HEADERS)
             .then(res => {
-                toast.notify("Content deleted successfully.", { position: "bottom-right" });
+                toast.notify("Material deleted successfully.", { position: "top-right" });
                 this.props.handleRefresh()
             }).catch(err => {
+                toast.notify("Something went wrong!", { position: "top-right" });
                 console.log(err)
             });
     }
 
     render() {
-        const { content, questions, editable, handleRefresh } = this.props;
+        const { content, questions, editable, handleRefresh } = this.props
         return (
-            <div className=" bg-alt materialBody">
-                {editable && (
-                    <div className="text-center text-white border bg-info rounded-pill">
-                        <h1>Content Creation</h1>
-                    </div>
-                )}
-                <h1 className="mt-4 mb-4 fontMedium">
+            <div className="bg-alt materialBody">
+                <h4 className="mb-4 fontMedium">
                     {content.title}
                     {editable && (
                         <React.Fragment>
@@ -89,47 +95,38 @@ export class PathElement extends Component {
                             <Link className="btn  btn-outline-primary btn-sm ml-2 inlineBtn" to={`/content/${content.id}`}><FontAwesomeIcon icon={faEdit} /></Link>
                         </React.Fragment>
                     )}
-                </h1>
+                </h4>
                 <div className="text-left" dangerouslySetInnerHTML={{ __html: content.text }} ></div>
-
                 {
-                    questions.length > 0 && !editable && (
-                        <React.Fragment>
-                            <hr/>
-                            <Link className="btn btn-outline-info btn-lg ml-2 inlineBtn" to={`/quiz/${content.id}`}><FontAwesomeIcon icon={faPlayCircle} /> Start Quiz</Link>
-                        </React.Fragment>
-                    )
-                }
+                    editable ? (
+                        questions.length > 0 && (
+                            <React.Fragment>
+                                <hr />
+                                {
+                                    questions.map((question, idx) => {
+                                        return (
+                                            <Question
+                                                key={idx}
+                                                order={idx + 1}
+                                                question={question}
+                                                editable={editable}
+                                                handleRefresh={handleRefresh}
+                                                answered={false}
+                                            />
+                                        )
+                                    })
+                                }
+                            </React.Fragment>
+                        )
+                    ) :
+                        (
+                            <div className="text-right">
+                                <hr />
+                                <Link className="btn btn-success btn-sm ml-2 inlineBtn" to={`/content/${content.id}/quiz`}><FontAwesomeIcon icon={faChevronRight} /> Start Section Quiz</Link>
 
-                {editable && (
-                    <React.Fragment>
-                        <hr/>
-                        <div className="text-center text-white border bg-info rounded-pill">
-                            <h1>Quiz Creation</h1>
-                        </div>
-                    </React.Fragment>
-                )}
+                            </div>
+                        )
 
-                {
-                    questions.length > 0 && editable && (
-                        <React.Fragment>
-                            <hr />
-                            {
-                                questions.map((question, idx) => {
-                                    return (
-                                        <Question
-                                            key={idx}
-                                            order={idx + 1}
-                                            question={question}
-                                            editable={editable}
-                                            handleRefresh={handleRefresh}
-                                            answered={false}
-                                        />
-                                    )
-                                })
-                            }
-                        </React.Fragment>
-                    )
                 }
             </div>
         )
@@ -151,121 +148,128 @@ export class Question extends Component {
     }
 
     handleDeleteQuestionById(questionIdToDelete) {
-        const url = API_BASE_URL + `/questions/${questionIdToDelete}`;
-
-        const REQUEST_HEADERS = {
-            headers: { 'content-type': 'application/json', 'Authorization': 'Bearer ' + localStorage.getItem(ACCESS_TOKEN) }
-        };
+        let url = resolveEndpoint('deleteQuestionById', [{ "slug1": questionIdToDelete }]);
 
         axios.delete(url, REQUEST_HEADERS)
             .then(res => {
-                toast.notify("Question deleted successfully.", { position: "bottom-right" });
+                toast.notify("Question deleted successfully.", { position: "top-right" });
                 this.props.handleRefresh()
             }).catch(err => {
+                toast.notify("Something went wrong!", { position: "top-right" });
                 console.log(err)
             });
     }
 
     render() {
-        const { question, order, editable, handleRefresh } = this.props;
+        const { question, order, editable, handleRefresh } = this.props
         const { disabled } = this.state;
         return (
-            <React.Fragment>
-                <div className="mt-5" id={`questionDiv${question.id}`}>
-                    <p>
-                        <strong>Q{order}:</strong> {question.text}
-                        {editable && (
-                            <React.Fragment>
-                                <OptionModal handleRefresh={() => handleRefresh()} questionId={question.id} />
-                                <Button
-                                    className="ml-2 btn-sm inlineBtn"
-                                    variant="outline-danger"
-                                    onClick={() => this.handleDeleteQuestionById(question.id)}>
-                                    <FontAwesomeIcon icon={faTrash} />
-                                </Button>
-                            </React.Fragment>
-                        )}
-                    </p>
-                    {
-                        question.choiceList.length > 0 && (
+            <div id={`questionDiv${question.id}`}>
+                <p>
+                    <strong>Q{order}:</strong> {question.text}
+                    {editable && (
+                        <React.Fragment>
+                            <OptionModal handleRefresh={() => handleRefresh()} questionId={question.id} />
+                            <Button
+                                className="ml-2 btn-sm inlineBtn"
+                                variant="outline-danger"
+                                onClick={() => this.handleDeleteQuestionById(question.id)}>
+                                <FontAwesomeIcon icon={faTrash} />
+                            </Button>
+                        </React.Fragment>
+                    )}
+                </p>
+                {
+                    question.choiceList.length > 0 && (
 
-                            <Formik
-                                initialValues={{ choice: '' }}
-                                validate={values => {
-                                    let errors = {};
-                                    if (!values.choice) {
-                                        errors.choice = 'You must select a choice';
-                                    }
-                                    return errors;
-                                }}
-                                onSubmit={(values, { setSubmitting }) => {
-                                    setTimeout(() => {
-                                        const selectedOption = {
-                                            choice: values.choice,
-                                            question: question.id
-                                        };
-                                        this.setState({ disabled: true });
-                                        console.log(selectedOption);
-                                        // to give answer post the newOption
-                                        /* createOption(selectedOption)
-                                            .then(res => {
-                                                toast.notify("Question answered.", { position: "bottom-right" });
+                        <Formik
+                            initialValues={{ choice: '' }}
+                            validate={values => {
+                                let errors = {};
+                                if (!values.choice) {
+                                    errors.choice = 'You must select a choice';
+                                }
+                                return errors;
+                            }}
+                            onSubmit={(values, { setSubmitting }) => {
+                                setTimeout(() => {
+                                    const newAnswer = {
+                                        choiceId: values.choice,
+                                        questionId: question.id
+                                    };
+                                    giveAnswer(newAnswer)
+                                        .then(res => {
+                                            toast.notify("Answer given.", { position: "top-right" });
+                                            this.setState({ disabled: true })
 
-                                            }).catch(err => {
-                                                toast.notify("Something went wrong!", { position: "bottom-right" });
-                                            }); */
-                                        setSubmitting(false);
-                                    }, 400);
-                                }}
-                            >
-                                {() => (
-                                    <Form>
-                                        <ul className={!editable ? 'questionUl' : ''}>
-                                            {
-                                                question.choiceList.map((choice, choiceId) => {
-                                                    return (
-                                                        <li key={choiceId} className="m-2">
-                                                            {!editable &&
-                                                                <Field
-                                                                    type="radio"
-                                                                    name="choice"
-                                                                    className="choices"
-                                                                    disabled={disabled}
-                                                                    value={choice.id}
-                                                                />
-                                                            } {choice.text}
-                                                            {editable && (
-                                                                <span>
-                                                                    {choice.correct && <FontAwesomeIcon className="text-success" icon={faCheck} />}
-                                                                </span>
-                                                            )}
-                                                        </li>
-                                                    )
-                                                })
-                                            }
-                                            <ErrorMessage name="choice" className="errorMessage" component="span" />
+                                        }).catch(err => {
+                                            toast.notify("Something went wrong!", { position: "top-right" });
+                                            this.setState({ disabled: true })
+                                        });
+                                    setSubmitting(false);
+                                }, 400);
+                            }}
+                        >
+                            {() => (
+                                <Form>
+                                    <ul className={!editable ? 'questionUl' : ''}>
+                                        {
+                                            question.choiceList.map((choice, choiceId) => {
+                                                return (
+                                                    <li key={choiceId}>
+                                                        {!editable &&
+                                                            <Field
+                                                                type="radio"
+                                                                name="choice"
+                                                                className="choices"
+                                                                disabled={disabled}
+                                                                value={choice.id}
+                                                                checked={question.userAnswer && ((question.userAnswer.id === choice.id) ? true : false)}
+                                                            />
+                                                        } {choice.text}
+                                                        {(editable || disabled) && (
+                                                            <small className="text-success">
+                                                                <em> {choice.correct && " (correct)"}</em>
+                                                            </small>
+                                                        )}
 
-                                            {!editable && (
-                                                <div className="mt-3 text-left">
-                                                    <Button
-                                                        className="ml-2 btn inlineBtn"
-                                                        variant="info"
-                                                        type="submit"
-                                                        disabled={disabled}
-                                                        id={`question${question.id}`} >
-                                                        {disabled ? 'Answered' : 'Give Answer'}
-                                                    </Button>
-                                                </div>
-                                            )}
-                                        </ul>
-                                    </Form>
-                                )}
-                            </Formik>
-                        )
-                    }
-                    <hr />
-                </div>
-            </React.Fragment>
+                                                        {question.userAnswer && (question.userAnswer.id === choice.id) ? (
+                                                            <strong>
+                                                                {
+                                                                    choice.correct ? (<span className="text-success"> <FontAwesomeIcon icon={faCheck} /></span>) : <span className="text-danger"> <FontAwesomeIcon icon={faTimes} /></span>
+                                                                }
+                                                            </strong>
+                                                        ) : false}
+
+
+                                                    </li>
+                                                )
+                                            })
+                                        }
+                                        <ErrorMessage name="choice" className="errorMessage" component="span" />
+
+                                        {!editable && (
+                                            <div className="mt-3 text-right">
+                                                <Button
+                                                    className="ml-2 btn-sm inlineBtn"
+                                                    variant="outline-success"
+                                                    type="submit"
+                                                    disabled={disabled}
+                                                    id={`question${question.id}`} >
+                                                    {disabled ? 'Answered' : 'Answer'}
+                                                </Button>
+                                            </div>
+                                        )}
+
+                                    </ul>
+
+                                </Form>
+                            )}
+                        </Formik>
+                    )
+                }
+                <hr />
+            </div>
 
         )
     }

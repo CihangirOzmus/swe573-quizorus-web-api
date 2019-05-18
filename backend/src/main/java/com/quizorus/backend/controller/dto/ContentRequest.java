@@ -12,9 +12,10 @@ import javax.validation.constraints.Size;
 @AllArgsConstructor
 public class ContentRequest {
 
+    @NonNull
     private Long id = 0L;
 
-    @NotBlank
+    @NonNull
     private Long topicId;
 
     @NotBlank

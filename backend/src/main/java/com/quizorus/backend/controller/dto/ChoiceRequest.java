@@ -13,7 +13,7 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 public class ChoiceRequest {
 
-    @NotBlank
+    @NonNull
     private Long questionId;
 
     @NotBlank

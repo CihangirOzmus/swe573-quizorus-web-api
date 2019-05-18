@@ -12,7 +12,7 @@ import javax.validation.constraints.Size;
 @AllArgsConstructor
 public class QuestionRequest {
 
-    @NotBlank
+    @NonNull
     private Long contentId;
 
     @NotBlank

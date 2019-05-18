@@ -5,23 +5,25 @@ import toast from "toasted-notes";
 import { createOption } from "../util/APIUtils";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
+import loadingGif from '../img/loading.gif'
 
 function OptionModal(FieldProps) {
-    const [modalState, setModalState] = useState(false);
-    const [refreshState, setRefreshState] = useState(false);
+    const [modalState, setModalState] = useState(false)
+    const [refreshState, setRefreshState] = useState(false)
+    const [loadingState, setLoadingState] = useState(false)
 
     useEffect(() => {
         FieldProps.handleRefresh()
-    }, [modalState, refreshState]);
+    }, [modalState, refreshState])
 
     return (
         <React.Fragment>
-            <Button className="btn-sm ml-2 inlineBtn" variant="info" onClick={() => { setModalState(true) }}>
+            <Button className="btn-sm ml-2 inlineBtn" variant="success" onClick={() => { setModalState(true) }}>
                 <FontAwesomeIcon icon={faPlus} /> Option
             </Button>
             <Modal show={modalState} onHide={() => { setModalState(false) }}>
                 <Modal.Header closeButton>
-                    <Modal.Title>New Option</Modal.Title>
+                    <Modal.Title>{loadingState ? (<span><img src={loadingGif} width="30" alt="" /> </span>) : 'New Option'}</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <Formik
@@ -34,18 +36,21 @@ function OptionModal(FieldProps) {
                             return errors;
                         }}
                         onSubmit={(values, { setSubmitting }) => {
+                            setLoadingState(true)
                             setTimeout(() => {
                                 const newOption = {
+                                    questionId: FieldProps.questionId,
                                     text: values.text,
                                     correct: values.isCorrect
                                 };
                                 createOption(newOption, FieldProps.questionId)
                                     .then(res => {
-                                        toast.notify("Option created successfully.", { position: "bottom-right" });
-                                        setModalState(false);
-                                        setRefreshState(true);
+                                        toast.notify("Option created successfully.", { position: "top-right" });
+                                        setModalState(false)
+                                        setRefreshState(true)
+                                        setLoadingState(false)
                                     }).catch(err => {
-                                        toast.notify("Something went wrong!", { position: "bottom-right" });
+                                        toast.notify("Something went wrong!", { position: "top-right" });
                                     });
                                 setSubmitting(false);
                             }, 400);
@@ -66,7 +71,7 @@ function OptionModal(FieldProps) {
                                     </div>
                                 </div>
 
-                                <Button variant="info" type="submit" block disabled={isSubmitting}>Save</Button>
+                                <Button variant="success" type="submit" block disabled={isSubmitting}>{loadingState ? "Loading" : 'Save'}</Button>
                             </Form>
                         )}
                     </Formik>

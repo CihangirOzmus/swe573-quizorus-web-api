@@ -3,13 +3,7 @@ import React, {Component} from 'react';
 class UserProfile extends Component{
     render() {
         return(
-            <React.Fragment>
-                {/*<PageHeader title="User Profile" />*/}
-                <div className="container text-center mt-5">
-                    <h1 className="text-danger">@{this.props.currentUser.username} Profile</h1>
-                    <p className="text-danger">Work in progress!</p>
-                </div>
-            </React.Fragment>
+            <h1 className="text-danger">@{this.props.currentUser.username} Profile</h1>
         )
     }
 }
