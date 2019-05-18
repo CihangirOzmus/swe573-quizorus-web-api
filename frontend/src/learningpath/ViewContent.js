@@ -64,21 +64,19 @@ class ViewContent extends Component {
                                                 <div className="text-right mt-5">
                                                     <hr />
                                                     {content.questionCount > 0 ? (
-                                                        <Link className="btn btn-success btn-sm ml-2 inlineBtn" to={`/content/${content.id}/quiz`} ><FontAwesomeIcon icon={faChevronRight} /> Start Section Quiz</Link>
+                                                        <Link className="btn btn-info btn-sm ml-2 inlineBtn" to={`/content/${content.id}/quiz`} ><FontAwesomeIcon icon={faChevronRight} /> Start Section Quiz</Link>
                                                     ) : (
                                                             <React.Fragment>
                                                                 {content.nextContentId === null ? (
                                                                     <div className="text-right mt-5">
-                                                                        <Link className="btn btn-success btn-sm ml-2 inlineBtn" to={`/topic/view/${content.topicId}`}><FontAwesomeIcon icon={faCheck} /> Finalize</Link>
+                                                                        <Link className="btn btn-info btn-sm ml-2 inlineBtn" to={`/topic/view/${content.topicId}`}><FontAwesomeIcon icon={faCheck} /> Finalize</Link>
                                                                     </div>
                                                                 ) : (
                                                                         <div className="text-right mt-5">
-                                                                            <a className="btn btn-success btn-sm ml-2 inlineBtn" href={`/content/view/${content.nextContentId}`} ><FontAwesomeIcon icon={faChevronRight} /> Start Next Content</a>
+                                                                            <a className="btn btn-info btn-sm ml-2 inlineBtn" href={`/content/view/${content.nextContentId}`} ><FontAwesomeIcon icon={faChevronRight} /> Start Next Content</a>
                                                                         </div>
                                                                     )}
                                                             </React.Fragment>
-
-
                                                         )}
                                                 </div>
                                             </div>

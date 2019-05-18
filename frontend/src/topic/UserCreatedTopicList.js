@@ -6,7 +6,6 @@ import {Button, Table} from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
-import PageHeader from "../components/PageHeader";
 import { WikiLabels } from "../components/Wiki";
 import { resolveEndpoint } from "../util/Helpers";
 import Loading from '../components/Loading';

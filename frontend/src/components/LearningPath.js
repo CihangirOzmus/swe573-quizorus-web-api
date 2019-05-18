@@ -74,10 +74,10 @@ export class PathElement extends Component {
         let url = resolveEndpoint('deleteContentById', [{ "slug1": contentId }]);
         axios.delete(url, REQUEST_HEADERS)
             .then(res => {
-                toast.notify("Material deleted successfully.", { position: "top-right" });
+                toast.notify("Material deleted successfully.", { position: "bottom-right" });
                 this.props.handleRefresh()
             }).catch(err => {
-                toast.notify("Something went wrong!", { position: "top-right" });
+                toast.notify("Something went wrong!", { position: "bottom-right" });
                 console.log(err)
             });
     }
@@ -122,7 +122,7 @@ export class PathElement extends Component {
                         (
                             <div className="text-right">
                                 <hr />
-                                <Link className="btn btn-success btn-sm ml-2 inlineBtn" to={`/content/${content.id}/quiz`}><FontAwesomeIcon icon={faChevronRight} /> Start Section Quiz</Link>
+                                <Link className="btn btn-info btn-sm ml-2 inlineBtn" to={`/content/${content.id}/quiz`}><FontAwesomeIcon icon={faChevronRight} /> Start Section Quiz</Link>
 
                             </div>
                         )
@@ -152,10 +152,10 @@ export class Question extends Component {
 
         axios.delete(url, REQUEST_HEADERS)
             .then(res => {
-                toast.notify("Question deleted successfully.", { position: "top-right" });
+                toast.notify("Question deleted successfully.", { position: "bottom-right" });
                 this.props.handleRefresh()
             }).catch(err => {
-                toast.notify("Something went wrong!", { position: "top-right" });
+                toast.notify("Something went wrong!", { position: "bottom-right" });
                 console.log(err)
             });
     }
@@ -199,11 +199,11 @@ export class Question extends Component {
                                     };
                                     giveAnswer(newAnswer)
                                         .then(res => {
-                                            toast.notify("Answer given.", { position: "top-right" });
+                                            toast.notify("Answer given.", { position: "bottom-right" });
                                             this.setState({ disabled: true })
 
                                         }).catch(err => {
-                                            toast.notify("Something went wrong!", { position: "top-right" });
+                                            toast.notify("Something went wrong!", { position: "bottom-right" });
                                             this.setState({ disabled: true })
                                         });
                                     setSubmitting(false);
@@ -252,7 +252,7 @@ export class Question extends Component {
                                             <div className="mt-3 text-right">
                                                 <Button
                                                     className="ml-2 btn-sm inlineBtn"
-                                                    variant="outline-success"
+                                                    variant="outline-info"
                                                     type="submit"
                                                     disabled={disabled}
                                                     id={`question${question.id}`} >

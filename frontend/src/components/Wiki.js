@@ -7,7 +7,7 @@ export class WikiLabel extends Component {
     render() {
         const { wiki } = this.props;
         return (
-            <a href={wiki.conceptUri} target="_blank" rel="noopener noreferrer" className="badge badge-pill badge-dark mr-2">
+            <a href={wiki.conceptUri} target="_blank" rel="noopener noreferrer" className="badge badge-pill badge-info mr-2">
                 <FontAwesomeIcon icon={faHashtag} /> {wiki.label}
             </a>
         )
@@ -17,7 +17,7 @@ export class WikiLabel extends Component {
 
 export class WikiLabels extends Component {
     render() {
-        const wikiData = this.props.wikis
+        const wikiData = this.props.wikis;
 
         return (
             <React.Fragment>

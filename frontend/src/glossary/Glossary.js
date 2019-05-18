@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Row, InputGroup } from 'react-bootstrap';
 import { Link, withRouter } from 'react-router-dom';
-import PageHeader from "../components/PageHeader";
 import { WikiLabels } from "../components/Wiki";
 import axios from 'axios';
 import toast from "toasted-notes";
@@ -83,7 +82,7 @@ class Glossary extends Component {
                                                     <div className="col-md-4">
                                                         <div className="clear p-4">
                                                             <img src={topic.imageUrl} className="img-fluid fullWidth mb-4" alt={topic.title} />
-                                                            <Link className="btn btn-sm btn-primary fullWidth" to={`/topic/preview/${topic.id}`}>Details</Link>
+                                                            <Link className="btn btn-sm btn-info fullWidth" to={`/topic/preview/${topic.id}`}>Details</Link>
                                                         </div>
                                                     </div>
                                                     <div className="col-md-8">

@@ -394,6 +394,11 @@ code {
     
 }
 
+.list-group-item.active{
+    background-color: #5bc0de;
+    border-color: #5bc0de;
+}
+
 .list-group-item.list-group-item-action.active a{
     color: white !important;
 }
