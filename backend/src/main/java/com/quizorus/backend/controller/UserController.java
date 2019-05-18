@@ -6,7 +6,6 @@ import com.quizorus.backend.controller.dto.UserResponse;
 import com.quizorus.backend.security.CurrentUser;
 import com.quizorus.backend.security.UserPrincipal;
 import com.quizorus.backend.service.UserService;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -36,15 +35,8 @@ public class UserController {
     }
 
     @GetMapping("/users/{username}")
-    @PreAuthorize("hasRole('USER')")
     public UserProfile getUserProfile(@PathVariable String username) {
         return userService.getUserProfileByUsername(username);
     }
-
-//    @GetMapping("/users/{username}/topics")
-//    @PreAuthorize("hasRole('USER')")
-//    public ResponseEntity<List<TopicResponse>> getTopicsCreatedByUsername(@PathVariable String username, @CurrentUser UserPrincipal currentUser) {
-//        return topicService.getTopicsCreatedByUsername(currentUser, username);
-//    }
 
 }

@@ -1,60 +1,82 @@
 package com.quizorus.backend.service;
 
-import com.quizorus.backend.model.Content;
-import com.quizorus.backend.model.Question;
 import com.quizorus.backend.controller.dto.ApiResponse;
+import com.quizorus.backend.controller.dto.ContentRequest;
 import com.quizorus.backend.controller.dto.ContentResponse;
+import com.quizorus.backend.exception.ResourceNotFoundException;
+import com.quizorus.backend.model.Content;
+import com.quizorus.backend.model.Topic;
 import com.quizorus.backend.repository.ContentRepository;
+import com.quizorus.backend.repository.TopicRepository;
 import com.quizorus.backend.security.UserPrincipal;
+import org.springframework.core.convert.support.ConfigurableConversionService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+
+import java.util.Comparator;
+import java.util.Objects;
+import java.util.concurrent.atomic.AtomicLong;
+import java.util.stream.Collectors;
 
 @Service
 public class ContentService {
 
     private ContentRepository contentRepository;
 
-    public ContentService(ContentRepository contentRepository) {
+    private TopicRepository topicRepository;
+
+    private ConfigurableConversionService quizorusConversionService;
+
+    public ContentService(ContentRepository contentRepository, TopicRepository topicRepository, ConfigurableConversionService quizorusConversionService) {
         this.contentRepository = contentRepository;
+        this.topicRepository = topicRepository;
+        this.quizorusConversionService = quizorusConversionService;
     }
 
-    //private static final Logger logger = LoggerFactory.getLogger(ContentService.class);
+    public ResponseEntity<ApiResponse> createContentByTopicId(UserPrincipal currentUser,
+                                                              ContentRequest contentRequest) {
 
-    public ResponseEntity<ContentResponse> getContentById(UserPrincipal currentUser, Long contentId){
-        Content contentById = contentRepository.findById(contentId).orElse(null);
-        ContentResponse contentResponse = new ContentResponse();
-        contentResponse.setId(contentById.getId());
-        contentResponse.setTitle(contentById.getTitle());
-        contentResponse.setText(contentById.getText());
-        contentResponse.setTopicId(contentById.getTopic().getId());
+        final Topic topic = topicRepository.findById(contentRequest.getTopicId())
+                .orElseThrow(
+                        () -> new ResourceNotFoundException("topic", "id", contentRequest.getTopicId().toString()));
 
-        if (contentById != null){
-            return ResponseEntity.ok().body(contentResponse);
-        }
-        return ResponseEntity.notFound().build();
+        QuizorusUtils.checkCreatedBy("topic", currentUser.getId(), topic.getCreatedBy());
+
+        final Content content = quizorusConversionService.convert(contentRequest, Content.class);
+        content.setTopic(topic);
+        contentRepository.save(content);
+        return ResponseEntity.ok().body(new ApiResponse(true, "Content created successfully"));
     }
 
-    public ResponseEntity<ApiResponse> createQuestionByContentId(UserPrincipal currentUser, Long contentId, Question questionRequest){
-        Content contentById = contentRepository.findById(contentId).orElse(null);
 
-        if (contentById != null && currentUser.getId().equals(contentById.getCreatedBy())){
-            questionRequest.setContent(contentById);
-            contentById.getQuestionList().add(questionRequest);
-            contentRepository.save(contentById);
+    public ResponseEntity<ContentResponse> getContentById(UserPrincipal currentUser, Long contentId) {
 
-            return ResponseEntity.ok().body(new ApiResponse(true, "Question created successfully"));
-        }
+        final Content content = contentRepository.findById(contentId)
+                .orElseThrow(() -> new ResourceNotFoundException("content", "id", contentId.toString()));
 
-        return ResponseEntity.badRequest().body(new ApiResponse(false, "Failed to create question"));
+        final ContentResponse contentResponse = quizorusConversionService.convert(content, ContentResponse.class);
+
+        final AtomicLong nextContentId = new AtomicLong(0L);
+
+        content.getTopic().getContentList().stream()
+                .map(Content::getId).collect(Collectors.toList()).stream().filter(id -> id > contentId).min(
+                Comparator.comparing(Long::valueOf)).ifPresent(nextContentId::set);
+
+        Objects.requireNonNull(contentResponse).setNextContentId(nextContentId.get());
+
+        return ResponseEntity.ok().body(contentResponse);
     }
 
-    public ResponseEntity<ApiResponse> deleteContentById(UserPrincipal currentUser, Long contentId){
-        Content content = contentRepository.findById(contentId).orElse(null);
-        if (content != null && currentUser.getId().equals(content.getCreatedBy())){
-            contentRepository.deleteContentById(contentId);
-            return ResponseEntity.ok().body(new ApiResponse(true, "Content deleted successfully"));
-        }
-        return ResponseEntity.badRequest().body(new ApiResponse(false, "Content not found"));
+
+    public ResponseEntity<ApiResponse> deleteContentById(UserPrincipal currentUser, Long contentId) {
+
+        final Content content = contentRepository.findById(contentId)
+                .orElseThrow(() -> new ResourceNotFoundException("content", "id", contentId.toString()));
+
+        QuizorusUtils.checkCreatedBy("content", currentUser.getId(), content.getCreatedBy());
+
+        contentRepository.delete(content);
+        return ResponseEntity.ok().body(new ApiResponse(true, "Content deleted successfully"));
     }
 
 }

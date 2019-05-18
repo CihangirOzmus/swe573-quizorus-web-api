@@ -1,13 +1,11 @@
 package com.quizorus.backend.controller;
 
-import com.quizorus.backend.controller.dto.ApiResponse;
-import com.quizorus.backend.controller.dto.TopicRequest;
-import com.quizorus.backend.controller.dto.TopicResponse;
-import com.quizorus.backend.model.Content;
+import com.quizorus.backend.controller.dto.*;
 import com.quizorus.backend.security.CurrentUser;
 import com.quizorus.backend.security.UserPrincipal;
 import com.quizorus.backend.service.TopicService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -16,55 +14,63 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/topics")
 public class TopicController {
-
     private TopicService topicService;
 
     public TopicController(TopicService topicService) {
         this.topicService = topicService;
     }
 
+    @Transactional
     @GetMapping
-    public ResponseEntity<List<TopicResponse>> getAllTopics(@CurrentUser UserPrincipal currentUser){
+    public ResponseEntity<List<TopicResponse>> getAllTopics(@CurrentUser UserPrincipal currentUser) {
         return topicService.getAllTopics(currentUser);
     }
 
+    @Transactional
     @GetMapping("/{username}")
-    public ResponseEntity<List<TopicResponse>> getCreatedTopicsByUsername(@CurrentUser UserPrincipal currentUser, @PathVariable String username){
-        return topicService.getTopicsCreatedByUsername(currentUser, username);
+    public ResponseEntity<List<TopicResponse>> getTopicsByUsername(@PathVariable String username,
+                                                                   @CurrentUser UserPrincipal currentUser) {
+        return topicService.getTopicsCreatedBy(username, currentUser);
     }
 
+    @Transactional
     @GetMapping("/topic/{topicId}")
-    public ResponseEntity<TopicResponse> getCreatedTopicById(@CurrentUser UserPrincipal currentUser, @PathVariable Long topicId){
-        return topicService.getCreatedTopicById(currentUser, topicId);
+    public ResponseEntity<TopicResponse> getTopicById(@CurrentUser UserPrincipal currentUser,
+                                                      @PathVariable Long topicId) {
+        return topicService.getTopicById(topicId, currentUser);
     }
 
+    @Transactional
+    @PostMapping("/publish")
+    public ResponseEntity<ApiResponse> publishStatusUpdate(@CurrentUser UserPrincipal currentUser,
+                                                           @RequestBody PublishRequest publishRequest) {
+        return topicService.publishStatusUpdate(currentUser, publishRequest);
+    }
+
+    @Transactional
     @PostMapping
-    public ResponseEntity<TopicResponse> createTopic(@CurrentUser UserPrincipal currentUser, @Valid @RequestBody TopicRequest topicRequest){
-        return topicService.createTopic(currentUser, topicRequest);
+    public ResponseEntity<TopicResponse> createTopic(@Valid @RequestBody TopicRequest topicRequest) {
+        return topicService.createTopic(topicRequest);
     }
 
-    @PutMapping("/edit")
-    public ResponseEntity<ApiResponse> updateTopic(@CurrentUser UserPrincipal currentUser, @Valid @RequestBody TopicRequest topicRequest){
-        return  topicService.updateTopic(currentUser, topicRequest);
-    }
-
-    @PostMapping("/{topicId}/contents")
-    public ResponseEntity<ApiResponse> createContentByTopicId(@CurrentUser UserPrincipal currentUser, @PathVariable Long topicId, @Valid @RequestBody Content contentRequest){
-        return topicService.createOrUpdateContentByTopicId(currentUser,topicId, contentRequest);
-    }
-
+    @Transactional
     @DeleteMapping("/topic/{topicId}")
-    public ResponseEntity<ApiResponse> deleteTopicById(@CurrentUser UserPrincipal currentUser, @PathVariable Long topicId){
+    public ResponseEntity<ApiResponse> deleteTopicById(@CurrentUser UserPrincipal currentUser,
+                                                       @PathVariable Long topicId) {
         return topicService.deleteTopicById(topicId, currentUser);
     }
 
-    @PostMapping("/{topicId}/enroll/{username}")
-    public ResponseEntity<ApiResponse> enrollToTopicByUsername(@CurrentUser UserPrincipal currentUser, @PathVariable Long topicId, @PathVariable String username){
-        return topicService.enrollToTopicByUsername(currentUser, topicId, username);
+    @Transactional
+    @PostMapping("/enroll")
+    public ResponseEntity<ApiResponse> enrollToTopicByUsername(@CurrentUser UserPrincipal currentUser,
+                                                               @RequestBody EnrollmentRequest enrollmentRequest) {
+        return topicService.enrollToTopicByUsername(currentUser, enrollmentRequest);
     }
 
+    @Transactional
     @GetMapping("/enrolled/{userId}")
-    public ResponseEntity<List<TopicResponse>> getEnrolledTopics(@CurrentUser UserPrincipal currentUser , @PathVariable Long userId){
+    public ResponseEntity<List<TopicResponse>> getEnrolledTopics(@CurrentUser UserPrincipal currentUser,
+                                                                 @PathVariable Long userId) {
         return topicService.getTopicsByEnrolledUserId(currentUser, userId);
     }
 

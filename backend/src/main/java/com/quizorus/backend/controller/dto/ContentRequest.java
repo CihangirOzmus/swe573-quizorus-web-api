@@ -12,6 +12,8 @@ import javax.validation.constraints.Size;
 @AllArgsConstructor
 public class ContentRequest {
 
+    private Long id = 0L;
+
     @NotBlank
     private Long topicId;
 

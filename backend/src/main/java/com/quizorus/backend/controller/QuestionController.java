@@ -1,18 +1,17 @@
 package com.quizorus.backend.controller;
 
-import com.quizorus.backend.model.Choice;
+import com.quizorus.backend.controller.dto.AnswerRequest;
 import com.quizorus.backend.controller.dto.ApiResponse;
-import com.quizorus.backend.model.Question;
+import com.quizorus.backend.controller.dto.LearningStepsResponse;
+import com.quizorus.backend.controller.dto.QuestionRequest;
 import com.quizorus.backend.security.CurrentUser;
 import com.quizorus.backend.security.UserPrincipal;
 import com.quizorus.backend.service.QuestionService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
 
 @RestController
 @RequestMapping("api/questions")
@@ -24,21 +23,32 @@ public class QuestionController {
         this.questionService = questionService;
     }
 
-    @GetMapping("/{contentId}")
-    public ResponseEntity<List<Question>> getQuestionsByContentId(@CurrentUser UserPrincipal currentUser, @PathVariable Long contentId){
-        return questionService.getQuestionsByContentId(currentUser, contentId);
-    }
-
-    @PostMapping("/{questionId}/choices")
     @Transactional
-    public ResponseEntity<ApiResponse> createChoiceByQuestionId(@CurrentUser UserPrincipal currentUser, @PathVariable Long questionId, @Valid @RequestBody Choice choiceRequest){
-        return questionService.createChoiceByQuestionId(currentUser, questionId, choiceRequest);
+    @PostMapping("/")
+    public ResponseEntity<ApiResponse> createQuestionByContentId(@CurrentUser UserPrincipal currentUser,
+                                                                 @Valid @RequestBody QuestionRequest questionRequest) {
+        return questionService.createQuestionByContentId(currentUser, questionRequest);
     }
 
+    @Transactional
     @DeleteMapping("/{questionId}")
-    @Transactional
-    public ResponseEntity<ApiResponse> deleteQuestionById(@CurrentUser UserPrincipal currentUser, @PathVariable Long questionId){
+    public ResponseEntity<ApiResponse> deleteQuestionById(@CurrentUser UserPrincipal currentUser,
+                                                          @PathVariable Long questionId) {
         return questionService.deleteQuestionById(questionId, currentUser);
+    }
+
+    @Transactional
+    @GetMapping("/{contentId}")
+    public ResponseEntity<LearningStepsResponse> getLearningStepsByContentId(@CurrentUser UserPrincipal currentUser,
+                                                                             @PathVariable Long contentId) {
+        return questionService.getLearningSteps(currentUser, contentId);
+    }
+
+    @Transactional
+    @PostMapping("/answer/")
+    public ResponseEntity<ApiResponse> giveAnswer(@CurrentUser UserPrincipal currentUser,
+                                                  @Valid @RequestBody AnswerRequest answerRequest) {
+        return questionService.giveAnswer(currentUser, answerRequest);
     }
 
 }

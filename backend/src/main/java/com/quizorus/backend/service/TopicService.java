@@ -1,12 +1,11 @@
 package com.quizorus.backend.service;
 
-import com.quizorus.backend.controller.dto.TopicRequest;
-import com.quizorus.backend.controller.dto.TopicResponse;
+import com.quizorus.backend.controller.dto.*;
+import com.quizorus.backend.exception.NotValidTopicException;
 import com.quizorus.backend.exception.ResourceNotFoundException;
-import com.quizorus.backend.model.Content;
 import com.quizorus.backend.model.Topic;
 import com.quizorus.backend.model.User;
-import com.quizorus.backend.controller.dto.ApiResponse;
+import com.quizorus.backend.model.WikiData;
 import com.quizorus.backend.repository.TopicRepository;
 import com.quizorus.backend.repository.UserRepository;
 import com.quizorus.backend.repository.WikiDataRepository;
@@ -21,9 +20,14 @@ import java.util.stream.Collectors;
 @Service
 public class TopicService {
 
+    private static final String TOPIC = "Topic";
+
     private TopicRepository topicRepository;
+
     private UserRepository userRepository;
+
     private WikiDataRepository wikiDataRepository;
+
     private ConfigurableConversionService quizorusConversionService;
 
     public TopicService(TopicRepository topicRepository, UserRepository userRepository, WikiDataRepository wikiDataRepository, ConfigurableConversionService quizorusConversionService) {
@@ -34,88 +38,100 @@ public class TopicService {
     }
 
     public ResponseEntity<List<TopicResponse>> getAllTopics(UserPrincipal currentUser) {
-        List<TopicResponse> topicResponseList = topicRepository.findAll()
-                .stream()
-                .map(topic -> quizorusConversionService.convert(topic, TopicResponse.class))
-                .collect(Collectors.toList());
-        return ResponseEntity.ok().body(topicResponseList);
+        return ResponseEntity.ok().body(topicRepository.findByPublished(true).stream()
+                .map(topic -> quizorusConversionService.convert(topic, TopicResponse.class)).collect(
+                        Collectors.toList()));
     }
 
-    public ResponseEntity<List<TopicResponse>> getTopicsCreatedByUsername(UserPrincipal currentUser, String username) {
-        User user = userRepository.findByUsername(username)
+    public ResponseEntity<List<TopicResponse>> getTopicsCreatedBy(String username, UserPrincipal currentUser) {
+        final User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new ResourceNotFoundException("User", "username", username));
 
-        List<TopicResponse> topicResponseList = topicRepository.findByCreatedBy(user.getId())
-                .stream()
-                .map(topic -> quizorusConversionService.convert(topic, TopicResponse.class))
-                .collect(Collectors.toList());
-        return ResponseEntity.ok().body(topicResponseList);
+        return ResponseEntity.ok().body(topicRepository.findByCreatedBy(user.getId()).stream()
+                .map(topic -> quizorusConversionService.convert(topic, TopicResponse.class)).collect(
+                        Collectors.toList()));
     }
 
-    public ResponseEntity<TopicResponse> getCreatedTopicById(UserPrincipal currentUser, Long topicId) {
-        Topic topicById = topicRepository.findById(topicId).orElseThrow(
-                () -> new ResourceNotFoundException("Topic", "id", topicId));
-        return ResponseEntity.ok().body(quizorusConversionService.convert(topicById, TopicResponse.class));
-    }
+    public ResponseEntity<TopicResponse> getTopicById(Long topicId, UserPrincipal currentUser) {
+        final Topic topic = topicRepository.findById(topicId).orElseThrow(
+                () -> new ResourceNotFoundException(TOPIC, "id", topicId.toString()));
 
-    public ResponseEntity<TopicResponse> createTopic(UserPrincipal currentUser, TopicRequest topicRequest) {
-        topicRequest.getWikiData().forEach(wikiData -> wikiDataRepository.save(wikiData));
-        Topic topic = topicRepository.save(quizorusConversionService.convert(topicRequest, Topic.class));
         return ResponseEntity.ok().body(quizorusConversionService.convert(topic, TopicResponse.class));
     }
 
-    public ResponseEntity<ApiResponse> updateTopic(UserPrincipal currentUser, TopicRequest topicRequest) {
-        Topic topic = topicRepository.findById(topicRequest.getId()).orElseThrow(() -> new ResourceNotFoundException("Topic", "id", topicRequest.getId()));
+    public ResponseEntity<TopicResponse> createTopic(TopicRequest topicRequest) {
 
-        if (currentUser.getId().equals(topic.getCreatedBy())){
-            topicRequest.setWikiData(topic.getWikiDataList());
-            topicRepository.save(quizorusConversionService.convert(topicRequest, Topic.class));
-            return ResponseEntity.ok().body(new ApiResponse(true,"Topic updated successfully"));
-        }
+        final List<WikiData> nonExistWikiDataSet =
+                topicRequest.getWikiData() != null ? topicRequest.getWikiData().stream()
+                        .filter(wikiData -> !wikiDataRepository.existsById(wikiData.getId()))
+                        .collect(Collectors.toList()) : null;
 
-        return ResponseEntity.badRequest().body(new ApiResponse(false, "Failed to update topic"));
+        wikiDataRepository.saveAll(nonExistWikiDataSet);
+
+        topicRepository.findById(topicRequest.getId())
+                .ifPresent(topic -> topicRequest.setEnrolledUsers(topic.getEnrolledUsers()));
+
+        final Topic topic = topicRepository.save(quizorusConversionService.convert(topicRequest, Topic.class));
+
+        return ResponseEntity.ok().body(quizorusConversionService.convert(topic, TopicResponse.class));
     }
 
-    public ResponseEntity<ApiResponse> createOrUpdateContentByTopicId(UserPrincipal currentUser, Long topicId, Content contentRequest) {
-        Topic topic = topicRepository.findById(topicId).orElseThrow(() -> new ResourceNotFoundException("Topic", "id", topicId));
-        if (currentUser.getId().equals(topic.getCreatedBy())) {
-            contentRequest.setTopic(topic);
-            topic.getContentList().add(contentRequest);
-            topicRepository.save(topic);
-            return ResponseEntity.ok().body(new ApiResponse(true, "Content created successfully"));
+    public ResponseEntity<ApiResponse> publishStatusUpdate(UserPrincipal currentUser, PublishRequest publishRequest) {
+        final Topic topic = topicRepository.findById(publishRequest.getTopicId())
+                .orElseThrow(() -> new ResourceNotFoundException(TOPIC, "id", publishRequest.getTopicId().toString()));
+
+        QuizorusUtils.checkCreatedBy(TOPIC, currentUser.getId(), topic.getCreatedBy());
+
+        if (publishRequest.isPublish()) {
+
+            if(topic.getContentList() == null || topic.getContentList().isEmpty()){
+                throw new NotValidTopicException(topic.getTitle(),
+                        "All topics must have at least one content. Please Check Your Topic!");
+            }
+
+            topic.getContentList().forEach(content -> {
+                if (content.getQuestionList() == null || content.getQuestionList().isEmpty()) {
+                    throw new NotValidTopicException(topic.getTitle(),
+                            "All contents must have at least one question. Please Check Your Contents!");
+                }
+            });
         }
-        return ResponseEntity.badRequest().body(new ApiResponse(false, "Failed to create content"));
+
+        topic.setPublished(publishRequest.isPublish());
+        topicRepository.save(topic);
+        return ResponseEntity.ok().body(new ApiResponse(true, "Topic published successfully"));
     }
 
     public ResponseEntity<ApiResponse> deleteTopicById(Long topicId, UserPrincipal currentUser) {
-        Topic topic = topicRepository.findById(topicId).orElseThrow(() -> new ResourceNotFoundException("Topic", "id", topicId));
-        if (currentUser.getId().equals(topic.getCreatedBy())) {
-            topicRepository.deleteById(topicId);
-            return ResponseEntity.ok().body(new ApiResponse(true, "Topic deleted"));
-        }
-        return ResponseEntity.badRequest().body(new ApiResponse(false, "Failed to delete topic"));
+        final Topic topic = topicRepository.findById(topicId)
+                .orElseThrow(() -> new ResourceNotFoundException(TOPIC, "id", topicId.toString()));
+
+        QuizorusUtils.checkCreatedBy(TOPIC, currentUser.getId(), topic.getCreatedBy());
+
+        topicRepository.delete(topic);
+        return ResponseEntity.ok().body(new ApiResponse(true, "Topic deleted"));
     }
 
-    public ResponseEntity<ApiResponse> enrollToTopicByUsername(UserPrincipal currentUser, Long topicId, String username) {
-        Topic topicToEnroll = topicRepository.findById(topicId).orElseThrow(() -> new ResourceNotFoundException("Topic", "topicId", topicId));
-        User userToEnroll = userRepository.findByUsername(username).orElseThrow(() -> new ResourceNotFoundException("User", "username", username));
-
-        List<Topic> enrolledTopicList = topicRepository.findTopicEntitiesByEnrolledUsersContains(userToEnroll);
-        if (enrolledTopicList.contains(topicToEnroll)) {
-            return ResponseEntity.badRequest().body(new ApiResponse(false, "Already enrolled to topic"));
-        }
-
-        topicToEnroll.getEnrolledUsers().add(userToEnroll);
-        topicRepository.save(topicToEnroll);
+    public ResponseEntity<ApiResponse> enrollToTopicByUsername(UserPrincipal currentUser,
+                                                               EnrollmentRequest enrollmentRequest) {
+        final Topic topic = topicRepository.findById(enrollmentRequest.getTopicId())
+                .orElseThrow(() -> new ResourceNotFoundException(TOPIC, "topicId",
+                        enrollmentRequest.getTopicId().toString()));
+        final User user = userRepository.findByUsername(enrollmentRequest.getUsername())
+                .orElseThrow(() -> new ResourceNotFoundException("User", "username", enrollmentRequest.getUsername()));
+        topic.getEnrolledUsers().add(user);
+        topicRepository.save(topic);
         return ResponseEntity.ok().body(new ApiResponse(true, "Enrolled to topic successfully"));
+
     }
 
     public ResponseEntity<List<TopicResponse>> getTopicsByEnrolledUserId(UserPrincipal currentUser, Long userId) {
-        User userById = userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("User", "id", userId));
-        List<Topic> enrolledTopicList = topicRepository.findTopicEntitiesByEnrolledUsersContains(userById);
-        List<TopicResponse> enrolledTopicDTOList = enrolledTopicList.stream()
-                .map(topic -> quizorusConversionService.convert(topic, TopicResponse.class))
-                .collect(Collectors.toList());
-        return ResponseEntity.ok().body(enrolledTopicDTOList);
+        final User user = userRepository.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("User", "id", userId.toString()));
+        final List<Topic> enrolledTopics = topicRepository.findTopicByEnrolledUsersContainsAndPublished(user, true);
+
+        return ResponseEntity.ok()
+                .body(enrolledTopics.stream().map(topic -> quizorusConversionService.convert(topic, TopicResponse.class))
+                        .collect(Collectors.toList()));
     }
 }

@@ -12,9 +12,14 @@ import java.util.Optional;
 public interface TopicRepository extends JpaRepository<Topic, Long> {
 
     Optional<Topic> findById(Long topicId);
+
     List<Topic> findByCreatedBy(Long userId);
-    long countByCreatedBy(Long userId);
+
+    List<Topic> findByPublished(Boolean published);
+
     void deleteById(Long topicId);
+
     List<Topic> findTopicEntitiesByEnrolledUsersContains(User user);
 
+    List<Topic> findTopicByEnrolledUsersContainsAndPublished(User user,Boolean published);
 }

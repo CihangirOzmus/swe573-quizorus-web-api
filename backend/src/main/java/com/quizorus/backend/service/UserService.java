@@ -32,13 +32,11 @@ public class UserService {
     }
 
     public UserIdentityAvailability checkUsernameAvailability(String username){
-        Boolean isAvailable = !userRepository.existsByUsername(username);
-        return new UserIdentityAvailability(isAvailable);
+        return new UserIdentityAvailability(!userRepository.existsByUsername(username));
     }
 
     public UserIdentityAvailability checkEmailAvailability(String email){
-        Boolean isAvailable = !userRepository.existsByEmail(email);
-        return new UserIdentityAvailability(isAvailable);
+        return new UserIdentityAvailability(!userRepository.existsByEmail(email));
     }
 
     public UserProfile getUserProfileByUsername(String username){
