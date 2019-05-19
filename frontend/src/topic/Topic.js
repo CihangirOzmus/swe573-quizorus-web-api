@@ -78,15 +78,7 @@ class Topic extends Component {
                 {loading ? <Loading /> : (
                     <React.Fragment>
                         <PageHeader title="Details">
-                            {editable ? (
-                                <Link to={`/${this.props.currentUser.username}/topics/created`} className="breadcrumbLink">
-                                    <span>My Topics</span>
-                                </Link>
-                            ) : (
-                                    <Link to={`/explore`} className="breadcrumbLink">
-                                        <span>Explore</span>
-                                    </Link>
-                                )}
+
                         </PageHeader>
 
                         {
@@ -104,7 +96,7 @@ class Topic extends Component {
                             <div className="container">
                                 <div className="row">
                                     <div className="col-md-8">
-                                        <h4 className="mb-4">Explore <strong>{topic.title}</strong>
+                                        <h4 className="mb-4"><strong>{topic.title}</strong>
                                             {editable && (
                                                 <Link className="btn btn-outline-primary btn-sm ml-2 inlineBtn" to={`/topic/${topic.id}/edit`}>
                                                     <FontAwesomeIcon icon={faEdit} />
@@ -130,7 +122,7 @@ class Topic extends Component {
                                     Learning <strong>Path</strong>
                                     {editable && (
                                         <Link className="btn btn-success btn-sm ml-2 inlineBtn" to={`/topic/${topic.id}/content`}>
-                                            <FontAwesomeIcon icon={faPlus} /> Material
+                                            <FontAwesomeIcon icon={faPlus} /> Content
                                 </Link>)}
 
                                 </h4>

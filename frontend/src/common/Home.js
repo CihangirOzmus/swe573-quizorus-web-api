@@ -7,8 +7,8 @@ export default class Home extends Component {
     render() {
         return (
             <React.Fragment>
-                <div className="mt-5 mb-5 text-left sectionPadding">
-                    <div className="container">
+                <div className="pt-5 pb-5 text-left sectionPadding">
+                    <div className="container home-component">
                         <div className="row align-items-center">
                             <div className="col-md-6">
                                 <h4 className="mt-5 mb-5">This is <strong className="strong">your space</strong></h4>

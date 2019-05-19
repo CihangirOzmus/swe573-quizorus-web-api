@@ -85,7 +85,7 @@ class ContentQuiz extends Component {
                                                 {content.nextContentId === null ? (
                                                     <div className="text-right mt-5">
 
-                                                        <Link className="btn btn-info btn-sm ml-2 inlineBtn" to={`/topic/view/${content.topicId}`}><FontAwesomeIcon icon={faCheck} /> Finalize</Link>
+                                                        <Link className="btn btn-info btn-sm ml-2 inlineBtn" to={`/topic/view/${content.topicId}`}><FontAwesomeIcon icon={faCheck} /> Finish</Link>
                                                     </div>
                                                 ) : (
                                                         <div className="text-right mt-5">

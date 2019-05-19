@@ -91,7 +91,7 @@ class App extends Component {
                         currentUser={this.state.currentUser}
                         onLogout={this.handleLogout} />
 
-                    <div className="mainContent">
+                    <div className="mainContent bg-alt">
                         <Switch>
 
                             <Route exact path="/" component={Home}></Route>

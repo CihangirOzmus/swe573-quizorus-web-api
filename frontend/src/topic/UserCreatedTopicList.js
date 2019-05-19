@@ -85,15 +85,15 @@ class UserCreatedTopicList extends Component {
                     <React.Fragment>
 
                         <div className="container-fluid">
-                            <div className="row mt-5">
+                            <div className="row pt-5">
                                 <div className="col-md-12 text-center">
-                                    <Link to="/topic/new" className="btn btn-outline-info">
-                                        <FontAwesomeIcon icon={faPlus} /> Create a Topic
+                                    <Link to="/topic/new" className="btn btn-success">
+                                        <FontAwesomeIcon icon={faPlus} /> Create Topic
                             </Link>
                                 </div>
                             </div>
 
-                            <div className="row mt-5 mb-5">
+                            <div className="row pt-5 pb-5">
                                 <Table striped bordered hover responsive>
                                     <thead>
                                     <tr>

@@ -160,15 +160,13 @@ class CreateTopic extends Component {
                 {loading ? <Loading /> : (
                     <React.Fragment>
                         <PageHeader title="Create a Topic">
-                            <Link to={`/${props.currentUser.username}/topics/created`} className="breadcrumbLink">
-                                <span>My Topics</span>
-                            </Link>
+
                         </PageHeader>
 
                         <div className="sectionPadding">
-                            <div className="container w-90">
+                            <div className="container">
                                 <div className="row">
-                                    <div className="col-md-8">
+                                    <div className="col-md-12">
                                         <Form onSubmit={this.handleSubmit}>
                                             <Form.Group className="row" >
                                                 <Form.Label column sm="12">
@@ -245,29 +243,33 @@ class CreateTopic extends Component {
 
                                             {wikiDataSearch.length > 0 && (
                                                 wikiDataSearch.map((wiki, wikiIndex) => {
-                                                    return (
-                                                        <Row key={wikiIndex} className="border-bottom border-info p-1 m-1">
-                                                            {wiki.description && (
-                                                                <React.Fragment>
-                                                                    <Col md="1">
-                                                                        <Form.Check
-                                                                            onChange={() => this.addWiki(wiki)}
-                                                                            type="checkbox"
-                                                                            id="default-checkbox"
-                                                                            value={wiki}
-                                                                        />
-                                                                    </Col>
-                                                                    <Col md="9">{wiki.description}</Col>
-                                                                    <Col md="2">
-                                                                        <a href={wiki.concepturi} target="_blank" rel="noopener noreferrer">Visit</a>
-                                                                    </Col>
-                                                                </React.Fragment>
-                                                            )}
-                                                        </Row>
-                                                    )
+                                                    if (wiki.description) {
+                                                        return (
+                                                            <Row key={wikiIndex}
+                                                                 className="border-bottom border-info p-1 m-1">
+                                                                {wiki.description && (
+                                                                    <React.Fragment>
+                                                                        <Col md="1">
+                                                                            <Form.Check
+                                                                                onChange={() => this.addWiki(wiki)}
+                                                                                type="checkbox"
+                                                                                id="default-checkbox"
+                                                                                value={wiki}
+                                                                            />
+                                                                        </Col>
+                                                                        <Col md="9">{wiki.description}</Col>
+                                                                        <Col md="2">
+                                                                            <a href={wiki.concepturi} target="_blank"
+                                                                               rel="noopener noreferrer">Visit</a>
+                                                                        </Col>
+                                                                    </React.Fragment>
+                                                                )}
+                                                            </Row>
+                                                        )
+                                                    }
                                                 })
                                             )}
-                                            <Button className="mt-4" variant="info" type="submit" block>
+                                            <Button className="mt-4" variant="success" type="submit" block>
                                                 Create Topic
                                     </Button>
                                         </Form>

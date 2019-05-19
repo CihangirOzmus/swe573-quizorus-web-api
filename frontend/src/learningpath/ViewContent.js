@@ -57,19 +57,19 @@ class ViewContent extends Component {
                             content && (
                                 <div className="bg-alt sectionPadding text-left">
                                     <div className="container">
-                                        <div className="row">
+                                        <div className="row materialBody">
                                             <div className="col-md-12">
                                                 <h4 className="mb-4"><strong>{content.title}</strong></h4>
                                                 <div className="text-left" dangerouslySetInnerHTML={{ __html: content.text }} ></div>
                                                 <div className="text-right mt-5">
                                                     <hr />
                                                     {content.questionCount > 0 ? (
-                                                        <Link className="btn btn-info btn-sm ml-2 inlineBtn" to={`/content/${content.id}/quiz`} ><FontAwesomeIcon icon={faChevronRight} /> Start Section Quiz</Link>
+                                                        <Link className="btn btn-info btn-sm ml-2 inlineBtn" to={`/content/${content.id}/quiz`} ><FontAwesomeIcon icon={faChevronRight} /> Start Content Quiz</Link>
                                                     ) : (
                                                             <React.Fragment>
                                                                 {content.nextContentId === null ? (
                                                                     <div className="text-right mt-5">
-                                                                        <Link className="btn btn-info btn-sm ml-2 inlineBtn" to={`/topic/view/${content.topicId}`}><FontAwesomeIcon icon={faCheck} /> Finalize</Link>
+                                                                        <Link className="btn btn-info btn-sm ml-2 inlineBtn" to={`/topic/view/${content.topicId}`}><FontAwesomeIcon icon={faCheck} /> Finish</Link>
                                                                     </div>
                                                                 ) : (
                                                                         <div className="text-right mt-5">

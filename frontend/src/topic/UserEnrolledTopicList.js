@@ -71,7 +71,7 @@ class UserEnrolledTopicList extends Component {
             <React.Fragment>
                 {loading ? <Loading /> : (
                     <React.Fragment>
-                        <div className="row mt-5">
+                        <div className="row pt-5">
                             <div className="col-md-12 text-center">
                                 <Link to="/explore" className="btn btn-outline-info">
                                     <FontAwesomeIcon icon={faBookmark} /> Check New Courses
@@ -83,7 +83,7 @@ class UserEnrolledTopicList extends Component {
                             {
                                 topics.length === 0 && (<div className="mt-5 text-center">Nothing to show</div>)
                             }
-                            <div className="row mt-5 mb-5">
+                            <div className="row pt-5 pb-5">
                                 <Table striped bordered hover>
                                     <thead>
                                     <tr>

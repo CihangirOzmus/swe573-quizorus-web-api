@@ -63,7 +63,7 @@ class Glossary extends Component {
                 {loading ? <Loading /> : (
                     <React.Fragment>
                         <div className="container">
-                            <div className="row  mt-5 mb-5">
+                            <div className="row pt-5 pb-5">
                                 <div className="col-md-12">
                                     <InputGroup>
                                         <input value={input} placeholder="Search topics" className="form-control searchInput" type="text" onChange={this.handleSearch} />

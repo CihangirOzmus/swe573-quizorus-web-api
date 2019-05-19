@@ -30,7 +30,7 @@ class AddContent extends Component {
                             <div className="container">
                                 <div className="row">
                                     <div className="col-md-12">
-                                        Add Material
+                                        Add Content
                                     </div>
                                 </div>
                             </div>
@@ -38,8 +38,7 @@ class AddContent extends Component {
                         <div className="sectionPadding">
                             <div className="container text-left ">
                                 <div className="row">
-                                    <ThingsToConsider />
-                                    <div className="col-md-8 offset-md-1">
+                                    <div className="col-md-12">
                                         <Formik
                                             initialValues={{ title: '', text: '' }}
                                             validate={values => {
@@ -82,7 +81,7 @@ class AddContent extends Component {
                                             {({ isSubmitting }) => (
                                                 <Form>
                                                     <div className="form-group row text-left">
-                                                        <label htmlFor="contentTitle" className="col-sm-12 col-form-label">Material <strong>Title</strong></label>
+                                                        <label htmlFor="contentTitle" className="col-sm-12 col-form-label">Content <strong>Title</strong></label>
                                                         <div className="col-sm-12">
                                                             <Field type="text" name="title" id="contentTitle" placeholder="content title" className="form-control" />
                                                             <ErrorMessage name="contentTitle" component="div" />
@@ -90,7 +89,7 @@ class AddContent extends Component {
                                                     </div>
 
                                                     <div className="form-group row text-left">
-                                                        <label htmlFor="contentText" className="col-sm-12 col-form-label">Material <strong>Body</strong> </label>
+                                                        <label htmlFor="contentText" className="col-sm-12 col-form-label">Content <strong>Body</strong> </label>
                                                         <div className="col-sm-12">
                                                             <Field name="text" component={EditorField} placeholder="Enter Content" row="20" />
                                                             <ErrorMessage name="contentText" component="div" />

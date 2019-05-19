@@ -152,6 +152,10 @@ code {
     padding: 60px 0;
 }
 
+.home-component{
+    padding: 150px 0;
+}
+
 .strong{
     font-weight: 700;
 }
@@ -166,6 +170,7 @@ code {
 
 .fullWidth{
     width: 100%;
+    border-radius: 0 !important;
 }
 
 .list-group-item{
