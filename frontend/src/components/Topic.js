@@ -48,18 +48,18 @@ class Topic extends Component {
         let reqObj = {
             topicId: topicId,
             publish: publish
-        }
+        };
 
-        this.setState({ loading: true })
+        this.setState({ loading: true });
 
         axios.post(url, reqObj, REQUEST_HEADERS)
             .then(res => {
-                this.setState({ loading: false })
-                toast.notify("Status changed.", { position: "top-right" });
+                this.setState({ loading: false });
+                toast.notify("Status changed", { position: "bottom-right" });
                 this.loadTopicById()
             }).catch(err => {
-                this.setState({ loading: false })
-                toast.notify(<span className="text-danger">{err.response.data.message}</span>, { position: "top-right" });
+                this.setState({ loading: false });
+                toast.notify("Content must have at least one question", { position: "top" });
             });
     }
 
@@ -67,11 +67,10 @@ class Topic extends Component {
         this.loadTopicById();
     }
 
-
     render() {
 
         const { topic, activeTab, loading } = this.state;
-        const { editable } = this.props
+        const { editable } = this.props;
 
         return (
             <React.Fragment>
