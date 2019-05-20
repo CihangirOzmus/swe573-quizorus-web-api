@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { Nav, Navbar, NavDropdown, Container } from "react-bootstrap";
 import logo from '../img/logo.png';
+import {faBookReader, faUserEdit, faUserGraduate} from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 class AppHeader extends Component {
 
@@ -33,8 +35,9 @@ class AppHeader extends Component {
                 <Nav className="ml-auto ">
                     <Nav.Link className="ml-2" as={Link} to="/explore">Glossary</Nav.Link>
                     <NavDropdown title={this.props.currentUser.username} id="basic-nav-dropdown">
-                        <NavDropdown.Item as={Link} to={`/${this.props.currentUser.username}/topics/created`}>Created Topics</NavDropdown.Item>
-                        <NavDropdown.Item as={Link} to={`/${this.props.currentUser.username}/topics/enrolled`}>Enrolled Topics</NavDropdown.Item>
+                        <NavDropdown.Item as={Link} to={`/${this.props.currentUser.username}`}><FontAwesomeIcon icon={faUserGraduate} /> User Profile</NavDropdown.Item>
+                        <NavDropdown.Item as={Link} to={`/${this.props.currentUser.username}/topics/created`}><FontAwesomeIcon icon={faUserEdit} /> Created Topics</NavDropdown.Item>
+                        <NavDropdown.Item as={Link} to={`/${this.props.currentUser.username}/topics/enrolled`}><FontAwesomeIcon icon={faBookReader} /> Enrolled Topics</NavDropdown.Item>
                         <NavDropdown.Item as={Link} onClick={this.props.onLogout} to="/" >Logout</NavDropdown.Item>
                     </NavDropdown>
                 </Nav>

@@ -50,7 +50,7 @@ public class UserService {
         List<Topic> enrolledTopics = topicRepository.findTopicEntitiesByEnrolledUsersContains(user);
         List<LearningStep> answers = learningStepRepository.findByUserId(user.getId());
 
-        return new UserProfile(user.getUsername(), user.getName(), user.getEmail(), createdTopics, enrolledTopics, answers );
+        return new UserProfile(createdTopics, enrolledTopics, answers );
     }
 
 }

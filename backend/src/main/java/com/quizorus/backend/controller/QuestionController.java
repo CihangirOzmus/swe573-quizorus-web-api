@@ -45,7 +45,7 @@ public class QuestionController {
     }
 
     @Transactional
-    @PostMapping("/answer/")
+    @PostMapping("/answer")
     public ResponseEntity<ApiResponse> giveAnswer(@CurrentUser UserPrincipal currentUser,
                                                   @Valid @RequestBody AnswerRequest answerRequest) {
         return questionService.giveAnswer(currentUser, answerRequest);

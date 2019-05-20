@@ -45,7 +45,6 @@ class UserEnrolledTopicList extends Component {
     }
 
     render() {
-
         const { topics, loading } = this.state;
 
         const topicsView = topics.map((topic, topicIndex) => {

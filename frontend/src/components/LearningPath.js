@@ -74,7 +74,7 @@ export class PathElement extends Component {
         let url = resolveEndpoint('deleteContentById', [{ "slug1": contentId }]);
         axios.delete(url, REQUEST_HEADERS)
             .then(res => {
-                toast.notify("Material deleted successfully.", { position: "bottom-right" });
+                toast.notify("Content deleted successfully.", { position: "bottom-right" });
                 this.props.handleRefresh()
             }).catch(err => {
                 toast.notify("Something went wrong!", { position: "bottom-right" });

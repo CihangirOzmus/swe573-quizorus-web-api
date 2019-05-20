@@ -13,9 +13,6 @@ import java.util.List;
 @AllArgsConstructor
 public class UserProfile {
 
-    private String username;
-    private String name;
-    private String email;
     private List<Topic> createdTopics;
     private List<Topic> enrolledTopics;
     private List<LearningStep> answers;

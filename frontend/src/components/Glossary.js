@@ -23,6 +23,7 @@ class Glossary extends Component {
         let url = resolveEndpoint('getAllTopics', []);
 
         axios.get(url).then(res => {
+            console.log(res.data)
             if (this.props.currentUser) {
                 let filteredTopics = res.data.filter(
                     obj => obj.createdBy !== this.props.currentUser.id
@@ -37,7 +38,6 @@ class Glossary extends Component {
                     loading: false
                 })
             }
-
         }).catch(err => {
             toast.notify("Something went wrong!", { position: "top-right" });
             console.log(err)
@@ -51,7 +51,6 @@ class Glossary extends Component {
     }
 
     componentDidMount() {
-
         this.loadTopicList();
     }
 
@@ -88,7 +87,7 @@ class Glossary extends Component {
                                                     <div className="col-md-8">
                                                         <div className="card-body text-left">
                                                             <h5 className="card-title text-info text-justify mb-1">{topic.title} </h5>
-                                                            <small className="text-left"><strong>by </strong> @ {topic.createdByName} {' '}</small>
+                                                            <small className="text-left"><strong>with {topic.contentList.length}</strong> learning path{topic.contentList.length > 1 ? 's':''} {' '}</small>
                                                             <hr />
                                                             <p className="card-text text-justify">{topic.description}</p>
                                                             <WikiLabels
