@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import {resolveEndpoint} from "../util/Helpers";
 import {ACCESS_TOKEN} from "../constants";
-import axios from "axios";
-import toast from "toasted-notes";
+import axios from "axios/index";
+import toast from "toasted-notes/lib/index";
 
 class UserProfile extends Component{
     constructor(props){

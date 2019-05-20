@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {ACCESS_TOKEN} from "../constants";
+import {REQUEST_HEADERS} from "../constants";
 import axios from "axios/index";
 import toast from "toasted-notes/lib/index";
 import {Button, Table} from "react-bootstrap";
@@ -25,10 +25,6 @@ class UserCreatedTopicList extends Component {
     loadUserCreatedTopics() {
         let url = resolveEndpoint('getTopicsByUserId', [{ "slug1": this.props.currentUser.username }]);
 
-        const REQUEST_HEADERS = {
-            headers: { 'content-type': 'application/json', 'Authorization': 'Bearer ' + localStorage.getItem(ACCESS_TOKEN) }
-        };
-
         axios.get(url, REQUEST_HEADERS).then(res => {
             this.setState({
                 topics: res.data,
@@ -42,10 +38,6 @@ class UserCreatedTopicList extends Component {
 
     handleDeleteTopicById(topicIdToDelete) {
         let url = resolveEndpoint('deleteTopicById', [{ "slug1": topicIdToDelete }]);
-
-        const REQUEST_HEADERS = {
-            headers: { 'content-type': 'application/json', 'Authorization': 'Bearer ' + localStorage.getItem(ACCESS_TOKEN) }
-        };
 
         axios.delete(url, REQUEST_HEADERS)
             .then(res => {

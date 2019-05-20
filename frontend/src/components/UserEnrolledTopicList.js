@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ACCESS_TOKEN } from "../constants";
+import {REQUEST_HEADERS} from "../constants";
 import axios from "axios/index";
 import toast from "toasted-notes/lib/index";
 import { Link } from "react-router-dom";
@@ -24,12 +24,7 @@ class UserEnrolledTopicList extends Component {
     loadUserEnrolledTopics() {
         let url = resolveEndpoint('getEnrolledTopicsByUserId', [{ "slug1": this.props.currentUser.id }]);
 
-        const REQUEST_HEADERS = {
-            headers: { 'content-type': 'application/json', 'Authorization': 'Bearer ' + localStorage.getItem(ACCESS_TOKEN) }
-        };
-
         axios.get(url, REQUEST_HEADERS).then(res => {
-
             this.setState({
                 topics: res.data,
                 loading: false

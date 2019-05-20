@@ -3,7 +3,7 @@ import { Col, Button, Form } from "react-bootstrap";
 import { login } from '../util/APIUtils';
 import { Link } from 'react-router-dom';
 import { ACCESS_TOKEN } from '../constants';
-import toast from "toasted-notes";
+import toast from "toasted-notes/lib/index";
 import Loading from '../common/Loading';
 
 class Login extends Component {

@@ -42,7 +42,6 @@ export function updateTopic(topicData) {
     });
 }
 
-/* Created by Tallrye */
 export function createQuestion(questionData) {
     let url = resolveEndpoint('createQuestion', []);
     return request({
@@ -52,7 +51,6 @@ export function createQuestion(questionData) {
     });
 }
 
-/* Created by Tallrye */
 export function createOption(optionData) {
     let url = resolveEndpoint('createOption', []);
     return request({
@@ -99,7 +97,7 @@ export function signup(signupRequest) {
     });
 }
 
-/* export function checkUsernameAvailability(username) {
+export function checkUsernameAvailability(username) {
     let url = resolveEndpoint('checkUsernameAvailability', [{ "slug1": username }]);
     return request({
         url: url,
@@ -113,8 +111,7 @@ export function checkEmailAvailability(email) {
         url: url,
         method: 'GET'
     });
-} */
-
+}
 
 export function getCurrentUser() {
     if (!localStorage.getItem(ACCESS_TOKEN)) {

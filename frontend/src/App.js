@@ -5,8 +5,8 @@ import { ACCESS_TOKEN } from './constants';
 
 import Glossary from './components/Glossary';
 import CreateTopic from './components/CreateTopic';
-import Login from './user/Login';
-import Signup from './user/Signup';
+import Login from './components/Login';
+import Signup from './components/Signup';
 import Home from './common/Home';
 import AppHeader from './common/AppHeader';
 import Footer from './common/Footer';
@@ -16,7 +16,7 @@ import toast from 'toasted-notes';
 import 'toasted-notes/src/styles.css';
 import UserCreatedTopicList from "./components/UserCreatedTopicList";
 import UserEnrolledTopicList from "./components/UserEnrolledTopicList";
-import UserProfile from "./user/UserProfile";
+import UserProfile from "./components/UserProfile";
 import Topic from "./components/Topic";
 import TopicPreview from "./components/TopicPreview"
 import EditTopic from "./components/EditTopic";
