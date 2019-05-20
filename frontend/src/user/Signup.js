@@ -5,7 +5,7 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
 import toast from "toasted-notes";
-import Loading from '../components/Loading';
+import Loading from '../common/Loading';
 
 class Signup extends Component {
     constructor(props) {
@@ -24,7 +24,7 @@ class Signup extends Component {
                 value: ''
             },
             loading: false
-        }
+        };
         this.handleInputChange = this.handleInputChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
@@ -55,16 +55,16 @@ class Signup extends Component {
 
         signup(signupRequest)
             .then(response => {
-                toast.notify("Thank you! You're successfully registered. Please Login to continue!", { position: "top-right" });
+                toast.notify("You're successfully registered. Please Login to continue!", { position: "bottom-right" });
                 this.props.history.push("/login");
             }).catch(error => {
-                toast.notify('Sorry! Something went wrong. Please try again!', { position: "top-right" });
+                toast.notify('Sorry! Something went wrong. Please try again!', { position: "bottom-right" });
                 this.setState({ loading: false })
             });
     }
 
     render() {
-        const { loading } = this.state
+        const { loading } = this.state;
         return (
             <React.Fragment>
                 {loading ? <Loading /> : (
@@ -149,9 +149,6 @@ class Signup extends Component {
             </React.Fragment>
         );
     }
-
-
-
 }
 
 export default Signup;

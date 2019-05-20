@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import { REQUEST_HEADERS } from "../constants";
-import axios from "axios";
-import toast from "toasted-notes";
+import axios from "axios/index";
+import toast from "toasted-notes/lib/index";
 import { Link, withRouter } from "react-router-dom";
-import PageHeader from "../components/PageHeader";
-import { Question } from "../components/LearningPath";
+import PageHeader from "../common/PageHeader";
+import { Question } from "./LearningPath";
 import { resolveEndpoint } from "../util/Helpers";
-import Loading from '../components/Loading';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faChevronRight, faCheck } from '@fortawesome/free-solid-svg-icons'
+import Loading from '../common/Loading';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome/index'
+import { faChevronRight, faCheck } from '@fortawesome/free-solid-svg-icons/index'
 
 class ContentQuiz extends Component {
     constructor(props) {
@@ -85,12 +85,12 @@ class ContentQuiz extends Component {
                                                 {content.nextContentId === null ? (
                                                     <div className="text-right mt-5">
 
-                                                        <Link className="btn btn-info btn-sm ml-2 inlineBtn" to={`/topic/view/${content.topicId}`}><FontAwesomeIcon icon={faCheck} /> Finish</Link>
+                                                        <Link className="btn btn-info ml-2 inlineBtn" to={`/topic/view/${content.topicId}`}><FontAwesomeIcon icon={faCheck} /> Finish</Link>
                                                     </div>
                                                 ) : (
                                                         <div className="text-right mt-5">
 
-                                                            <Link className="btn btn-info btn-sm ml-2 inlineBtn" to={`/content/view/${content.nextContentId}`}><FontAwesomeIcon icon={faChevronRight} /> Start Next Content</Link>
+                                                            <Link className="btn btn-info ml-2 inlineBtn" to={`/content/view/${content.nextContentId}`}><FontAwesomeIcon icon={faChevronRight} /> Start Next Content</Link>
                                                         </div>
                                                     )}
 

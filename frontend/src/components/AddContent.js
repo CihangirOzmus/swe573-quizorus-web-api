@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { Formik, Form, Field, ErrorMessage } from 'formik/dist/index';
 import { Button } from "react-bootstrap";
 import { createContent } from "../util/APIUtils";
-import toast from "toasted-notes";
-import EditorField from '../components/EditorField'
-import Loading from '../components/Loading';
-import ThingsToConsider from '../components/partials/ThingsToConsider';
+import toast from "toasted-notes/lib/index";
+import EditorField from '../common/EditorField'
+import Loading from '../common/Loading';
 
 class AddContent extends Component {
     constructor(props) {

@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { REQUEST_HEADERS } from "../constants";
-import axios from "axios";
-import toast from "toasted-notes";
+import axios from "axios/index";
+import toast from "toasted-notes/lib/index";
 import { Link, withRouter } from "react-router-dom";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faChevronRight, faCheck } from '@fortawesome/free-solid-svg-icons'
-import PageHeader from "../components/PageHeader";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome/index'
+import { faChevronRight, faCheck } from '@fortawesome/free-solid-svg-icons/index'
+import PageHeader from "../common/PageHeader";
 import { resolveEndpoint } from "../util/Helpers";
-import Loading from '../components/Loading';
+import Loading from '../common/Loading';
 
 class ViewContent extends Component {
     constructor(props) {
@@ -64,16 +64,16 @@ class ViewContent extends Component {
                                                 <div className="text-right mt-5">
                                                     <hr />
                                                     {content.questionCount > 0 ? (
-                                                        <Link className="btn btn-info btn-sm ml-2 inlineBtn" to={`/content/${content.id}/quiz`} ><FontAwesomeIcon icon={faChevronRight} /> Start Content Quiz</Link>
+                                                        <Link className="btn btn-info ml-2 inlineBtn" to={`/content/${content.id}/quiz`} ><FontAwesomeIcon icon={faChevronRight} /> Start Content Quiz</Link>
                                                     ) : (
                                                             <React.Fragment>
                                                                 {content.nextContentId === null ? (
                                                                     <div className="text-right mt-5">
-                                                                        <Link className="btn btn-info btn-sm ml-2 inlineBtn" to={`/topic/view/${content.topicId}`}><FontAwesomeIcon icon={faCheck} /> Finish</Link>
+                                                                        <Link className="btn btn-info ml-2 inlineBtn" to={`/topic/view/${content.topicId}`}><FontAwesomeIcon icon={faCheck} /> Finish</Link>
                                                                     </div>
                                                                 ) : (
                                                                         <div className="text-right mt-5">
-                                                                            <a className="btn btn-info btn-sm ml-2 inlineBtn" href={`/content/view/${content.nextContentId}`} ><FontAwesomeIcon icon={faChevronRight} /> Start Next Content</a>
+                                                                            <a className="btn btn-info ml-2 inlineBtn" href={`/content/view/${content.nextContentId}`} ><FontAwesomeIcon icon={faChevronRight} /> Start Next Content</a>
                                                                         </div>
                                                                     )}
                                                             </React.Fragment>

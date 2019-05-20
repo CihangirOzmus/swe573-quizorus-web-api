@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
 import { createTopic } from '../util/APIUtils';
-import toast from "toasted-notes";
+import toast from "toasted-notes/lib/index";
 import wdk from "wikidata-sdk";
-import axios from "axios";
+import axios from "axios/index";
 import { Row, Form, Col, Button } from "react-bootstrap";
-import { Link, withRouter } from "react-router-dom";
-import PageHeader from "../components/PageHeader";
-import Loading from '../components/Loading';
-import ThingsToConsider from '../components/partials/ThingsToConsider';
+import { withRouter } from "react-router-dom";
+import PageHeader from "../common/PageHeader";
+import Loading from '../common/Loading';
 import loadingGif from '../img/loading.gif'
 
 class CreateTopic extends Component {
@@ -59,9 +58,6 @@ class CreateTopic extends Component {
                     }
                 });
         }
-
-
-
     }
 
     componentDidMount() {
@@ -94,9 +90,9 @@ class CreateTopic extends Component {
                 const url = wdk.searchEntities(value, 'en', 15, 'json');
                 axios.get(url)
                     .then(response => {
-                        this.setState({ loadingWiki: false })
+                        this.setState({ loadingWiki: false });
                         if (response.data.search.length > 0) {
-                            this.setState({ wikiDataSearch: response.data.search })
+                            this.setState({ wikiDataSearch: response.data.search });
                             toast.notify("Found in WikiData!", { position: "bottom-right" })
                         } else {
                             toast.notify("Keyword can not found!", { position: "bottom-right" });
@@ -153,7 +149,6 @@ class CreateTopic extends Component {
 
     render() {
         const { wikiDataSearch, selectedWikis, loading, loadingWiki } = this.state;
-        const props = this.props;
 
         return (
             <React.Fragment>
@@ -267,6 +262,7 @@ class CreateTopic extends Component {
                                                             </Row>
                                                         )
                                                     }
+                                                    return (null)
                                                 })
                                             )}
                                             <Button className="mt-4" variant="success" type="submit" block>

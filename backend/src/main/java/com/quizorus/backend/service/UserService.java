@@ -4,8 +4,10 @@ import com.quizorus.backend.controller.dto.UserIdentityAvailability;
 import com.quizorus.backend.controller.dto.UserProfile;
 import com.quizorus.backend.controller.dto.UserResponse;
 import com.quizorus.backend.exception.ResourceNotFoundException;
+import com.quizorus.backend.model.LearningStep;
 import com.quizorus.backend.model.Topic;
 import com.quizorus.backend.model.User;
+import com.quizorus.backend.repository.LearningStepRepository;
 import com.quizorus.backend.repository.TopicRepository;
 import com.quizorus.backend.repository.UserRepository;
 import com.quizorus.backend.security.UserPrincipal;
@@ -19,11 +21,13 @@ public class UserService {
 
     private UserRepository userRepository;
     private TopicRepository topicRepository;
+    private LearningStepRepository learningStepRepository;
     private ConfigurableConversionService quizorusConversionService;
 
-    public UserService(UserRepository userRepository, TopicRepository topicRepository, ConfigurableConversionService quizorusConversionService) {
+    public UserService(UserRepository userRepository, TopicRepository topicRepository, LearningStepRepository learningStepRepository, ConfigurableConversionService quizorusConversionService) {
         this.userRepository = userRepository;
         this.topicRepository = topicRepository;
+        this.learningStepRepository = learningStepRepository;
         this.quizorusConversionService = quizorusConversionService;
     }
 
@@ -44,8 +48,9 @@ public class UserService {
                 .orElseThrow(() -> new ResourceNotFoundException("User", "username", username));
         List<Topic> createdTopics = topicRepository.findByCreatedBy(user.getId());
         List<Topic> enrolledTopics = topicRepository.findTopicEntitiesByEnrolledUsersContains(user);
+        List<LearningStep> answers = learningStepRepository.findByUserId(user.getId());
 
-        return new UserProfile(user.getUsername(), user.getName(), user.getEmail(), createdTopics, enrolledTopics );
+        return new UserProfile(user.getUsername(), user.getName(), user.getEmail(), createdTopics, enrolledTopics, answers );
     }
 
 }

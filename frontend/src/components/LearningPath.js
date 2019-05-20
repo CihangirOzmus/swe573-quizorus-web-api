@@ -126,7 +126,6 @@ export class PathElement extends Component {
 
                             </div>
                         )
-
                 }
             </div>
         )
@@ -260,9 +259,7 @@ export class Question extends Component {
                                                 </Button>
                                             </div>
                                         )}
-
                                     </ul>
-
                                 </Form>
                             )}
                         </Formik>

@@ -38,5 +38,5 @@ export function resolveEndpoint(key, slugs = {}) {
     for (let i = 0; i < slugs.length; i++)
       finalUrl = finalUrl.replace(`[slug${i + 1}]`, slugs[i][`slug${i + 1}`])
   }
-  return API_BASE_URL + `${finalUrl}`;;
+  return API_BASE_URL + `${finalUrl}`;
 }

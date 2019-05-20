@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
 import { REQUEST_HEADERS } from "../constants";
-import axios from "axios";
+import axios from "axios/index";
 import { Row, Tab, Button } from "react-bootstrap";
 import { Link, withRouter } from "react-router-dom";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faEdit } from '@fortawesome/free-solid-svg-icons'
-import PageHeader from "../components/PageHeader";
-import toast from "toasted-notes";
-import { PathNavigator } from "../components/LearningPath";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome/index'
+import { faEdit } from '@fortawesome/free-solid-svg-icons/index'
+import PageHeader from "../common/PageHeader";
+import toast from "toasted-notes/lib/index";
+import { PathNavigator } from "./LearningPath";
 import { resolveEndpoint } from "../util/Helpers";
-import Loading from '../components/Loading';
-import { WikiLabels } from "../components/Wiki";
+import Loading from '../common/Loading';
+import { WikiLabels } from "./Wiki";
 
 class TopicPreview extends Component {
     _isMounted = false;

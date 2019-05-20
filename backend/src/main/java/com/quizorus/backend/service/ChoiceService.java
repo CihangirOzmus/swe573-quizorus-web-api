@@ -35,10 +35,14 @@ public class ChoiceService {
 
         QuizorusUtils.checkCreatedBy("Question", currentUser.getId(), question.getCreatedBy());
 
-        final Choice choice = quizorusConversionService.convert(choiceRequest, Choice.class);
-        choice.setQuestion(question);
-        choiceRepository.save(choice);
-        return ResponseEntity.ok().body(new ApiResponse(true, "Choice created successfully"));
+        if (question.getChoiceList().size() < 5){
+            final Choice choice = quizorusConversionService.convert(choiceRequest, Choice.class);
+            choice.setQuestion(question);
+            choiceRepository.save(choice);
+            return ResponseEntity.ok().body(new ApiResponse(true, "Choice created successfully"));
+        }
+
+        return ResponseEntity.badRequest().body(new ApiResponse(false, "Question already have 5 choices!"));
     }
 
     public ResponseEntity<ApiResponse> deleteChoiceById(UserPrincipal currentUser, Long choiceId) {

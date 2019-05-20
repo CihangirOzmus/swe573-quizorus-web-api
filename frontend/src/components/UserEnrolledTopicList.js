@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
-import { REQUEST_HEADERS } from "../constants";
-import axios from "axios";
-import toast from "toasted-notes";
+import { ACCESS_TOKEN } from "../constants";
+import axios from "axios/index";
+import toast from "toasted-notes/lib/index";
 import { Link } from "react-router-dom";
-import { WikiLabels } from "../components/Wiki";
+import { WikiLabels } from "./Wiki";
 import { resolveEndpoint } from "../util/Helpers";
-import Loading from '../components/Loading';
-import {faBookmark} from "@fortawesome/free-solid-svg-icons";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import Loading from '../common/Loading';
+import {faBookmark} from "@fortawesome/free-solid-svg-icons/index";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome/index";
 import {Table} from "react-bootstrap";
 
 class UserEnrolledTopicList extends Component {
@@ -19,12 +19,14 @@ class UserEnrolledTopicList extends Component {
             loading: true
         };
         this.loadUserEnrolledTopics = this.loadUserEnrolledTopics.bind(this);
-
     }
 
     loadUserEnrolledTopics() {
-
         let url = resolveEndpoint('getEnrolledTopicsByUserId', [{ "slug1": this.props.currentUser.id }]);
+
+        const REQUEST_HEADERS = {
+            headers: { 'content-type': 'application/json', 'Authorization': 'Bearer ' + localStorage.getItem(ACCESS_TOKEN) }
+        };
 
         axios.get(url, REQUEST_HEADERS).then(res => {
 
@@ -33,7 +35,7 @@ class UserEnrolledTopicList extends Component {
                 loading: false
             })
         }).catch(err => {
-            toast.notify("Something went wrong!", { position: "top-right" });
+            toast.notify("Something went wrong!", { position: "bottom-right" });
             console.log(err)
         });
     }
@@ -61,7 +63,6 @@ class UserEnrolledTopicList extends Component {
                     <td>{topic.contentList.length}</td>
                     <td>
                         <Link className="btn btn btn-outline-info" to={`/topic/view/${topic.id}`}>Details</Link>
-                        <Link className="disabled btn btn-outline-warning ml-2" to={`/topic/${topic.id}`}>Statistics</Link>
                     </td>
                 </tr>
             )
@@ -90,10 +91,10 @@ class UserEnrolledTopicList extends Component {
                                         <th>#</th>
                                         <th>Image</th>
                                         <th>Title</th>
-                                        <th style={{ width: '30%' }}>Short Description</th>
+                                        <th style={{ width: '40%' }}>Short Description</th>
                                         <th>Wikidata</th>
                                         <th>#Learning Path</th>
-                                        <th style={{ width: '30%' }}>Action</th>
+                                        <th style={{ width: '20%' }}>Action</th>
                                     </tr>
                                     </thead>
                                     <tbody>

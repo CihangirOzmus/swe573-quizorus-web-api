@@ -4,7 +4,7 @@ import { login } from '../util/APIUtils';
 import { Link } from 'react-router-dom';
 import { ACCESS_TOKEN } from '../constants';
 import toast from "toasted-notes";
-import Loading from '../components/Loading';
+import Loading from '../common/Loading';
 
 class Login extends Component {
     constructor(props) {
@@ -36,7 +36,7 @@ class Login extends Component {
     handleSubmit(event) {
         event.preventDefault();
         const err = !this.validate();
-        this.setState({ loading: true })
+        this.setState({ loading: true });
         if (!err) {
             const loginRequest = this.state;
             login(loginRequest)
@@ -44,11 +44,11 @@ class Login extends Component {
                     localStorage.setItem(ACCESS_TOKEN, response.accessToken);
                     this.props.onLogin();
                 }).catch(error => {
-                    this.setState({ loading: false })
+                    this.setState({ loading: false });
                     if (error.status === 401) {
-                        toast.notify('Your Username or Password is incorrect. Please try again!', { position: "top-right" });
+                        toast.notify('Your Username or Password is incorrect. Please try again!', { position: "bottom-right" });
                     } else {
-                        toast.notify('Sorry! Something went wrong. Please try again!', { position: "top-right" });
+                        toast.notify('Sorry! Something went wrong. Please try again!', { position: "bottom-right" });
                     }
                 });
         }

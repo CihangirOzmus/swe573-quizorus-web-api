@@ -1,5 +1,6 @@
 package com.quizorus.backend.controller.dto;
 
+import com.quizorus.backend.model.LearningStep;
 import com.quizorus.backend.model.Topic;
 import lombok.*;
 
@@ -17,5 +18,6 @@ public class UserProfile {
     private String email;
     private List<Topic> createdTopics;
     private List<Topic> enrolledTopics;
+    private List<LearningStep> answers;
 
 }

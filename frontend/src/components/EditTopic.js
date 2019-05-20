@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
 import { REQUEST_HEADERS } from "../constants";
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { Formik, Form, Field, ErrorMessage } from 'formik/dist/index';
 import { createTopic } from '../util/APIUtils';
-import toast from "toasted-notes";
+import toast from "toasted-notes/lib/index";
 import wdk from "wikidata-sdk";
-import axios from "axios";
+import axios from "axios/index";
 import { Col, Button, Row } from "react-bootstrap";
 import { Link, withRouter } from "react-router-dom";
-import PageHeader from "../components/PageHeader";
+import PageHeader from "../common/PageHeader";
 import { resolveEndpoint } from "../util/Helpers";
-import Loading from '../components/Loading';
+import Loading from '../common/Loading';
 import loadingGif from '../img/loading.gif'
 
 class EditTopic extends Component {

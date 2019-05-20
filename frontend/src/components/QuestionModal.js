@@ -8,13 +8,13 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import loadingGif from '../img/loading.gif'
 
 function QuestionModal(FieldProps) {
-    const [modalState, setModalState] = useState(false)
-    const [refreshState, setRefreshState] = useState(false)
-    const [loadingState, setLoadingState] = useState(false)
+    const [modalState, setModalState] = useState(false);
+    const [refreshState, setRefreshState] = useState(false);
+    const [loadingState, setLoadingState] = useState(false);
 
     useEffect(() => {
         FieldProps.handleRefresh()
-    }, [modalState, refreshState])
+    }, [modalState, refreshState]);
 
     return (
         <React.Fragment>
@@ -36,7 +36,7 @@ function QuestionModal(FieldProps) {
                             return errors;
                         }}
                         onSubmit={(values, { setSubmitting }) => {
-                            setLoadingState(true)
+                            setLoadingState(true);
                             setTimeout(() => {
                                 const newQuestion = {
                                     contentId: FieldProps.contentId,
@@ -44,12 +44,12 @@ function QuestionModal(FieldProps) {
                                 };
                                 createQuestion(newQuestion, FieldProps.contentId)
                                     .then(res => {
-                                        toast.notify("Question created successfully.", { position: "top-right" });
-                                        setModalState(false)
-                                        setRefreshState(true)
-                                        setLoadingState(false)
+                                        toast.notify("Question created successfully.", { position: "bottom-right" });
+                                        setModalState(false);
+                                        setRefreshState(true);
+                                        setLoadingState(false);
                                     }).catch(err => {
-                                        toast.notify("Something went wrong!", { position: "top-right" });
+                                        toast.notify("Something went wrong!", { position: "bottom-right" });
                                     });
                                 setSubmitting(false);
                             }, 400);

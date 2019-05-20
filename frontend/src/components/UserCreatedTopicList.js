@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
-import { REQUEST_HEADERS } from "../constants";
-import axios from "axios";
-import toast from "toasted-notes";
+import {ACCESS_TOKEN, REQUEST_HEADERS} from "../constants";
+import axios from "axios/index";
+import toast from "toasted-notes/lib/index";
 import {Button, Table} from "react-bootstrap";
 import { Link } from "react-router-dom";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPlus } from '@fortawesome/free-solid-svg-icons'
-import { WikiLabels } from "../components/Wiki";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome/index'
+import { faPlus } from '@fortawesome/free-solid-svg-icons/index'
+import { WikiLabels } from "./Wiki";
 import { resolveEndpoint } from "../util/Helpers";
-import Loading from '../components/Loading';
+import Loading from '../common/Loading';
 
 class UserCreatedTopicList extends Component {
     constructor(props) {
@@ -25,13 +25,17 @@ class UserCreatedTopicList extends Component {
     loadUserCreatedTopics() {
         let url = resolveEndpoint('getTopicsByUserId', [{ "slug1": this.props.currentUser.username }]);
 
+        const REQUEST_HEADERS = {
+            headers: { 'content-type': 'application/json', 'Authorization': 'Bearer ' + localStorage.getItem(ACCESS_TOKEN) }
+        };
+
         axios.get(url, REQUEST_HEADERS).then(res => {
             this.setState({
                 topics: res.data,
                 loading: false
             })
         }).catch(err => {
-            toast.notify("Something went wrong!", { position: "top-right" });
+            toast.notify("Something went wrong!", { position: "bottom-right" });
             console.log(err)
         });
     }
@@ -43,7 +47,7 @@ class UserCreatedTopicList extends Component {
             .then(res => {
                 this.loadUserCreatedTopics()
             }).catch(err => {
-                toast.notify("Something went wrong!", { position: "top-right" });
+                toast.notify("Something went wrong!", { position: "bottom-right" });
                 console.log(err)
             });
 
@@ -72,7 +76,6 @@ class UserCreatedTopicList extends Component {
                     <td>{topic.contentList.length}</td>
                     <td>
                         <Link className="btn btn-outline-info" to={`/topic/${topic.id}`}>Details</Link>
-                        <Link className="disabled btn btn-outline-warning ml-2" to={`/topic/${topic.id}`}>Statistics</Link>
                         <Button className="ml-2" variant="outline-danger" onClick={() => this.handleDeleteTopicById(topic.id)}>Delete</Button>
                     </td>
                 </tr>
@@ -83,7 +86,6 @@ class UserCreatedTopicList extends Component {
             <React.Fragment>
                 {loading ? <Loading /> : (
                     <React.Fragment>
-
                         <div className="container-fluid">
                             <div className="row pt-5">
                                 <div className="col-md-12 text-center">
@@ -100,10 +102,10 @@ class UserCreatedTopicList extends Component {
                                         <th>#</th>
                                         <th>Image</th>
                                         <th>Title</th>
-                                        <th style={{ width: '30%' }}>Short Description</th>
+                                        <th style={{ width: '40%' }}>Short Description</th>
                                         <th>WikiData</th>
                                         <th>#Learning Path</th>
-                                        <th style={{ width: '30%' }}>Action</th>
+                                        <th style={{ width: '20%' }}>Action</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -113,7 +115,6 @@ class UserCreatedTopicList extends Component {
                             </div>
                         </div>
                     </React.Fragment>)
-
                 }
             </React.Fragment>
 

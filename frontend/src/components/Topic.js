@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
 import { REQUEST_HEADERS } from "../constants";
-import axios from "axios";
-import toast from "toasted-notes";
+import axios from "axios/index";
+import toast from "toasted-notes/lib/index";
 import { Row, Tab, Button } from "react-bootstrap";
 import { Link, withRouter } from "react-router-dom";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPlus, faEdit } from '@fortawesome/free-solid-svg-icons'
-import PageHeader from "../components/PageHeader";
-import { PathNavigator, PathTabs } from "../components/LearningPath";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome/index'
+import { faPlus, faEdit } from '@fortawesome/free-solid-svg-icons/index'
+import PageHeader from "../common/PageHeader";
+import { PathNavigator, PathTabs } from "./LearningPath";
 import { resolveEndpoint } from "../util/Helpers";
-import Loading from '../components/Loading';
-import { WikiLabels } from "../components/Wiki";
+import Loading from '../common/Loading';
+import { WikiLabels } from "./Wiki";
 
 class Topic extends Component {
     constructor(props) {
@@ -137,8 +137,6 @@ class Topic extends Component {
                                             {editable && (
                                                 <PathTabs contents={topic.contentList} editable={editable} handleRefresh={() => this.loadTopicById()} />
                                             )}
-
-
                                         </Row>
                                     </div>
                                 </Tab.Container>

@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
 import { REQUEST_HEADERS } from "../constants";
-import axios from "axios";
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import axios from "axios/index";
+import { Formik, Form, Field, ErrorMessage } from 'formik/dist/index';
 import { Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { createContent } from "../util/APIUtils";
-import toast from "toasted-notes";
-import PageHeader from "../components/PageHeader";
-import EditorField from '../components/EditorField'
+import toast from "toasted-notes/lib/index";
+import PageHeader from "../common/PageHeader";
+import EditorField from '../common/EditorField'
 import { resolveEndpoint } from "../util/Helpers";
-import Loading from '../components/Loading';
+import Loading from '../common/Loading';
 
 class EditContent extends Component {
     constructor(props) {

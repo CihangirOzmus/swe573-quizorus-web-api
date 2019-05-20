@@ -8,13 +8,13 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import loadingGif from '../img/loading.gif'
 
 function OptionModal(FieldProps) {
-    const [modalState, setModalState] = useState(false)
-    const [refreshState, setRefreshState] = useState(false)
-    const [loadingState, setLoadingState] = useState(false)
+    const [modalState, setModalState] = useState(false);
+    const [refreshState, setRefreshState] = useState(false);
+    const [loadingState, setLoadingState] = useState(false);
 
     useEffect(() => {
         FieldProps.handleRefresh()
-    }, [modalState, refreshState])
+    }, [modalState, refreshState]);
 
     return (
         <React.Fragment>
@@ -45,12 +45,12 @@ function OptionModal(FieldProps) {
                                 };
                                 createOption(newOption, FieldProps.questionId)
                                     .then(res => {
-                                        toast.notify("Option created successfully.", { position: "top-right" });
-                                        setModalState(false)
-                                        setRefreshState(true)
+                                        toast.notify("Option created successfully.", { position: "bottom-right" });
+                                        setModalState(false);
+                                        setRefreshState(true);
                                         setLoadingState(false)
                                     }).catch(err => {
-                                        toast.notify("Something went wrong!", { position: "top-right" });
+                                        toast.notify(err.message, { position: "bottom-right" });
                                     });
                                 setSubmitting(false);
                             }, 400);

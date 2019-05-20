@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { Row, InputGroup } from 'react-bootstrap';
 import { Link, withRouter } from 'react-router-dom';
-import { WikiLabels } from "../components/Wiki";
-import axios from 'axios';
-import toast from "toasted-notes";
+import { WikiLabels } from "./Wiki";
+import axios from 'axios/index';
+import toast from "toasted-notes/lib/index";
 import { resolveEndpoint } from "../util/Helpers";
-import Loading from '../components/Loading';
+import Loading from '../common/Loading';
 
 class Glossary extends Component {
     constructor(props) {
@@ -26,7 +26,7 @@ class Glossary extends Component {
             if (this.props.currentUser) {
                 let filteredTopics = res.data.filter(
                     obj => obj.createdBy !== this.props.currentUser.id
-                )
+                );
                 this.setState({
                     topics: filteredTopics,
                     loading: false
