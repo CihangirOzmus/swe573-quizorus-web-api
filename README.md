@@ -1,5 +1,5 @@
 # swe573-quizorus-web-api
-This repository is created for the lecture "SWE573 - Software Development Practice" which is given in Boğaziçi University Software Engineering Department.
+This repository is created for the lecture "SWE573 - Software Development Practice" which is given in Boğaziçi University Software Engineering Department. Please refer to User Manual wiki page to see screen shots of the application. https://github.com/CihangirOzmus/swe573-quizorus-web-api/wiki/15.-User-Manual
 
 # How to start database
 * Install MySQL
