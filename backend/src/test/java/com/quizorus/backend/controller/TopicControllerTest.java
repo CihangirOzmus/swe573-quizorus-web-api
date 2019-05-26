@@ -25,7 +25,7 @@ public class TopicControllerTest {
 
     @Before
     public void setUp() throws Exception {
-        currentUser = DummyTestData.createDummyUser();
+        currentUser = DummyTestData.createDummyUserPrincipal();
     }
 
     @Mock

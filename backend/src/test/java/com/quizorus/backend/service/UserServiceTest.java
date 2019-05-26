@@ -27,7 +27,7 @@ public class UserServiceTest {
 
     @BeforeClass
     public static void setCurrentUser(){
-        currentUser = DummyTestData.createDummyUser();
+        currentUser = DummyTestData.createDummyUserPrincipal();
     }
 
     @Mock
