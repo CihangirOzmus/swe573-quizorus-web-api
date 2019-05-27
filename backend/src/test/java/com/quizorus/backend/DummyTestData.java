@@ -1,11 +1,10 @@
 package com.quizorus.backend;
 
+import com.quizorus.backend.controller.dto.EnrollmentRequest;
+import com.quizorus.backend.controller.dto.PublishRequest;
 import com.quizorus.backend.controller.dto.TopicRequest;
 import com.quizorus.backend.controller.dto.TopicResponse;
-import com.quizorus.backend.model.Content;
-import com.quizorus.backend.model.Topic;
-import com.quizorus.backend.model.User;
-import com.quizorus.backend.model.WikiData;
+import com.quizorus.backend.model.*;
 import com.quizorus.backend.security.UserPrincipal;
 
 import java.util.ArrayList;
@@ -99,7 +98,7 @@ public class DummyTestData {
     }
 
     public static TopicResponse createDummyTopicResponse() {
-        final TopicResponse topicResponse = new TopicResponse();
+        TopicResponse topicResponse = new TopicResponse();
         topicResponse.setWikiData(createDummyWikiDataSet());
         topicResponse.setContentList(createDummyContentList());
         topicResponse.setId(0L);
@@ -107,6 +106,34 @@ public class DummyTestData {
         topicResponse.setImageUrl("someImageUrl");
         topicResponse.setTitle("someTitle");
         return topicResponse;
+    }
+
+    public static Question createDummyQuestion() {
+        Question question = new Question();
+        question.setId(0L);
+        question.setText("someText");
+        question.setContent(createDummyContent());
+        return question;
+    }
+
+    public static List<Question> createDummyQuestionList() {
+        final List<Question> questionList = new ArrayList<>();
+        questionList.add(createDummyQuestion());
+        return questionList;
+    }
+
+    public static PublishRequest createDummyPublishRequest() {
+        final PublishRequest publishRequest = new PublishRequest();
+        publishRequest.setPublish(true);
+        publishRequest.setTopicId(0L);
+        return publishRequest;
+    }
+
+    public static EnrollmentRequest createDummyEnrollmentRequest() {
+        EnrollmentRequest enrollmentRequest = new EnrollmentRequest();
+        enrollmentRequest.setTopicId(0L);
+        enrollmentRequest.setUsername("username");
+        return enrollmentRequest;
     }
 
 }
