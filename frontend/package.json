@@ -15,7 +15,7 @@
     "react-event-timeline": "^1.6.3",
     "react-router-dom": "^5.0.0",
     "react-rte": "^0.16.1",
-    "react-scripts": "2.1.8",
+    "react-scripts": "5.0.1",
     "toasted-notes": "^2.1.5",
     "wikidata-sdk": "^6.4.0"
   },
